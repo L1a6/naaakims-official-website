@@ -4,7 +4,12 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* ─────────────────────────────────────────────────────────────
    PROGRAMS — flagship NAAKIMS initiatives
@@ -178,14 +183,17 @@ export default function ProgramsShowcase() {
     gsap.fromTo(progressRef.current, { scaleX: 0 }, { scaleX: 1, duration: SLIDE_DURATION / 1000, ease: 'none' });
   }, [activeIdx, slideRef.vis]);
 
-  /* ── GSAP — header entrance ────────────────────────────── */
+  /* ── GSAP — header entrance with ScrollTrigger ──────────── */
   useEffect(() => {
     if (!headerRef.vis) return;
     const els = document.querySelectorAll('.prog-hdr');
     if (!els.length) return;
     gsap.fromTo(els,
       { opacity: 0, y: 40, clipPath: 'inset(0 0 100% 0)' },
-      { opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 1.0, stagger: 0.12, ease: 'power3.out' },
+      {
+        opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 1.0, stagger: 0.12, ease: 'power3.out',
+        scrollTrigger: { trigger: headerRef.ref.current, start: 'top 80%', toggleActions: 'play none none none' },
+      },
     );
   }, [headerRef.vis]);
 
@@ -209,12 +217,15 @@ export default function ProgramsShowcase() {
     if (stat) gsap.fromTo(stat, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, delay: 0.9, ease: 'back.out(2)' });
   }, [slideRef.vis]);
 
-  /* ── GSAP — impact row ─────────────────────────────────── */
+  /* ── GSAP — impact row with ScrollTrigger ────────────── */
   useEffect(() => {
     if (!impactRef.vis) return;
     const items = document.querySelectorAll('.imp-item');
     if (!items.length) return;
-    gsap.fromTo(items, { opacity: 0, y: 20, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out' });
+    gsap.fromTo(items, { opacity: 0, y: 20, scale: 0.95 }, {
+      opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out',
+      scrollTrigger: { trigger: impactRef.ref.current, start: 'top 85%', toggleActions: 'play none none none' },
+    });
   }, [impactRef.vis]);
 
   const handleDotClick = useCallback((idx: number) => {
@@ -285,10 +296,10 @@ export default function ProgramsShowcase() {
                     <div className="prog-slide-txt flex items-center gap-4">
                       <Link
                         href="/events"
-                        className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-md bg-white/10 backdrop-blur-sm border border-white/15 text-white text-[11px] sm:text-[13px] font-semibold tracking-wide hover:bg-white/20 active:scale-[0.98] transition-all duration-300"
+                        className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-md bg-white/10 backdrop-blur-sm border border-white/15 text-white text-[10px] sm:text-[13px] font-semibold tracking-wide hover:bg-white/20 active:scale-[0.98] transition-all duration-300 whitespace-nowrap"
                       >
                         Learn More
-                        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="sm:w-3 sm:h-3"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </Link>
 
                       {/* Mobile stat inline */}

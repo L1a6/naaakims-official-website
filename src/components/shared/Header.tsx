@@ -79,12 +79,28 @@ export default function Header() {
           });
         };
 
+        // Click also triggers the shape (for mobile tap / nav selection)
+        const onClick = () => {
+          if (shapesContainer) {
+            shapesContainer.querySelectorAll('.bg-shape').forEach((s) => s.classList.remove('active'));
+          }
+          shape.classList.add('active');
+
+          gsap.fromTo(
+            shapeEls,
+            { scale: 0, opacity: 0, rotation: -25 },
+            { scale: 1, opacity: 1, rotation: 0, duration: 0.85, stagger: 0.05, ease: 'back.out(2)', overwrite: 'auto' }
+          );
+        };
+
         item.addEventListener('mouseenter', onEnter);
         item.addEventListener('mouseleave', onLeave);
+        item.addEventListener('click', onClick);
 
         (item as any)._cleanup = () => {
           item.removeEventListener('mouseenter', onEnter);
           item.removeEventListener('mouseleave', onLeave);
+          item.removeEventListener('click', onClick);
         };
       });
     }, containerRef);
@@ -273,67 +289,70 @@ export default function Header() {
               <div className="backdrop-layer second"></div>
               <div className="backdrop-layer"></div>
 
-              {/* Abstract shapes container — each unique per nav link */}
+              {/* Abstract shapes container — cute bubble/round designs per nav link */}
               <div className="ambient-background-shapes">
-                {/* Shape 1: Floating orbs constellation */}
+                {/* Shape 1: Floating soap bubbles */}
                 <svg className="bg-shape bg-shape-1" viewBox="0 0 400 400" fill="none">
-                  <circle className="shape-element" cx="80" cy="120" r="50" fill="rgba(0,208,132,0.25)" />
-                  <circle className="shape-element" cx="300" cy="80" r="70" fill="rgba(0,135,81,0.20)" />
-                  <circle className="shape-element" cx="200" cy="300" r="90" fill="rgba(0,184,114,0.15)" />
-                  <circle className="shape-element" cx="350" cy="280" r="30" fill="rgba(0,208,132,0.30)" />
-                  <circle className="shape-element" cx="150" cy="200" r="14" fill="rgba(0,208,132,0.40)" />
-                  <line className="shape-element" x1="80" y1="120" x2="200" y2="300" stroke="rgba(0,208,132,0.12)" strokeWidth="1.5"/>
-                  <line className="shape-element" x1="300" y1="80" x2="200" y2="300" stroke="rgba(0,208,132,0.12)" strokeWidth="1.5"/>
-                  <line className="shape-element" x1="80" y1="120" x2="300" y2="80" stroke="rgba(0,208,132,0.08)" strokeWidth="1"/>
+                  <circle className="shape-element" cx="80" cy="100" r="55" fill="rgba(0,208,132,0.12)" stroke="rgba(0,208,132,0.25)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="290" cy="70" r="75" fill="rgba(0,135,81,0.10)" stroke="rgba(0,135,81,0.20)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="200" cy="280" r="95" fill="rgba(0,184,114,0.08)" stroke="rgba(0,184,114,0.18)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="340" cy="300" r="35" fill="rgba(0,208,132,0.18)" stroke="rgba(0,208,132,0.30)" strokeWidth="1" />
+                  <circle className="shape-element" cx="50" cy="300" r="25" fill="rgba(0,208,132,0.22)" stroke="rgba(0,208,132,0.35)" strokeWidth="1" />
+                  <circle className="shape-element" cx="160" cy="160" r="15" fill="rgba(0,208,132,0.40)" />
+                  <circle className="shape-element" cx="350" cy="180" r="12" fill="rgba(0,184,114,0.35)" />
+                  <circle className="shape-element" cx="120" cy="220" r="8" fill="rgba(0,208,132,0.50)" />
                 </svg>
 
-                {/* Shape 2: Diamond mosaic */}
+                {/* Shape 2: Orbiting rings / planetary system */}
                 <svg className="bg-shape bg-shape-2" viewBox="0 0 400 400" fill="none">
-                  <rect className="shape-element" x="140" y="60" width="85" height="85" rx="4" transform="rotate(45 182 102)" fill="rgba(0,208,132,0.22)" />
-                  <rect className="shape-element" x="240" y="160" width="105" height="105" rx="4" transform="rotate(45 292 212)" fill="rgba(0,135,81,0.18)" />
-                  <rect className="shape-element" x="60" y="220" width="75" height="75" rx="4" transform="rotate(45 97 257)" fill="rgba(0,184,114,0.24)" />
-                  <rect className="shape-element" x="180" y="280" width="55" height="55" rx="4" transform="rotate(45 207 307)" fill="rgba(0,208,132,0.28)" />
-                  <rect className="shape-element" x="310" y="30" width="45" height="45" rx="4" transform="rotate(45 332 52)" fill="rgba(0,208,132,0.20)" />
-                  <rect className="shape-element" x="50" y="100" width="35" height="35" rx="4" transform="rotate(45 67 117)" fill="rgba(0,184,114,0.16)" />
+                  <circle className="shape-element" cx="200" cy="200" r="140" fill="none" stroke="rgba(0,208,132,0.15)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="200" cy="200" r="100" fill="none" stroke="rgba(0,135,81,0.12)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="200" cy="200" r="55" fill="none" stroke="rgba(0,184,114,0.18)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="200" cy="200" r="22" fill="rgba(0,208,132,0.25)" />
+                  <circle className="shape-element" cx="340" cy="200" r="14" fill="rgba(0,208,132,0.45)" />
+                  <circle className="shape-element" cx="200" cy="60" r="12" fill="rgba(0,135,81,0.40)" />
+                  <circle className="shape-element" cx="100" cy="260" r="10" fill="rgba(0,184,114,0.45)" />
+                  <circle className="shape-element" cx="300" cy="300" r="8" fill="rgba(0,208,132,0.50)" />
                 </svg>
 
-                {/* Shape 3: DNA helix strands */}
+                {/* Shape 3: Scattered pearls / confetti dots */}
                 <svg className="bg-shape bg-shape-3" viewBox="0 0 400 400" fill="none">
-                  <path className="shape-element" d="M50,50 Q200,150 100,200 Q0,250 150,300 Q300,350 200,400" stroke="rgba(0,208,132,0.30)" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
-                  <path className="shape-element" d="M350,50 Q200,150 300,200 Q400,250 250,300 Q100,350 200,400" stroke="rgba(0,135,81,0.25)" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
-                  <circle className="shape-element" cx="100" cy="200" r="8" fill="rgba(0,208,132,0.45)"/>
-                  <circle className="shape-element" cx="300" cy="200" r="8" fill="rgba(0,135,81,0.45)"/>
-                  <circle className="shape-element" cx="150" cy="300" r="7" fill="rgba(0,184,114,0.40)"/>
-                  <circle className="shape-element" cx="250" cy="300" r="7" fill="rgba(0,208,132,0.40)"/>
-                  <circle className="shape-element" cx="175" cy="100" r="5" fill="rgba(0,208,132,0.35)"/>
-                  <line className="shape-element" x1="100" y1="200" x2="300" y2="200" stroke="rgba(0,208,132,0.15)" strokeWidth="1.5" strokeDasharray="4 6"/>
-                  <line className="shape-element" x1="150" y1="300" x2="250" y2="300" stroke="rgba(0,208,132,0.15)" strokeWidth="1.5" strokeDasharray="4 6"/>
+                  <circle className="shape-element" cx="60" cy="80" r="20" fill="rgba(0,208,132,0.30)" />
+                  <circle className="shape-element" cx="180" cy="50" r="28" fill="rgba(0,135,81,0.22)" />
+                  <circle className="shape-element" cx="320" cy="100" r="35" fill="rgba(0,184,114,0.15)" stroke="rgba(0,184,114,0.25)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="100" cy="200" r="45" fill="rgba(0,208,132,0.10)" stroke="rgba(0,208,132,0.20)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="300" cy="230" r="55" fill="rgba(0,135,81,0.08)" stroke="rgba(0,135,81,0.18)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="200" cy="330" r="40" fill="rgba(0,208,132,0.12)" stroke="rgba(0,208,132,0.22)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="70" cy="340" r="16" fill="rgba(0,184,114,0.35)" />
+                  <circle className="shape-element" cx="350" cy="350" r="12" fill="rgba(0,208,132,0.45)" />
+                  <circle className="shape-element" cx="240" cy="160" r="10" fill="rgba(0,208,132,0.50)" />
                 </svg>
 
-                {/* Shape 4: Hexagonal grid */}
+                {/* Shape 4: Bubbly cluster / molecular grouping */}
                 <svg className="bg-shape bg-shape-4" viewBox="0 0 400 400" fill="none">
-                  <polygon className="shape-element" points="200,60 260,95 260,165 200,200 140,165 140,95" fill="rgba(0,208,132,0.18)" stroke="rgba(0,208,132,0.25)" strokeWidth="1.5"/>
-                  <polygon className="shape-element" points="320,140 380,175 380,245 320,280 260,245 260,175" fill="rgba(0,135,81,0.15)" stroke="rgba(0,135,81,0.22)" strokeWidth="1.5"/>
-                  <polygon className="shape-element" points="80,200 140,235 140,305 80,340 20,305 20,235" fill="rgba(0,184,114,0.20)" stroke="rgba(0,184,114,0.25)" strokeWidth="1.5"/>
-                  <polygon className="shape-element" points="200,260 260,295 260,365 200,400 140,365 140,295" fill="rgba(0,208,132,0.14)" stroke="rgba(0,208,132,0.20)" strokeWidth="1.5"/>
-                  <circle className="shape-element" cx="200" cy="130" r="5" fill="rgba(0,208,132,0.50)"/>
-                  <circle className="shape-element" cx="320" cy="210" r="5" fill="rgba(0,135,81,0.50)"/>
-                  <circle className="shape-element" cx="80" cy="270" r="5" fill="rgba(0,184,114,0.50)"/>
+                  <circle className="shape-element" cx="160" cy="140" r="65" fill="rgba(0,208,132,0.10)" stroke="rgba(0,208,132,0.18)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="260" cy="120" r="50" fill="rgba(0,135,81,0.12)" stroke="rgba(0,135,81,0.20)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="200" cy="240" r="80" fill="rgba(0,184,114,0.07)" stroke="rgba(0,184,114,0.15)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="120" cy="300" r="45" fill="rgba(0,208,132,0.12)" stroke="rgba(0,208,132,0.22)" strokeWidth="1.5" />
+                  <circle className="shape-element" cx="320" cy="280" r="35" fill="rgba(0,135,81,0.15)" stroke="rgba(0,135,81,0.25)" strokeWidth="1" />
+                  <circle className="shape-element" cx="210" cy="170" r="18" fill="rgba(0,208,132,0.35)" />
+                  <circle className="shape-element" cx="300" cy="180" r="10" fill="rgba(0,184,114,0.45)" />
+                  <circle className="shape-element" cx="80" cy="200" r="8" fill="rgba(0,208,132,0.50)" />
                 </svg>
 
-                {/* Shape 5: Architectural arcs + grid */}
+                {/* Shape 5: Galaxy spiral dots */}
                 <svg className="bg-shape bg-shape-5" viewBox="0 0 400 400" fill="none">
-                  <path className="shape-element" d="M50,200 A150,150 0 0,1 200,50" stroke="rgba(0,208,132,0.28)" strokeWidth="3" fill="none" strokeLinecap="round"/>
-                  <path className="shape-element" d="M200,350 A150,150 0 0,1 350,200" stroke="rgba(0,135,81,0.24)" strokeWidth="3" fill="none" strokeLinecap="round"/>
-                  <path className="shape-element" d="M100,350 A200,200 0 0,1 350,100" stroke="rgba(0,184,114,0.18)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-                  <line className="shape-element" x1="40" y1="120" x2="360" y2="120" stroke="rgba(0,208,132,0.10)" strokeWidth="1.5"/>
-                  <line className="shape-element" x1="40" y1="280" x2="360" y2="280" stroke="rgba(0,208,132,0.10)" strokeWidth="1.5"/>
-                  <line className="shape-element" x1="120" y1="40" x2="120" y2="360" stroke="rgba(0,208,132,0.10)" strokeWidth="1.5"/>
-                  <line className="shape-element" x1="280" y1="40" x2="280" y2="360" stroke="rgba(0,208,132,0.10)" strokeWidth="1.5"/>
-                  <circle className="shape-element" cx="120" cy="120" r="10" fill="rgba(0,208,132,0.35)"/>
-                  <circle className="shape-element" cx="280" cy="280" r="10" fill="rgba(0,208,132,0.35)"/>
-                  <circle className="shape-element" cx="120" cy="280" r="6" fill="rgba(0,184,114,0.25)"/>
-                  <circle className="shape-element" cx="280" cy="120" r="6" fill="rgba(0,135,81,0.25)"/>
+                  <circle className="shape-element" cx="200" cy="200" r="110" fill="none" stroke="rgba(0,208,132,0.10)" strokeWidth="1" strokeDasharray="6 8" />
+                  <circle className="shape-element" cx="200" cy="200" r="70" fill="none" stroke="rgba(0,135,81,0.12)" strokeWidth="1" strokeDasharray="4 6" />
+                  <circle className="shape-element" cx="200" cy="200" r="30" fill="rgba(0,208,132,0.20)" />
+                  <circle className="shape-element" cx="310" cy="200" r="22" fill="rgba(0,208,132,0.30)" />
+                  <circle className="shape-element" cx="200" cy="90" r="18" fill="rgba(0,184,114,0.28)" />
+                  <circle className="shape-element" cx="90" cy="200" r="16" fill="rgba(0,135,81,0.32)" />
+                  <circle className="shape-element" cx="200" cy="310" r="20" fill="rgba(0,208,132,0.25)" />
+                  <circle className="shape-element" cx="270" cy="130" r="13" fill="rgba(0,184,114,0.40)" />
+                  <circle className="shape-element" cx="130" cy="270" r="11" fill="rgba(0,208,132,0.42)" />
+                  <circle className="shape-element" cx="280" cy="280" r="9" fill="rgba(0,135,81,0.48)" />
+                  <circle className="shape-element" cx="120" cy="130" r="7" fill="rgba(0,208,132,0.50)" />
                 </svg>
               </div>
             </div>

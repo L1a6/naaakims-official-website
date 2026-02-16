@@ -4,7 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* ─────────────────────────────────────────────────────────────
    STATS — key numbers
@@ -94,36 +99,54 @@ export default function AboutPreview() {
   const statsRef     = useInView(0.4);
   const pillarsRef   = useInView(0.12);
 
-  /* ── GSAP — About block cinematic entrance ─────────────── */
+  /* ── GSAP — About block cinematic entrance with ScrollTrigger ── */
   useEffect(() => {
     if (!sectionRef.current) return;
     const ctx = gsap.context(() => {
+      // Text reveals with ScrollTrigger
       const els = textRef.current?.querySelectorAll('.g-up');
       if (els?.length) {
         gsap.fromTo(els,
           { opacity: 0, y: 48, clipPath: 'inset(0 0 100% 0)' },
-          { opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 1.0, stagger: 0.1, ease: 'power3.out' },
+          {
+            opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 1.0, stagger: 0.1, ease: 'power3.out',
+            scrollTrigger: { trigger: textRef.current, start: 'top 80%', toggleActions: 'play none none none' },
+          },
         );
       }
-      // cinematic wipe on image
+      // cinematic wipe on image with ScrollTrigger
       if (imageClipRef.current) {
         gsap.fromTo(imageClipRef.current,
           { clipPath: 'inset(100% 0 0 0)' },
-          { clipPath: 'inset(0% 0 0 0)', duration: 1.4, delay: 0.25, ease: 'power4.inOut' },
+          {
+            clipPath: 'inset(0% 0 0 0)', duration: 1.4, ease: 'power4.inOut',
+            scrollTrigger: { trigger: imageClipRef.current, start: 'top 85%', toggleActions: 'play none none none' },
+          },
         );
       }
       // Ken-Burns scale
       if (imageInner.current) {
         gsap.fromTo(imageInner.current,
           { scale: 1.18 },
-          { scale: 1, duration: 1.8, delay: 0.25, ease: 'power3.out' },
+          {
+            scale: 1, duration: 1.8, ease: 'power3.out',
+            scrollTrigger: { trigger: imageInner.current, start: 'top 85%', toggleActions: 'play none none none' },
+          },
         );
+      }
+      // Parallax on about image
+      if (imageClipRef.current) {
+        gsap.to(imageClipRef.current, {
+          yPercent: -8,
+          ease: 'none',
+          scrollTrigger: { trigger: imageClipRef.current, start: 'top bottom', end: 'bottom top', scrub: 1 },
+        });
       }
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
-  /* ── GSAP — Pillar cinematic reveals ───────────────────── */
+  /* ── GSAP — Pillar cinematic reveals with ScrollTrigger ── */
   useEffect(() => {
     if (!pillarsRef.vis) return;
     const cards = document.querySelectorAll('.p-card');
@@ -136,15 +159,24 @@ export default function AboutPreview() {
 
       if (img) gsap.fromTo(img,
         { clipPath: 'inset(0 100% 0 0)' },
-        { clipPath: 'inset(0 0% 0 0)', duration: 1.2, delay: i * 0.2, ease: 'power4.inOut' },
+        {
+          clipPath: 'inset(0 0% 0 0)', duration: 1.2, delay: i * 0.2, ease: 'power4.inOut',
+          scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none none' },
+        },
       );
       if (txt.length) gsap.fromTo(txt,
         { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.85, delay: 0.35 + i * 0.2, stagger: 0.08, ease: 'power3.out' },
+        {
+          opacity: 1, y: 0, duration: 0.85, delay: 0.35 + i * 0.2, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none none' },
+        },
       );
       if (line) gsap.fromTo(line,
         { scaleX: 0 },
-        { scaleX: 1, duration: 0.7, delay: 0.55 + i * 0.2, ease: 'power3.out' },
+        {
+          scaleX: 1, duration: 0.7, delay: 0.55 + i * 0.2, ease: 'power3.out',
+          scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none none' },
+        },
       );
     });
   }, [pillarsRef.vis]);
@@ -254,20 +286,8 @@ export default function AboutPreview() {
             ))}
           </div>
 
-          {/* MOBILE: horizontal scroll snap carousel — ultra compact */}
-          <div className="lg:hidden -mx-6 sm:-mx-10">
-            <div className="flex gap-3 px-6 sm:px-10 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-              {PILLARS.map((p, i) => (
-                <PillarCard key={`m-${p.title}`} pillar={p} index={i} visible={pillarsRef.vis} mobile />
-              ))}
-            </div>
-            {/* Scroll hint dots */}
-            <div className="flex items-center justify-center gap-1.5 mt-2">
-              {PILLARS.map((_, i) => (
-                <span key={i} className="w-1.5 h-1.5 rounded-full bg-[#00D084]/30" />
-              ))}
-            </div>
-          </div>
+          {/* MOBILE: auto-sliding carousel with taller cards */}
+          <MobilePillarCarousel pillars={PILLARS} visible={pillarsRef.vis} />
         </div>
       </div>
     </section>
@@ -275,18 +295,155 @@ export default function AboutPreview() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   PillarCard — interactive expanding card with GSAP
+   MobilePillarCarousel — auto-sliding + swipeable + taller cards
+   ───────────────────────────────────────────────────────────── */
+function MobilePillarCarousel({ pillars, visible }: { pillars: typeof PILLARS; visible: boolean }) {
+  const [active, setActive] = useState(0);
+  const [isAnim, setIsAnim] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef(0);
+  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const entered = useRef(false);
+
+  const goTo = (idx: number) => {
+    if (isAnim || idx === active) return;
+    setIsAnim(true);
+    const cont = containerRef.current;
+    if (!cont) { setIsAnim(false); return; }
+
+    const curr = cont.querySelector(`.mp-slide[data-idx="${active}"]`) as HTMLElement;
+    const next = cont.querySelector(`.mp-slide[data-idx="${idx}"]`) as HTMLElement;
+    if (!curr || !next) { setIsAnim(false); return; }
+
+    const dir = idx > active ? 1 : -1;
+    next.style.visibility = 'visible';
+    next.style.zIndex = '3';
+    curr.style.zIndex = '2';
+
+    const tl = gsap.timeline({
+      onComplete: () => { setActive(idx); setIsAnim(false); curr.style.visibility = 'hidden'; },
+    });
+
+    tl.to(curr, { xPercent: dir * -100, opacity: 0, duration: 0.5, ease: 'power3.inOut' });
+    tl.fromTo(next,
+      { xPercent: dir * 100, opacity: 0 },
+      { xPercent: 0, opacity: 1, duration: 0.6, ease: 'power3.out' },
+      '-=0.25',
+    );
+    const img = next.querySelector('.mp-img');
+    if (img) tl.fromTo(img, { scale: 1.1 }, { scale: 1, duration: 1.2, ease: 'power2.out' }, '-=0.5');
+  };
+
+  // Auto-advance
+  useEffect(() => {
+    if (!visible) return;
+    autoRef.current = setInterval(() => {
+      setActive((prev) => {
+        const next = (prev + 1) % pillars.length;
+        return prev; // trigger goTo from separate effect
+      });
+    }, 4000);
+    return () => { if (autoRef.current) clearInterval(autoRef.current); };
+  }, [visible, pillars.length]);
+
+  useEffect(() => {
+    if (!visible) return;
+    const interval = setInterval(() => {
+      const next = (active + 1) % pillars.length;
+      goTo(next);
+    }, 4000);
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, visible]);
+
+  // Entrance animation
+  useEffect(() => {
+    if (!visible || entered.current || !containerRef.current) return;
+    entered.current = true;
+    const first = containerRef.current.querySelector('.mp-slide[data-idx="0"]');
+    if (first) {
+      gsap.fromTo(first, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8, ease: 'power3.out' });
+    }
+  }, [visible]);
+
+  // Touch swipe
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goTo((active + 1) % pillars.length);
+      else goTo((active - 1 + pillars.length) % pillars.length);
+    }
+  };
+
+  return (
+    <div className="lg:hidden">
+      <div
+        ref={containerRef}
+        className="relative aspect-3/4 sm:aspect-4/3 rounded-2xl overflow-hidden mx-6 sm:mx-10 shadow-xl"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        {pillars.map((p, i) => (
+          <div
+            key={p.title}
+            data-idx={i}
+            className="mp-slide absolute inset-0"
+            style={{ visibility: i === 0 ? 'visible' : 'hidden', zIndex: i === 0 ? 2 : 1 }}
+          >
+            <div className="mp-img absolute inset-0">
+              <Image src={p.image} alt={p.title} fill className="object-cover" sizes="90vw" />
+            </div>
+            {/* Dark gradient overlay */}
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,40,22,0.95) 0%, rgba(0,60,32,0.6) 40%, rgba(0,60,32,0.1) 70%, transparent 100%)' }} />
+            {/* Curved green accent overlay */}
+            <div className="absolute bottom-0 left-0 right-0 h-[55%] pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(0,80,42,0.4) 0%, rgba(0,80,42,0.15) 50%, transparent 100%)', borderRadius: '35% 35% 0 0 / 18% 18% 0 0' }} />
+
+            {/* Content */}
+            <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
+              <span className="text-[#00D084]/70 text-[10px] font-mono tracking-[0.3em] block mb-1.5">{p.num}</span>
+              <h3 className="text-white text-[1.15rem] sm:text-[1.3rem] font-bold leading-tight tracking-[-0.01em] mb-2" style={{ fontFamily: 'var(--font-poppins)' }}>
+                {p.title}
+              </h3>
+              <p className="text-white/65 text-[12px] sm:text-[13px] leading-[1.7] line-clamp-3" style={{ fontFamily: 'var(--font-inter)' }}>
+                {p.sub}
+              </p>
+            </div>
+
+            {/* Top shimmer */}
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-[#00D084]/50 to-transparent" />
+          </div>
+        ))}
+
+        {/* Dots + counter */}
+        <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+          {pillars.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              className={cn(
+                'rounded-full transition-all duration-500',
+                i === active ? 'w-6 h-2 bg-[#00D084]' : 'w-2 h-2 bg-white/30',
+              )}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PillarCard — desktop expanding accordion card with GSAP
    ───────────────────────────────────────────────────────────── */
 function PillarCard({
   pillar,
   index,
   visible,
-  mobile = false,
 }: {
   pillar: typeof PILLARS[number];
   index: number;
   visible: boolean;
-  mobile?: boolean;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const imgRef  = useRef<HTMLDivElement>(null);
@@ -304,9 +461,9 @@ function PillarCard({
     );
   }, [visible, index]);
 
-  // Hover GSAP — image zoom + text slide (desktop only)
+  // Hover GSAP — image zoom + text slide
   useEffect(() => {
-    if (mobile || !cardRef.current) return;
+    if (!cardRef.current) return;
     const card = cardRef.current;
     const img  = imgRef.current;
     const txt  = txtRef.current;
@@ -326,43 +483,7 @@ function PillarCard({
       card.removeEventListener('mouseenter', onEnter);
       card.removeEventListener('mouseleave', onLeave);
     };
-  }, [mobile]);
-
-  /* ── Mobile card: compact horizontal scroll item ─────── */
-  if (mobile) {
-    return (
-      <div
-        ref={cardRef}
-        className="relative shrink-0 w-[78vw] sm:w-[60vw] snap-center rounded-2xl overflow-hidden shadow-lg opacity-0"
-      >
-        {/* Image */}
-        <div className="relative aspect-video">
-          <Image
-            src={pillar.image}
-            alt={pillar.title}
-            fill
-            className="object-cover"
-            sizes="80vw"
-          />
-          {/* Curved green gradient overlay for readability */}
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,50,30,0.92) 0%, rgba(0,80,42,0.65) 40%, rgba(0,80,42,0.15) 70%, transparent 100%)', borderRadius: '0 0 1rem 1rem' }} />
-          {/* Shimmer */}
-          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-[#00D084]/60 to-transparent" />
-        </div>
-
-        {/* Text overlay anchored to bottom of image */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
-          <span className="text-[#00D084]/70 text-[9px] font-mono tracking-[0.3em] block mb-1">{pillar.num}</span>
-          <h3 className="text-white text-[1rem] font-bold leading-tight tracking-[-0.01em] mb-1.5" style={{ fontFamily: 'var(--font-poppins)' }}>
-            {pillar.title}
-          </h3>
-          <p className="text-white/60 text-[11px] sm:text-[12px] leading-[1.6] line-clamp-2" style={{ fontFamily: 'var(--font-inter)' }}>
-            {pillar.sub}
-          </p>
-        </div>
-      </div>
-    );
-  }
+  }, []);
 
   /* ── Desktop card: expanding accordion ───────────────── */
   return (

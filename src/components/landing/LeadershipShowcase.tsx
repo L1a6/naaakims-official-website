@@ -4,7 +4,12 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* ─────────────────────────────────────────────────────────────
    EXECUTIVES DATA
@@ -203,14 +208,17 @@ export default function LeadershipShowcase() {
   const gridRef       = useInView(0.1);
   const ctaRef        = useInView(0.3);
 
-  /* ── GSAP — section header entrance ────────────────────── */
+  /* ── GSAP — section header entrance with ScrollTrigger ── */
   useEffect(() => {
     if (!headerRef.vis) return;
     const els = document.querySelectorAll('.lead-hdr');
     if (!els.length) return;
     gsap.fromTo(els,
       { opacity: 0, y: 40, clipPath: 'inset(0 0 100% 0)' },
-      { opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 1.0, stagger: 0.12, ease: 'power3.out' },
+      {
+        opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 1.0, stagger: 0.12, ease: 'power3.out',
+        scrollTrigger: { trigger: headerRef.ref.current, start: 'top 80%', toggleActions: 'play none none none' },
+      },
     );
   }, [headerRef.vis]);
 
@@ -225,7 +233,10 @@ export default function LeadershipShowcase() {
     if (card) {
       gsap.fromTo(card,
         { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' },
+        {
+          opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
+          scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none none' },
+        },
       );
     }
     if (img) {
@@ -248,14 +259,17 @@ export default function LeadershipShowcase() {
     }
   }, [presidentRef.vis]);
 
-  /* ── GSAP — CTA row entrance ───────────────────────────── */
+  /* ── GSAP — CTA row entrance with ScrollTrigger ────────── */
   useEffect(() => {
     if (!ctaRef.vis) return;
     const els = document.querySelectorAll('.lead-cta');
     if (!els.length) return;
     gsap.fromTo(els,
       { opacity: 0, y: 25 },
-      { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' },
+      {
+        opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
+        scrollTrigger: { trigger: ctaRef.ref.current, start: 'top 85%', toggleActions: 'play none none none' },
+      },
     );
   }, [ctaRef.vis]);
 
