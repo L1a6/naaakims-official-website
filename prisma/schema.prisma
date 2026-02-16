@@ -1,0 +1,469 @@
+// This is your Prisma schema file for NAAKIMS Worldwide Website
+// Learn more about Prisma: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// USER & AUTHENTICATION
+// ============================================================================
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String
+  password      String   // Hashed password
+  role          UserRole @default(CONTENT_MANAGER)
+  profileImage  String?
+  
+  // Relations
+  blogPosts     BlogPost[]
+  galleryItems  GalleryItem[]
+  contactReplies ContactSubmission[]
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("users")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  CHAPTER_ADMIN
+  CONTENT_MANAGER
+}
+
+// ============================================================================
+// EXECUTIVES & ADMINISTRATIONS
+// ============================================================================
+
+model Administration {
+  id          String      @id @default(cuid())
+  name        String      // e.g., "2025-2026 Administration"
+  startYear   Int
+  endYear     Int
+  isCurrent   Boolean     @default(false)
+  achievements String?    @db.Text
+  photos      String[]    // Array of photo URLs
+  
+  // Relations
+  executives  Executive[]
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  @@map("administrations")
+}
+
+model Executive {
+  id                String         @id @default(cuid())
+  name              String
+  position          String
+  bio               String?        @db.Text
+  photo             String?
+  email             String?
+  phone             String?
+  linkedIn          String?
+  twitter           String?
+  order             Int            @default(0) // Display order
+  isActive          Boolean        @default(true)
+  
+  // Relations
+  administrationId  String
+  administration    Administration @relation(fields: [administrationId], references: [id], onDelete: Cascade)
+  
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  
+  @@map("executives")
+}
+
+// ============================================================================
+// CHAPTERS
+// ============================================================================
+
+model Chapter {
+  id                    String                 @id @default(cuid())
+  name                  String                 @unique
+  slug                  String                 @unique
+  university            String
+  logo                  String?
+  description           String?                @db.Text
+  location              String?
+  foundedYear           Int?
+  achievements          String?                @db.Text
+  email                 String?
+  phone                 String?
+  
+  // Social Media
+  facebook              String?
+  twitter               String?
+  instagram             String?
+  linkedin              String?
+  whatsapp              String?
+  
+  isActive              Boolean                @default(true)
+  
+  // Relations
+  executives            ChapterExecutive[]
+  pastPresidents        PastChapterPresident[]
+  events                Event[]
+  galleryItems          GalleryItem[]
+  testimonials          Testimonial[]
+  
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  
+  @@map("chapters")
+}
+
+model ChapterExecutive {
+  id          String   @id @default(cuid())
+  name        String
+  position    String
+  photo       String?
+  email       String?
+  phone       String?
+  bio         String?  @db.Text
+  year        String   // Academic year: "2025-2026"
+  
+  // Relations
+  chapterId   String
+  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("chapter_executives")
+}
+
+model PastChapterPresident {
+  id            String   @id @default(cuid())
+  name          String
+  photo         String?
+  tenure        String   // e.g., "2023-2024"
+  achievements  String?  @db.Text
+  
+  // Relations
+  chapterId     String
+  chapter       Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("past_chapter_presidents")
+}
+
+// ============================================================================
+// EVENTS
+// ============================================================================
+
+model Event {
+  id                String      @id @default(cuid())
+  title             String
+  slug              String      @unique
+  description       String      @db.Text
+  content           String?     @db.Text // Full event details
+  featuredImage     String?
+  startDate         DateTime
+  endDate           DateTime?
+  location          String?
+  eventType         EventType   @default(OTHER)
+  status            EventStatus @default(UPCOMING)
+  attendeeCount     Int?
+  registrationLink  String?
+  photos            String[]    // Array of photo URLs
+  tags              String[]
+  
+  // Relations
+  chapterId         String?
+  chapter           Chapter?    @relation(fields: [chapterId], references: [id], onDelete: SetNull)
+  
+  createdById       String
+  albums            Album[]
+  galleryItems      GalleryItem[]
+  
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  
+  @@map("events")
+}
+
+enum EventType {
+  ACADEMIC
+  SOCIAL
+  OUTREACH
+  MEETING
+  CONFERENCE
+  WORKSHOP
+  OTHER
+}
+
+enum EventStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+// ============================================================================
+// BLOG/NEWS
+// ============================================================================
+
+model BlogPost {
+  id            String      @id @default(cuid())
+  title         String
+  slug          String      @unique
+  excerpt       String      @db.Text
+  content       String      @db.Text
+  featuredImage String?
+  status        PostStatus  @default(DRAFT)
+  publishedAt   DateTime?
+  readTime      Int?        // Minutes
+  views         Int         @default(0)
+  
+  // Relations
+  authorId      String
+  author        User        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  categoryId    String
+  category      Category    @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  
+  tags          Tag[]
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@map("blog_posts")
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  color       String?    // Hex color for badges
+  
+  // Relations
+  posts       BlogPost[]
+  
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  
+  @@map("categories")
+}
+
+model Tag {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  slug      String     @unique
+  
+  // Relations
+  posts     BlogPost[]
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  @@map("tags")
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+  ARCHIVED
+}
+
+// ============================================================================
+// GALLERY
+// ============================================================================
+
+model Album {
+  id          String        @id @default(cuid())
+  name        String
+  slug        String        @unique
+  description String?       @db.Text
+  coverImage  String?
+  
+  // Relations
+  photos      GalleryItem[]
+  
+  eventId     String?
+  event       Event?        @relation(fields: [eventId], references: [id], onDelete: SetNull)
+  
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  
+  @@map("albums")
+}
+
+model GalleryItem {
+  id            String   @id @default(cuid())
+  title         String?
+  description   String?  @db.Text
+  imageUrl      String
+  thumbnailUrl  String?
+  year          Int?
+  tags          String[]
+  
+  // Relations
+  albumId       String?
+  album         Album?   @relation(fields: [albumId], references: [id], onDelete: SetNull)
+  
+  eventId       String?
+  event         Event?   @relation(fields: [eventId], references: [id], onDelete: SetNull)
+  
+  chapterId     String?
+  chapter       Chapter? @relation(fields: [chapterId], references: [id], onDelete: SetNull)
+  
+  uploadedById  String
+  uploadedBy    User     @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("gallery_items")
+}
+
+// ============================================================================
+// ACHIEVEMENTS
+// ============================================================================
+
+model Achievement {
+  id            String          @id @default(cuid())
+  title         String
+  description   String          @db.Text
+  date          DateTime
+  type          AchievementType @default(OTHER)
+  photos        String[]        // Array of photo URLs
+  relatedLinks  String[]
+  
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  
+  @@map("achievements")
+}
+
+enum AchievementType {
+  MILESTONE
+  AWARD
+  SCHOLARSHIP
+  OUTREACH
+  RESEARCH
+  PARTNERSHIP
+  OTHER
+}
+
+// ============================================================================
+// SPONSORS & PATRONS
+// ============================================================================
+
+model Sponsor {
+  id            String      @id @default(cuid())
+  name          String
+  title         String?     // e.g., "His Excellency, Governor..."
+  organization  String?
+  logo          String?
+  photo         String?
+  description   String?     @db.Text
+  quote         String?     @db.Text
+  tier          SponsorTier @default(PARTNER)
+  website       String?
+  email         String?
+  phone         String?
+  order         Int         @default(0) // Display order within tier
+  isActive      Boolean     @default(true)
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@map("sponsors")
+}
+
+enum SponsorTier {
+  PLATINUM
+  GOLD
+  SILVER
+  BRONZE
+  PARTNER
+}
+
+// ============================================================================
+// TESTIMONIALS
+// ============================================================================
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  quote       String   @db.Text
+  authorName  String
+  authorRole  String?  // e.g., "2024 Graduate, University of Uyo"
+  authorPhoto String?
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  
+  // Relations
+  chapterId   String?
+  chapter     Chapter? @relation(fields: [chapterId], references: [id], onDelete: SetNull)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("testimonials")
+}
+
+// ============================================================================
+// CONTACT & NEWSLETTER
+// ============================================================================
+
+model ContactSubmission {
+  id        String            @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String            @db.Text
+  category  ContactCategory   @default(GENERAL_INQUIRY)
+  status    SubmissionStatus  @default(NEW)
+  
+  // Optional: Admin who handled the submission
+  handledById String?
+  handledBy   User?          @relation(fields: [handledById], references: [id], onDelete: SetNull)
+  
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  
+  @@map("contact_submissions")
+}
+
+enum ContactCategory {
+  GENERAL_INQUIRY
+  CHAPTER_RELATED
+  SPONSORSHIP
+  MEMBERSHIP
+  TECHNICAL_ISSUE
+  OTHER
+}
+
+enum SubmissionStatus {
+  NEW
+  IN_PROGRESS
+  RESOLVED
+  ARCHIVED
+}
+
+model NewsletterSubscriber {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String?
+  isActive        Boolean   @default(true)
+  subscribedAt    DateTime  @default(now())
+  unsubscribedAt  DateTime?
+  
+  @@map("newsletter_subscribers")
+}
