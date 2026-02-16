@@ -242,16 +242,31 @@ export default function AboutPreview() {
 
         <div ref={pillarsRef.ref} className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-16 sm:py-20">
           {/* Header */}
-          <div className="flex items-center gap-3 mb-10 sm:mb-12">
+          <div className="flex items-center gap-3 mb-8 sm:mb-12">
             <span className="h-px w-6 bg-[#00D084]" />
             <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#00D084]" style={{ fontFamily: 'var(--font-inter)' }}>Our Pillars</span>
           </div>
 
-          {/* Interactive pillar row — desktop: expands on hover, mobile: stacked */}
-          <div className="flex flex-col lg:flex-row gap-3 lg:gap-2 lg:h-105">
+          {/* DESKTOP: expanding accordion row */}
+          <div className="hidden lg:flex gap-2 lg:h-105">
             {PILLARS.map((p, i) => (
               <PillarCard key={p.title} pillar={p} index={i} visible={pillarsRef.vis} />
             ))}
+          </div>
+
+          {/* MOBILE: horizontal scroll snap carousel — ultra compact */}
+          <div className="lg:hidden -mx-6 sm:-mx-10">
+            <div className="flex gap-3 px-6 sm:px-10 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              {PILLARS.map((p, i) => (
+                <PillarCard key={`m-${p.title}`} pillar={p} index={i} visible={pillarsRef.vis} mobile />
+              ))}
+            </div>
+            {/* Scroll hint dots */}
+            <div className="flex items-center justify-center gap-1.5 mt-2">
+              {PILLARS.map((_, i) => (
+                <span key={i} className="w-1.5 h-1.5 rounded-full bg-[#00D084]/30" />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -266,10 +281,12 @@ function PillarCard({
   pillar,
   index,
   visible,
+  mobile = false,
 }: {
   pillar: typeof PILLARS[number];
   index: number;
   visible: boolean;
+  mobile?: boolean;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const imgRef  = useRef<HTMLDivElement>(null);
@@ -287,9 +304,9 @@ function PillarCard({
     );
   }, [visible, index]);
 
-  // Hover GSAP — image zoom + text slide
+  // Hover GSAP — image zoom + text slide (desktop only)
   useEffect(() => {
-    if (!cardRef.current) return;
+    if (mobile || !cardRef.current) return;
     const card = cardRef.current;
     const img  = imgRef.current;
     const txt  = txtRef.current;
@@ -309,15 +326,52 @@ function PillarCard({
       card.removeEventListener('mouseenter', onEnter);
       card.removeEventListener('mouseleave', onLeave);
     };
-  }, []);
+  }, [mobile]);
 
+  /* ── Mobile card: compact horizontal scroll item ─────── */
+  if (mobile) {
+    return (
+      <div
+        ref={cardRef}
+        className="relative shrink-0 w-[78vw] sm:w-[60vw] snap-center rounded-2xl overflow-hidden shadow-lg opacity-0"
+      >
+        {/* Image */}
+        <div className="relative aspect-video">
+          <Image
+            src={pillar.image}
+            alt={pillar.title}
+            fill
+            className="object-cover"
+            sizes="80vw"
+          />
+          {/* Curved green gradient overlay for readability */}
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,50,30,0.92) 0%, rgba(0,80,42,0.65) 40%, rgba(0,80,42,0.15) 70%, transparent 100%)', borderRadius: '0 0 1rem 1rem' }} />
+          {/* Shimmer */}
+          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-[#00D084]/60 to-transparent" />
+        </div>
+
+        {/* Text overlay anchored to bottom of image */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+          <span className="text-[#00D084]/70 text-[9px] font-mono tracking-[0.3em] block mb-1">{pillar.num}</span>
+          <h3 className="text-white text-[1rem] font-bold leading-tight tracking-[-0.01em] mb-1.5" style={{ fontFamily: 'var(--font-poppins)' }}>
+            {pillar.title}
+          </h3>
+          <p className="text-white/60 text-[11px] sm:text-[12px] leading-[1.6] line-clamp-2" style={{ fontFamily: 'var(--font-inter)' }}>
+            {pillar.sub}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  /* ── Desktop card: expanding accordion ───────────────── */
   return (
     <div
       ref={cardRef}
       className={cn(
         'group relative rounded-2xl overflow-hidden cursor-pointer opacity-0',
         'lg:flex-1 lg:hover:flex-[2.5] transition-all duration-700 ease-[cubic-bezier(0.65,0.01,0.05,0.99)]',
-        'h-70 sm:h-80 lg:h-full',
+        'h-full',
         'shadow-lg hover:shadow-2xl',
       )}
     >
@@ -328,12 +382,21 @@ function PillarCard({
           alt={pillar.title}
           fill
           className="object-cover"
-          sizes="(max-width: 1024px) 100vw, 50vw"
+          sizes="50vw"
         />
       </div>
 
       {/* Cinematic gradient — gets darker on hover */}
       <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-black/10 group-hover:from-black/90 group-hover:via-black/40 transition-all duration-700" />
+
+      {/* Curved green overlay that appears on hover for readability */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[60%] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to top, rgba(0,80,42,0.55) 0%, rgba(0,80,42,0.30) 40%, rgba(0,80,42,0.05) 80%, transparent 100%)',
+          borderRadius: '40% 40% 0 0 / 20% 20% 0 0',
+        }}
+      />
 
       {/* Green shimmer at bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-[#00D084]/0 group-hover:via-[#00D084]/70 to-transparent transition-all duration-700" />
@@ -359,7 +422,7 @@ function PillarCard({
         {/* Description — revealed on hover via GSAP + CSS */}
         <div
           ref={txtRef}
-          className="opacity-0 lg:opacity-70 translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-500"
+          className="opacity-70 translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-500"
         >
           <p
             className="text-white/70 text-[12px] sm:text-[13px] leading-[1.65] max-w-sm"

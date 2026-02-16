@@ -2,6 +2,7 @@ import HeroSlideshow from '@/components/landing/HeroSlideshow';
 import AboutPreview from '@/components/landing/AboutPreview';
 import ProgramsShowcase from '@/components/landing/ProgramsShowcase';
 import LeadershipShowcase from '@/components/landing/LeadershipShowcase';
+import TestimonialsShowcase from '@/components/landing/TestimonialsShowcase';
 
 export default function Home() {
   return (
@@ -17,6 +18,9 @@ export default function Home() {
 
       {/* Leadership & Executives */}
       <LeadershipShowcase />
+
+      {/* Testimonials & Chapters */}
+      <TestimonialsShowcase />
     </main>
   );
 }
