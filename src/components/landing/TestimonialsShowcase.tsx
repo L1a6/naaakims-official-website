@@ -307,8 +307,8 @@ export default function TestimonialsShowcase() {
 
                     {/* Avatar + info — left column */}
                     <div className="lg:col-span-3 flex items-center gap-4 lg:flex-col lg:items-start">
-                      <div className="t-avatar relative w-14 h-14 sm:w-16 sm:h-16 lg:w-28 lg:h-28 rounded-full overflow-hidden ring-2 ring-[#00D084]/20 ring-offset-2 ring-offset-white shrink-0">
-                        <Image src={t.image} alt={t.name} fill className="object-cover" sizes="(min-width:1024px) 112px, 64px" />
+                      <div className="t-avatar relative w-14 h-14 sm:w-16 sm:h-16 lg:w-36 lg:h-36 rounded-full overflow-hidden ring-2 ring-[#00D084]/20 ring-offset-2 ring-offset-white shrink-0">
+                        <Image src={t.image} alt={t.name} fill className="object-cover" sizes="(min-width:1024px) 144px, 64px" />
                       </div>
                       <div className="t-txt">
                         <p className="text-gray-900 text-[14px] sm:text-[15px] font-bold" style={{ fontFamily: 'var(--font-poppins)' }}>

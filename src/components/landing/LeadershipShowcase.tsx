@@ -274,108 +274,106 @@ export default function LeadershipShowcase() {
   }, [ctaRef.vis]);
 
   return (
-    <>
-    <section className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #001a0e 0%, #00120a 50%, #001a0e 100%)' }}>
-      {/* ─── AMBIENT GLOW ─────────────────────────────────── */}
-      <div className="absolute top-0 left-1/4 w-125 h-125 bg-[#00D084]/3 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-100 h-100 bg-[#008751]/4 rounded-full blur-[100px] pointer-events-none" />
+    <section className="relative overflow-hidden">
+      {/* ─── LEADERSHIP ZONE — dark green bg ──────────────── */}
+      <div className="relative" style={{ background: 'linear-gradient(180deg, #001a0e 0%, #00120a 50%, #001a0e 100%)' }}>
+        {/* ─── AMBIENT GLOW ─────────────────────────────────── */}
+        <div className="absolute top-0 left-1/4 w-125 h-125 bg-[#00D084]/3 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-100 h-100 bg-[#008751]/4 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* ─── HEADER ──────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-16 sm:pt-24 lg:pt-28 pb-10 sm:pb-14">
-        <div ref={headerRef.ref} className="text-center max-w-2xl mx-auto">
-          <div className="lead-hdr flex items-center justify-center gap-3 mb-4">
-            <span className="h-px w-6 bg-[#00D084]/50" />
-            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#00D084]/70" style={{ fontFamily: 'var(--font-inter)' }}>
-              Leadership
-            </span>
-            <span className="h-px w-6 bg-[#00D084]/50" />
+        {/* ─── HEADER ──────────────────────────────────────── */}
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-16 sm:pt-24 lg:pt-28 pb-10 sm:pb-14">
+          <div ref={headerRef.ref} className="text-center max-w-2xl mx-auto">
+            <div className="lead-hdr flex items-center justify-center gap-3 mb-4">
+              <span className="h-px w-6 bg-[#00D084]/50" />
+              <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#00D084]/70" style={{ fontFamily: 'var(--font-inter)' }}>
+                Leadership
+              </span>
+              <span className="h-px w-6 bg-[#00D084]/50" />
+            </div>
+            <h2 className="lead-hdr text-[clamp(1.6rem,3.5vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-white mb-4" style={{ fontFamily: 'var(--font-poppins)' }}>
+              The Visionaries{' '}<span className="text-[#00D084]">Behind</span> NAAKIMS
+            </h2>
+            <p className="lead-hdr text-white/40 text-[14px] sm:text-[15px] leading-[1.75] max-w-xl mx-auto" style={{ fontFamily: 'var(--font-inter)' }}>
+              Elected by members, driven by purpose — meet the executives leading NAAKIMS into its next chapter of impact and excellence.
+            </p>
           </div>
-          <h2 className="lead-hdr text-[clamp(1.6rem,3.5vw,2.5rem)] font-bold leading-[1.12] tracking-[-0.02em] text-white mb-4" style={{ fontFamily: 'var(--font-poppins)' }}>
-            The Visionaries{' '}<span className="text-[#00D084]">Behind</span> NAAKIMS
-          </h2>
-          <p className="lead-hdr text-white/40 text-[14px] sm:text-[15px] leading-[1.75] max-w-xl mx-auto" style={{ fontFamily: 'var(--font-inter)' }}>
-            Elected by members, driven by purpose — meet the executives leading NAAKIMS into its next chapter of impact and excellence.
-          </p>
+        </div>
+
+        {/* ─── PRESIDENT — cinematic hero card ──────────────── */}
+        <div ref={presidentRef.ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-12 sm:pb-16">
+          <div className="pres-card relative rounded-2xl overflow-hidden shadow-2xl opacity-0">
+            <div className="grid lg:grid-cols-2">
+              {/* Left — image with cinematic wipe */}
+              <div className="pres-img relative aspect-4/5 lg:aspect-auto lg:min-h-120 overflow-hidden">
+                <Image
+                  src={PRESIDENT.image}
+                  alt={PRESIDENT.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
+                {/* Subtle green tint overlay */}
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(0,80,42,0.25) 0%, rgba(0,26,14,0.15) 100%)' }} />
+                {/* Bottom fade for mobile */}
+                <div className="absolute inset-0 bg-linear-to-t from-[#001a0e] via-transparent to-transparent lg:hidden" />
+                {/* Right fade for desktop */}
+                <div className="absolute inset-0 bg-linear-to-r from-transparent via-transparent to-[#001a0e] hidden lg:block" />
+              </div>
+
+              {/* Right — info panel */}
+              <div className="relative flex flex-col justify-center p-8 sm:p-10 lg:p-14 -mt-16 lg:mt-0" style={{ background: 'linear-gradient(135deg, #001a0e 0%, #002a18 100%)' }}>
+                {/* Decorative corner accent */}
+                <div className="absolute top-6 right-6 w-12 h-12 border-t border-r border-[#00D084]/20 rounded-tr-lg" />
+
+                <span className="pres-txt text-[#00D084] text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] mb-3" style={{ fontFamily: 'var(--font-inter)' }}>
+                  Worldwide President
+                </span>
+                <h3 className="pres-txt text-white text-[clamp(1.5rem,3vw,2.2rem)] font-bold leading-[1.15] tracking-[-0.02em] mb-2" style={{ fontFamily: 'var(--font-poppins)' }}>
+                  {PRESIDENT.name}
+                </h3>
+                <span className="pres-txt text-white/30 text-[12px] sm:text-[13px] font-medium tracking-wide mb-6" style={{ fontFamily: 'var(--font-inter)' }}>
+                  {PRESIDENT.chapter}
+                </span>
+
+                {/* Quote block with left accent */}
+                <div className="pres-quote relative pl-5 border-l-2 border-[#00D084]/40 opacity-0">
+                  <p className="text-white/60 text-[14px] sm:text-[15px] leading-[1.8] italic" style={{ fontFamily: 'var(--font-inter)' }}>
+                    {PRESIDENT.quote}
+                  </p>
+                </div>
+
+                {/* Green shimmer line */}
+                <div className="mt-8 h-px w-full bg-linear-to-r from-[#00D084]/40 via-[#00D084]/10 to-transparent" />
+
+                <div className="pres-txt mt-6">
+                  <Link
+                    href="/executives"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#00D084]/10 border border-[#00D084]/20 text-[#00D084] text-[12px] sm:text-[13px] font-semibold tracking-wide hover:bg-[#00D084]/20 active:scale-[0.98] transition-all duration-300"
+                  >
+                    Meet Full Executive Team
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Decorative bottom green accent */}
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-[#00D084] via-[#008751] to-transparent" />
+          </div>
         </div>
       </div>
 
-      {/* ─── PRESIDENT — cinematic hero card ──────────────── */}
-      <div ref={presidentRef.ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-12 sm:pb-16">
-        <div className="pres-card relative rounded-2xl overflow-hidden shadow-2xl opacity-0">
-          <div className="grid lg:grid-cols-2">
-            {/* Left — image with cinematic wipe */}
-            <div className="pres-img relative aspect-4/5 lg:aspect-auto lg:min-h-120 overflow-hidden">
-              <Image
-                src={PRESIDENT.image}
-                alt={PRESIDENT.name}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
-              {/* Subtle green tint overlay */}
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(0,80,42,0.25) 0%, rgba(0,26,14,0.15) 100%)' }} />
-              {/* Bottom fade for mobile */}
-              <div className="absolute inset-0 bg-linear-to-t from-[#001a0e] via-transparent to-transparent lg:hidden" />
-              {/* Right fade for desktop */}
-              <div className="absolute inset-0 bg-linear-to-r from-transparent via-transparent to-[#001a0e] hidden lg:block" />
-            </div>
+      {/* ─── EXECUTIVE ZONE — warm green-tinted bg ──────── */}
+      <div className="relative" style={{ background: 'linear-gradient(180deg, #f2f7f4 0%, #f7faf8 50%, #f2f7f4 100%)' }}>
+        {/* Ambient glow */}
+        <div className="absolute -top-32 right-0 w-96 h-96 bg-[#00D084]/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-[#008751]/4 rounded-full blur-[100px] pointer-events-none" />
+        {/* Top decorative border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-[#00D084]/15 to-transparent" />
 
-            {/* Right — info panel */}
-            <div className="relative flex flex-col justify-center p-8 sm:p-10 lg:p-14 -mt-16 lg:mt-0" style={{ background: 'linear-gradient(135deg, #001a0e 0%, #002a18 100%)' }}>
-              {/* Decorative corner accent */}
-              <div className="absolute top-6 right-6 w-12 h-12 border-t border-r border-[#00D084]/20 rounded-tr-lg" />
-
-              <span className="pres-txt text-[#00D084] text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] mb-3" style={{ fontFamily: 'var(--font-inter)' }}>
-                Worldwide President
-              </span>
-              <h3 className="pres-txt text-white text-[clamp(1.5rem,3vw,2.2rem)] font-bold leading-[1.15] tracking-[-0.02em] mb-2" style={{ fontFamily: 'var(--font-poppins)' }}>
-                {PRESIDENT.name}
-              </h3>
-              <span className="pres-txt text-white/30 text-[12px] sm:text-[13px] font-medium tracking-wide mb-6" style={{ fontFamily: 'var(--font-inter)' }}>
-                {PRESIDENT.chapter}
-              </span>
-
-              {/* Quote block with left accent */}
-              <div className="pres-quote relative pl-5 border-l-2 border-[#00D084]/40 opacity-0">
-                <p className="text-white/60 text-[14px] sm:text-[15px] leading-[1.8] italic" style={{ fontFamily: 'var(--font-inter)' }}>
-                  {PRESIDENT.quote}
-                </p>
-              </div>
-
-              {/* Green shimmer line */}
-              <div className="mt-8 h-px w-full bg-linear-to-r from-[#00D084]/40 via-[#00D084]/10 to-transparent" />
-
-              <div className="pres-txt mt-6">
-                <Link
-                  href="/executives"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#00D084]/10 border border-[#00D084]/20 text-[#00D084] text-[12px] sm:text-[13px] font-semibold tracking-wide hover:bg-[#00D084]/20 active:scale-[0.98] transition-all duration-300"
-                >
-                  Meet Full Executive Team
-                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Decorative bottom green accent */}
-          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-[#00D084] via-[#008751] to-transparent" />
-        </div>
-      </div>
-
-      {/* President section end — close dark green section */}
-    </section>
-
-    {/* ─── EXECUTIVE GRID — separate warm green-tinted section ─── */}
-    <section className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #f2f7f4 0%, #f7faf8 50%, #f2f7f4 100%)' }}>
-      {/* Ambient glow */}
-      <div className="absolute -top-32 right-0 w-96 h-96 bg-[#00D084]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-[#008751]/4 rounded-full blur-[100px] pointer-events-none" />
-
-      {/* Top decorative border */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-[#00D084]/15 to-transparent" />
-
-      <div className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-14 sm:py-20 lg:py-24">
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-14 sm:py-20 lg:py-24">
           <div className="flex items-center gap-3 mb-2.5">
             <span className="h-px w-6 bg-[#00D084]/50" />
             <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#00D084]" style={{ fontFamily: 'var(--font-inter)' }}>Executive Team</span>
@@ -396,29 +394,29 @@ export default function LeadershipShowcase() {
           </div>
         </div>
 
-      {/* ─── VIEW ALL CTA ───────────────────────────────── */}
-      <div ref={ctaRef.ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-12 sm:pb-16">
-        <div className="lead-cta flex flex-col sm:flex-row items-center justify-between gap-5 py-5 border-t border-gray-200">
-          <div>
-            <p className="lead-cta text-gray-600 text-[13px] sm:text-[14px] font-medium" style={{ fontFamily: 'var(--font-poppins)' }}>
-              Our executives are elected annually by members across all chapters.
-            </p>
-            <p className="lead-cta text-gray-400 text-[11px] sm:text-[12px] mt-1" style={{ fontFamily: 'var(--font-inter)' }}>
-              10+ chapters · 25+ universities worldwide
-            </p>
+        {/* ─── VIEW ALL CTA ───────────────────────────────── */}
+        <div ref={ctaRef.ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-12 sm:pb-16">
+          <div className="lead-cta flex flex-col sm:flex-row items-center justify-between gap-5 py-5 border-t border-gray-200">
+            <div>
+              <p className="lead-cta text-gray-600 text-[13px] sm:text-[14px] font-medium" style={{ fontFamily: 'var(--font-poppins)' }}>
+                Our executives are elected annually by members across all chapters.
+              </p>
+              <p className="lead-cta text-gray-400 text-[11px] sm:text-[12px] mt-1" style={{ fontFamily: 'var(--font-inter)' }}>
+                10+ chapters · 25+ universities worldwide
+              </p>
+            </div>
+            <Link
+              href="/executives"
+              className="lead-cta group shrink-0 inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 text-gray-600 text-[13px] font-semibold tracking-wide hover:border-[#00D084] hover:text-[#008751] active:scale-[0.97] transition-all duration-300"
+            >
+              <span>View All Leaders</span>
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 group-hover:bg-[#00D084]/15 transition-colors duration-300">
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
+            </Link>
           </div>
-          <Link
-            href="/executives"
-            className="lead-cta group shrink-0 inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 text-gray-600 text-[13px] font-semibold tracking-wide hover:border-[#00D084] hover:text-[#008751] active:scale-[0.97] transition-all duration-300"
-          >
-            <span>View All Leaders</span>
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 group-hover:bg-[#00D084]/15 transition-colors duration-300">
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </span>
-          </Link>
         </div>
       </div>
     </section>
-    </>
   );
 }

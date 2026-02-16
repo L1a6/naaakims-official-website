@@ -193,16 +193,16 @@ export default function AboutPreview() {
             <div
               key={s.label}
               className={cn(
-                'flex flex-col items-center justify-center py-3.5 sm:py-5',
+                'flex flex-col items-center justify-center py-1.5 sm:py-5',
                 'transition-all duration-700 ease-out',
                 statsRef.vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3',
               )}
               style={{ transitionDelay: `${i * 90}ms` }}
             >
-              <span className="text-[clamp(1.05rem,2.5vw,1.55rem)] font-bold tracking-tight text-white" style={{ fontFamily: 'var(--font-poppins)' }}>
+              <span className="text-[clamp(0.7rem,2.5vw,1.55rem)] font-bold tracking-tight text-white" style={{ fontFamily: 'var(--font-poppins)' }}>
                 <CountUp end={s.end} suffix={s.suffix} started={statsRef.vis} />
               </span>
-              <span className="text-[8px] sm:text-[10px] text-white/40 font-semibold uppercase tracking-[0.18em] mt-0.5">
+              <span className="text-[6px] sm:text-[10px] text-white/40 font-semibold uppercase tracking-[0.18em] mt-0">
                 {s.label}
               </span>
             </div>
@@ -276,7 +276,7 @@ export default function AboutPreview() {
           {/* Header */}
           <div className="flex items-center gap-3 mb-8 sm:mb-12">
             <span className="h-px w-6 bg-[#00D084]" />
-            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#00D084]" style={{ fontFamily: 'var(--font-inter)' }}>Our Pillars</span>
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#00D084]" style={{ fontFamily: 'var(--font-inter)' }}>Core Values</span>
           </div>
 
           {/* DESKTOP: expanding accordion row */}

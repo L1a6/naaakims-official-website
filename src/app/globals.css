@@ -382,17 +382,6 @@ html {
   transform: translateX(8px);
 }
 
-.nav-link.active .nav-link-hover-bg {
-  transform: scaleX(1);
-  background: rgba(255, 255, 255, 0.95);
-}
-
-.nav-link.active .nav-link-text {
-  color: #00D084;
-  font-weight: 700;
-  transform: translateX(8px);
-}
-
 /* Utility classes */
 .w-inline-block {
   display: inline-block;

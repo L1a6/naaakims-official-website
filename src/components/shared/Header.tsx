@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import gsap from 'gsap';
@@ -20,9 +20,12 @@ if (typeof window !== 'undefined') {
 
 export default function Header() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const shapesRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const activeShapeRef = useRef<number>(0);
+  const isHoveringRef = useRef<boolean>(false);
+  const idleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Scroll detection — switch header bg when past hero
   useEffect(() => {
@@ -33,124 +36,92 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Initial Setup & Hover/Click Shape Effects
-  // Re-run when menu opens so DOM is visible and listeners work
-  useEffect(() => {
-    if (!containerRef.current || !isMenuOpen) return;
+  // ─── Shape animation helper ───
+  const showShape = useCallback((idx: number) => {
+    if (!shapesRef.current) return;
+    const allShapes = shapesRef.current.querySelectorAll('.bg-shape');
+    if (!allShapes.length) return;
 
-    const ctx = gsap.context(() => {
-      const menuItems = containerRef.current!.querySelectorAll('.menu-list-item[data-shape]');
-      const shapesContainer = containerRef.current!.querySelector('.ambient-background-shapes');
-      if (!shapesContainer) return;
-
-      const allShapes = shapesContainer.querySelectorAll('.bg-shape');
-      let activeShapeIdx = 0;
-      let idleTimer: ReturnType<typeof setTimeout> | null = null;
-      let idleInterval: ReturnType<typeof setInterval> | null = null;
-      let userSelected = false;
-
-      // Helper: show a specific shape by index (0-based)
-      const showShape = (idx: number, intense = false) => {
-        allShapes.forEach((s, i) => {
-          const els = s.querySelectorAll('.shape-element');
-          if (i === idx) {
-            s.classList.add('active');
-            gsap.killTweensOf(els);
-            gsap.fromTo(els,
-              { scale: intense ? 0.2 : 0.4, opacity: 0, rotation: gsap.utils.random(-20, 20) },
-              { scale: 1, opacity: 1, rotation: 0, duration: intense ? 0.8 : 1.1, stagger: 0.07, ease: intense ? 'back.out(1.7)' : 'power2.out', overwrite: 'auto' }
-            );
-            // Subtle float
-            gsap.to(els, {
-              y: gsap.utils.random(-6, 6), x: gsap.utils.random(-5, 5),
-              duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: 0.1, delay: 0.4,
-            });
-          } else {
-            gsap.killTweensOf(els);
-            gsap.to(els, { scale: 0.5, opacity: 0, duration: 0.4, ease: 'power2.in', overwrite: 'auto' });
-            s.classList.remove('active');
-          }
+    allShapes.forEach((s, i) => {
+      const els = s.querySelectorAll('.shape-element');
+      if (i === idx) {
+        s.classList.add('active');
+        gsap.killTweensOf(els);
+        gsap.fromTo(els,
+          { scale: 0.3, opacity: 0, rotation: gsap.utils.random(-20, 20) },
+          { scale: 1, opacity: 1, rotation: 0, duration: 0.7, stagger: 0.05, ease: 'back.out(1.7)', overwrite: 'auto' }
+        );
+        gsap.to(els, {
+          y: gsap.utils.random(-6, 6), x: gsap.utils.random(-5, 5),
+          duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: 0.1, delay: 0.4,
         });
-        activeShapeIdx = idx;
-      };
+      } else {
+        gsap.killTweensOf(els);
+        gsap.to(els, { scale: 0.5, opacity: 0, duration: 0.3, ease: 'power2.in', overwrite: 'auto' });
+        s.classList.remove('active');
+      }
+    });
+    activeShapeRef.current = idx;
+  }, []);
 
-      // Idle cycle — rotate shapes when user hasn't interacted
-      const startIdleCycle = () => {
-        stopIdleCycle();
-        idleInterval = setInterval(() => {
-          if (userSelected) return;
-          const next = (activeShapeIdx + 1) % allShapes.length;
-          showShape(next, false);
-        }, 3800);
-      };
+  // ─── Start/stop idle cycle ───
+  const startIdleCycle = useCallback(() => {
+    if (idleIntervalRef.current) return;
+    idleIntervalRef.current = setInterval(() => {
+      if (isHoveringRef.current) return;
+      activeShapeRef.current = (activeShapeRef.current + 1) % 5;
+      showShape(activeShapeRef.current);
+    }, 3500);
+  }, [showShape]);
 
-      const stopIdleCycle = () => {
-        if (idleInterval) { clearInterval(idleInterval); idleInterval = null; }
-        if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
-      };
+  const stopIdleCycle = useCallback(() => {
+    if (idleIntervalRef.current) {
+      clearInterval(idleIntervalRef.current);
+      idleIntervalRef.current = null;
+    }
+  }, []);
 
-      const resumeIdleAfterDelay = () => {
-        stopIdleCycle();
-        idleTimer = setTimeout(() => {
-          userSelected = false;
-          startIdleCycle();
-        }, 8000); // resume idle 8s after last interaction
-      };
+  // ─── Initialize shapes when menu opens ───
+  useEffect(() => {
+    if (!isMenuOpen) {
+      stopIdleCycle();
+      activeShapeRef.current = 0;
+      isHoveringRef.current = false;
+      return;
+    }
 
-      // Show first shape immediately
-      showShape(0, false);
+    // Wait for menu animation to complete before starting
+    const timer = setTimeout(() => {
+      showShape(0);
       startIdleCycle();
-
-      // Attach hover + click handlers to each nav item
-      menuItems.forEach((item) => {
-        const shapeIndex = parseInt(item.getAttribute('data-shape') || '1', 10) - 1;
-
-        const onEnter = () => {
-          userSelected = true;
-          stopIdleCycle();
-          showShape(shapeIndex, true);
-        };
-
-        const onLeave = () => {
-          // Don't hide — keep shape visible, just resume idle after delay
-          resumeIdleAfterDelay();
-        };
-
-        const onClick = (e: Event) => {
-          e.preventDefault();
-          e.stopPropagation();
-          userSelected = true;
-          stopIdleCycle();
-          showShape(shapeIndex, true);
-          resumeIdleAfterDelay();
-        };
-
-        item.addEventListener('mouseenter', onEnter);
-        item.addEventListener('mouseleave', onLeave);
-        item.addEventListener('click', onClick);
-
-        (item as any)._shapeCleanup = () => {
-          item.removeEventListener('mouseenter', onEnter);
-          item.removeEventListener('mouseleave', onLeave);
-          item.removeEventListener('click', onClick);
-        };
-      });
-
-      // Store cleanup ref
-      (containerRef.current as any)._idleCleanup = () => {
-        stopIdleCycle();
-      };
-    }, containerRef);
+    }, 600);
 
     return () => {
-      ctx.revert();
-      if (containerRef.current) {
-        const items = containerRef.current.querySelectorAll('.menu-list-item[data-shape]');
-        items.forEach((item: any) => item._shapeCleanup && item._shapeCleanup());
-        (containerRef.current as any)?._idleCleanup?.();
-      }
+      clearTimeout(timer);
+      stopIdleCycle();
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, showShape, startIdleCycle, stopIdleCycle]);
+
+  // ─── Interaction handlers ───
+  const handleNavHover = useCallback((idx: number) => {
+    isHoveringRef.current = true;
+    showShape(idx);
+  }, [showShape]);
+
+  const handleNavLeave = useCallback(() => {
+    isHoveringRef.current = false;
+    // Shape stays, idle will pick up from here
+  }, []);
+
+  const handleNavClick = useCallback((e: React.MouseEvent | React.TouchEvent, idx: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+    isHoveringRef.current = true;
+    showShape(idx);
+    setTimeout(() => {
+      isHoveringRef.current = false;
+    }, 5000);
+  }, [showShape]);
 
   // Menu Open/Close Animation Effect
   useEffect(() => {
@@ -328,7 +299,7 @@ export default function Header() {
               <div className="backdrop-layer"></div>
 
               {/* Abstract shapes container */}
-              <div className="ambient-background-shapes">
+              <div ref={shapesRef} className="ambient-background-shapes">
                 {/* Shape 1: Floating circles */}
                 <svg className="bg-shape bg-shape-1" viewBox="0 0 400 400" fill="none">
                   <circle className="shape-element" cx="80" cy="120" r="40" fill="rgba(0,208,132,0.15)" />
@@ -398,18 +369,26 @@ export default function Header() {
 
             <div className="menu-content-wrapper">
               <ul className="menu-list">
-                {NAV_LINKS.map((link, idx) => (
-                  <li key={link.href} className="menu-list-item" data-shape={((idx % 5) + 1).toString()}>
-                    <button
-                      type="button"
-                      className={`nav-link w-full text-left ${activeLink === link.href ? 'active' : ''}`}
-                      onClick={() => setActiveLink(link.href)}
-                    >
-                      <p className="nav-link-text">{link.label}</p>
-                      <div className="nav-link-hover-bg"></div>
-                    </button>
-                  </li>
-                ))}
+                {NAV_LINKS.map((link, idx) => {
+                  const sIdx = (idx % 5);
+                  return (
+                    <li key={link.href} className="menu-list-item" data-shape={(sIdx + 1).toString()}>
+                      <button
+                        type="button"
+                        className="nav-link w-full text-left"
+                        style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent', userSelect: 'none' }}
+                        onMouseEnter={() => handleNavHover(sIdx)}
+                        onMouseLeave={handleNavLeave}
+                        onClick={(e) => handleNavClick(e, sIdx)}
+                        onTouchStart={(e) => { e.preventDefault(); handleNavHover(sIdx); }}
+                        onTouchEnd={(e) => { e.preventDefault(); handleNavLeave(); }}
+                      >
+                        <p className="nav-link-text">{link.label}</p>
+                        <div className="nav-link-hover-bg"></div>
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </nav>

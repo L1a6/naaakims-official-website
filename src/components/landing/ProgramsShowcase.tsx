@@ -27,11 +27,11 @@ const PROGRAMS = [
   {
     tag: 'Outreach',
     title: 'Community Health Missions',
-    body: 'Free medical screenings, health education campaigns, and rural healthcare interventions reaching thousands of underserved communities across Akwa Ibom and beyond.',
+    body: 'Health education campaigns, awareness programs, and community engagement initiatives reaching thousands of communities across Akwa Ibom and beyond.',
     image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=1400&q=80',
     color: '#00B872',
-    stat: '12K+',
-    statLabel: 'Patients Screened Free',
+    stat: '50+',
+    statLabel: 'Health Campaigns',
   },
   {
     tag: 'Leadership',
@@ -49,7 +49,7 @@ const PROGRAMS = [
    ───────────────────────────────────────────────────────────── */
 const HIGHLIGHTS = [
   { num: '50+',  label: 'Health Campaigns' },
-  { num: '12K+', label: 'Patients Screened' },
+  { num: '20+', label: 'Active Chapters' },
   { num: '300+', label: 'Mentorship Pairs' },
   { num: '25+',  label: 'Universities' },
 ];
@@ -278,8 +278,8 @@ export default function ProgramsShowcase() {
                 </div>
 
                 {/* Overlays */}
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(0,26,14,0.92) 0%, rgba(0,26,14,0.55) 50%, rgba(0,26,14,0.15) 100%)' }} />
-                <div className="absolute inset-0 bg-linear-to-t from-[#001a0e]/70 via-transparent to-transparent" />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(0,26,14,0.75) 0%, rgba(0,26,14,0.35) 50%, rgba(0,26,14,0.08) 100%)' }} />
+                <div className="absolute inset-0 bg-linear-to-t from-[#001a0e]/50 via-transparent to-transparent" />
 
                 {/* Content */}
                 <div className="absolute inset-0 flex items-end sm:items-center">
