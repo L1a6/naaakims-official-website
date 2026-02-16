@@ -236,51 +236,139 @@ export default function AboutPreview() {
         </div>
       </div>
 
-      {/* ─── PILLARS — alternating cinematic image+text ──── */}
-      <div className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #f8faf9 0%, #f0f4f1 100%)' }}>
-        <div className="absolute -top-32 right-0 w-125 h-125 bg-[#00D084]/4 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 -left-20 w-80 h-80 bg-[#008751]/3 rounded-full blur-[100px] pointer-events-none" />
+      {/* ─── PILLARS — interactive accordion with image reveal ── */}
+      <div className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #fafbfa 0%, #f5f7f6 100%)' }}>
+        <div className="absolute -top-20 right-0 w-96 h-96 bg-[#00D084]/4 rounded-full blur-[120px] pointer-events-none" />
 
-        <div ref={pillarsRef.ref} className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28 lg:py-32">
+        <div ref={pillarsRef.ref} className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-16 sm:py-20">
           {/* Header */}
-          <div className="max-w-xl mb-14 sm:mb-20">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="h-px w-6 bg-[#00D084]" />
-              <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#00D084]" style={{ fontFamily: 'var(--font-inter)' }}>Our Pillars</span>
-            </div>
-            <h2 className="text-[clamp(1.5rem,3.2vw,2.3rem)] font-bold leading-[1.12] tracking-[-0.02em] text-gray-900" style={{ fontFamily: 'var(--font-poppins)' }}>
-              Built on Three{' '}<span className="text-[#008751]">Unshakeable</span> Pillars
-            </h2>
+          <div className="flex items-center gap-3 mb-10 sm:mb-12">
+            <span className="h-px w-6 bg-[#00D084]" />
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#00D084]" style={{ fontFamily: 'var(--font-inter)' }}>Our Pillars</span>
           </div>
 
-          {/* Alternating cards */}
-          <div className="flex flex-col gap-16 sm:gap-24">
-            {PILLARS.map((p, i) => {
-              const rev = i % 2 === 1;
-              return (
-                <div key={p.title} className={cn('p-card grid lg:grid-cols-2 gap-8 lg:gap-16 items-center', rev && 'lg:[direction:rtl]')}>
-                  {/* IMAGE — wipe reveal */}
-                  <div className="relative rounded-2xl overflow-hidden shadow-xl lg:[direction:ltr]">
-                    <div className="p-img relative aspect-16/11">
-                      <Image src={p.image} alt={p.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-                      <div className="absolute inset-0 bg-linear-to-t from-[#001a0e]/60 via-transparent to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-[#00D084]/60 to-transparent" />
-                    </div>
-                    <span className="absolute top-5 left-5 text-white/50 text-[11px] font-mono tracking-[0.3em] bg-black/25 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">{p.num}</span>
-                  </div>
-
-                  {/* TEXT */}
-                  <div className="lg:[direction:ltr] flex flex-col justify-center">
-                    <div className="p-line origin-left h-0.5 w-10 bg-[#00D084] rounded-full mb-5" />
-                    <h3 className="p-txt text-[clamp(1.25rem,2.5vw,1.65rem)] font-bold leading-[1.2] tracking-[-0.01em] text-gray-900 mb-3" style={{ fontFamily: 'var(--font-poppins)' }}>{p.title}</h3>
-                    <p className="p-txt text-gray-500 text-[14px] sm:text-[15px] leading-[1.75] max-w-md" style={{ fontFamily: 'var(--font-inter)' }}>{p.sub}</p>
-                  </div>
-                </div>
-              );
-            })}
+          {/* Interactive pillar row — desktop: expands on hover, mobile: stacked */}
+          <div className="flex flex-col lg:flex-row gap-3 lg:gap-2 lg:h-105">
+            {PILLARS.map((p, i) => (
+              <PillarCard key={p.title} pillar={p} index={i} visible={pillarsRef.vis} />
+            ))}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PillarCard — interactive expanding card with GSAP
+   ───────────────────────────────────────────────────────────── */
+function PillarCard({
+  pillar,
+  index,
+  visible,
+}: {
+  pillar: typeof PILLARS[number];
+  index: number;
+  visible: boolean;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const imgRef  = useRef<HTMLDivElement>(null);
+  const txtRef  = useRef<HTMLDivElement>(null);
+  const entered = useRef(false);
+
+  // Entrance animation
+  useEffect(() => {
+    if (!visible || entered.current || !cardRef.current) return;
+    entered.current = true;
+
+    gsap.fromTo(cardRef.current,
+      { opacity: 0, y: 30, scale: 0.97 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.9, delay: index * 0.15, ease: 'power3.out' },
+    );
+  }, [visible, index]);
+
+  // Hover GSAP — image zoom + text slide
+  useEffect(() => {
+    if (!cardRef.current) return;
+    const card = cardRef.current;
+    const img  = imgRef.current;
+    const txt  = txtRef.current;
+
+    const onEnter = () => {
+      if (img) gsap.to(img, { scale: 1.06, duration: 0.8, ease: 'power2.out' });
+      if (txt) gsap.to(txt, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' });
+    };
+    const onLeave = () => {
+      if (img) gsap.to(img, { scale: 1, duration: 0.6, ease: 'power2.inOut' });
+      if (txt) gsap.to(txt, { y: 12, opacity: 0.7, duration: 0.4, ease: 'power2.in' });
+    };
+
+    card.addEventListener('mouseenter', onEnter);
+    card.addEventListener('mouseleave', onLeave);
+    return () => {
+      card.removeEventListener('mouseenter', onEnter);
+      card.removeEventListener('mouseleave', onLeave);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className={cn(
+        'group relative rounded-2xl overflow-hidden cursor-pointer opacity-0',
+        'lg:flex-1 lg:hover:flex-[2.5] transition-all duration-700 ease-[cubic-bezier(0.65,0.01,0.05,0.99)]',
+        'h-70 sm:h-80 lg:h-full',
+        'shadow-lg hover:shadow-2xl',
+      )}
+    >
+      {/* Full bleed image */}
+      <div ref={imgRef} className="absolute inset-0">
+        <Image
+          src={pillar.image}
+          alt={pillar.title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+        />
+      </div>
+
+      {/* Cinematic gradient — gets darker on hover */}
+      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-black/10 group-hover:from-black/90 group-hover:via-black/40 transition-all duration-700" />
+
+      {/* Green shimmer at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-[#00D084]/0 group-hover:via-[#00D084]/70 to-transparent transition-all duration-700" />
+
+      {/* Content */}
+      <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-7">
+        {/* Number */}
+        <span className="absolute top-5 left-5 text-white/30 text-[10px] font-mono tracking-[0.3em] group-hover:text-[#00D084]/60 transition-colors duration-500">
+          {pillar.num}
+        </span>
+
+        {/* Green accent line */}
+        <div className="w-0 group-hover:w-10 h-0.5 bg-[#00D084] mb-3 rounded-full transition-all duration-700 ease-out" />
+
+        {/* Title — always visible */}
+        <h3
+          className="text-white text-[clamp(1.15rem,2vw,1.45rem)] font-bold leading-[1.2] tracking-[-0.01em] mb-2 group-hover:text-[#00D084] transition-colors duration-500"
+          style={{ fontFamily: 'var(--font-poppins)' }}
+        >
+          {pillar.title}
+        </h3>
+
+        {/* Description — revealed on hover via GSAP + CSS */}
+        <div
+          ref={txtRef}
+          className="opacity-0 lg:opacity-70 translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-500"
+        >
+          <p
+            className="text-white/70 text-[12px] sm:text-[13px] leading-[1.65] max-w-sm"
+            style={{ fontFamily: 'var(--font-inter)' }}
+          >
+            {pillar.sub}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }

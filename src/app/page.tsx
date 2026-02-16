@@ -1,6 +1,7 @@
 import HeroSlideshow from '@/components/landing/HeroSlideshow';
 import AboutPreview from '@/components/landing/AboutPreview';
 import ProgramsShowcase from '@/components/landing/ProgramsShowcase';
+import LeadershipShowcase from '@/components/landing/LeadershipShowcase';
 
 export default function Home() {
   return (
@@ -13,6 +14,9 @@ export default function Home() {
 
       {/* Programs & Initiatives */}
       <ProgramsShowcase />
+
+      {/* Leadership & Executives */}
+      <LeadershipShowcase />
     </main>
   );
 }
