@@ -50,7 +50,6 @@ const PROGRAMS = [
 const HIGHLIGHTS = [
   { num: '50+',  label: 'Health Campaigns' },
   { num: '20+', label: 'Active Chapters' },
-  { num: '300+', label: 'Mentorship Pairs' },
   { num: '25+',  label: 'Universities' },
 ];
 
@@ -339,8 +338,8 @@ export default function ProgramsShowcase() {
       <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #001a0e 0%, #002a18 50%, #001a0e 100%)' }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-50 bg-[#00D084]/5 rounded-full blur-[100px] pointer-events-none" />
 
-        <div ref={impactRef.ref} className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-6 sm:py-14">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
+        <div ref={impactRef.ref} className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-3 sm:py-14">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-8">
             <div className="shrink-0">
               <div className="flex items-center gap-3 mb-1">
                 <span className="h-px w-4 bg-[#00D084]/50" />
@@ -351,7 +350,7 @@ export default function ProgramsShowcase() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 lg:gap-10">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6 lg:gap-10">
               {HIGHLIGHTS.map((h) => (
                 <div key={h.label} className="imp-item text-center sm:text-left">
                   <span className="text-white text-[clamp(1rem,2vw,1.45rem)] font-bold tracking-tight block" style={{ fontFamily: 'var(--font-poppins)' }}>{h.num}</span>

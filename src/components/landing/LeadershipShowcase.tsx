@@ -365,13 +365,13 @@ export default function LeadershipShowcase() {
         </div>
       </div>
 
-      {/* ─── EXECUTIVE ZONE — warm green-tinted bg ──────── */}
-      <div className="relative" style={{ background: 'linear-gradient(180deg, #f2f7f4 0%, #f7faf8 50%, #f2f7f4 100%)' }}>
-        {/* Ambient glow */}
-        <div className="absolute -top-32 right-0 w-96 h-96 bg-[#00D084]/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-[#008751]/4 rounded-full blur-[100px] pointer-events-none" />
+      {/* ─── EXECUTIVE ZONE — premium clean styling ──────── */}
+      <div className="relative" style={{ background: 'linear-gradient(180deg, #fafafa 0%, #ffffff 50%, #fafafa 100%)' }}>
+        {/* Subtle ambient glow */}
+        <div className="absolute -top-32 right-0 w-96 h-96 bg-gray-200/20 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-gray-100/30 rounded-full blur-[100px] pointer-events-none" />
         {/* Top decorative border */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-[#00D084]/15 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-gray-200 to-transparent" />
 
         <div className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-14 sm:py-20 lg:py-24">
           <div className="flex items-center gap-3 mb-2.5">

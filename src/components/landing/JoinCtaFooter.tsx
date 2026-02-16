@@ -199,7 +199,7 @@ export default function JoinCtaFooter() {
                   height={32}
                   className="w-8 h-8 rounded-lg object-contain"
                 />
-                <span className="text-white/70 text-[13px] font-semibold tracking-[0.01em]" style={{ fontFamily: 'var(--font-inter)' }}>
+                <span className="text-white/40 text-[12px] font-medium tracking-[0.01em]" style={{ fontFamily: 'var(--font-inter)' }}>
                   {BRAND.NAME}
                 </span>
               </Link>

@@ -253,7 +253,7 @@ export default function AboutPreview() {
               </div>
               <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top right, rgba(0,80,42,0.25) 0%, transparent 60%)' }} />
             </div>
-            <div className="absolute -bottom-5 -left-4 sm:-left-6 bg-white/80 backdrop-blur-xl rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] px-5 py-4 border border-white/60 ring-1 ring-black/[0.03]">
+            <div className="absolute -bottom-5 -left-4 sm:-left-6 bg-white/80 backdrop-blur-xl rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] px-5 py-4 border border-white/60 ring-1 ring-black/3">
               <div className="flex items-center gap-3.5">
                 <div className="relative w-11 h-11 rounded-xl bg-linear-to-br from-[#00D084] to-[#008751] flex items-center justify-center shrink-0 shadow-sm shadow-[#00D084]/25">
                   <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/></svg>
@@ -304,6 +304,10 @@ function MobilePillarCarousel({ pillars, visible }: { pillars: typeof PILLARS; v
   const touchStartX = useRef(0);
   const entered = useRef(false);
 
+  // Create extended array for seamless loop (prev + current + next copies)
+  const extendedPillars = [...pillars, ...pillars, ...pillars];
+  const offset = pillars.length; // Start at middle copy
+
   const goTo = (idx: number) => {
     if (isAnim || idx === active) return;
     setIsAnim(true);
@@ -311,19 +315,22 @@ function MobilePillarCarousel({ pillars, visible }: { pillars: typeof PILLARS; v
     if (!trackRef.current) { setIsAnim(false); return; }
     const cards = trackRef.current.querySelectorAll<HTMLElement>('.mp-card');
 
+    // Calculate actual index in extended array (middle copy)
+    const actualIdx = idx + offset;
+
     // Animate all cards to new positions
     cards.forEach((card, i) => {
-      const offset = i - idx;
+      const offset2 = i - actualIdx;
       gsap.to(card, {
-        x: `${offset * 82}%`,
-        scale: offset === 0 ? 1 : 0.82,
-        opacity: Math.abs(offset) > 1 ? 0 : offset === 0 ? 1 : 0.35,
-        filter: offset === 0 ? 'blur(0px)' : 'blur(3px)',
-        zIndex: offset === 0 ? 5 : 2,
+        x: `${offset2 * 82}%`,
+        scale: offset2 === 0 ? 1 : 0.82,
+        opacity: Math.abs(offset2) > 2 ? 0 : offset2 === 0 ? 1 : 0.35,
+        filter: offset2 === 0 ? 'blur(0px)' : 'blur(3px)',
+        zIndex: offset2 === 0 ? 5 : 2,
         duration: 0.6,
         ease: 'power3.out',
         onComplete: () => {
-          if (i === idx) { setActive(idx); setIsAnim(false); }
+          if (i === actualIdx) { setActive(idx); setIsAnim(false); }
         },
       });
     });
@@ -345,21 +352,23 @@ function MobilePillarCarousel({ pillars, visible }: { pillars: typeof PILLARS; v
     if (!visible || entered.current || !trackRef.current) return;
     entered.current = true;
     const cards = trackRef.current.querySelectorAll<HTMLElement>('.mp-card');
+    const actualIdx = 0 + offset; // Start at first card of middle copy
     cards.forEach((card, i) => {
-      const offset = i - 0;
+      const offset2 = i - actualIdx;
       gsap.set(card, {
-        x: `${offset * 82}%`,
-        scale: offset === 0 ? 1 : 0.82,
-        opacity: Math.abs(offset) > 1 ? 0 : offset === 0 ? 1 : 0.35,
-        filter: offset === 0 ? 'blur(0px)' : 'blur(3px)',
-        zIndex: offset === 0 ? 5 : 2,
+        x: `${offset2 * 82}%`,
+        scale: offset2 === 0 ? 1 : 0.82,
+        opacity: Math.abs(offset2) > 2 ? 0 : offset2 === 0 ? 1 : 0.35,
+        filter: offset2 === 0 ? 'blur(0px)' : 'blur(3px)',
+        zIndex: offset2 === 0 ? 5 : 2,
       });
     });
     // Animate first card entrance
-    const first = cards[0];
+    const first = cards[actualIdx];
     if (first) {
       gsap.fromTo(first, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out' });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   // Touch swipe
@@ -381,12 +390,16 @@ function MobilePillarCarousel({ pillars, visible }: { pillars: typeof PILLARS; v
         onTouchEnd={onTouchEnd}
       >
         <div ref={trackRef} className="absolute inset-0 flex items-center justify-center">
-          {pillars.map((p, i) => (
+          {extendedPillars.map((p, i) => (
             <div
-              key={p.title}
+              key={`${p.title}-${i}`}
               className="mp-card absolute rounded-2xl overflow-hidden shadow-xl cursor-pointer"
               style={{ width: '80%', height: '90%', left: '10%', top: '5%', willChange: 'transform, opacity, filter' }}
-              onClick={() => goTo(i)}
+              onClick={() => {
+                // Get index in original pillars array
+                const originalIdx = i % pillars.length;
+                goTo(originalIdx);
+              }}
             >
               <div className="absolute inset-0">
                 <Image src={p.image} alt={p.title} fill className="object-cover" sizes="85vw" />

@@ -103,24 +103,23 @@ export default function Header() {
   }, [isMenuOpen, showShape, startIdleCycle, stopIdleCycle]);
 
   // ─── Interaction handlers ───
-  const handleNavHover = useCallback((idx: number) => {
+  const handleNavHover = useCallback((shapeIdx: number) => {
     isHoveringRef.current = true;
-    showShape(idx);
+    showShape(shapeIdx);
   }, [showShape]);
 
   const handleNavLeave = useCallback(() => {
     isHoveringRef.current = false;
-    // Shape stays, idle will pick up from here
+    // Shape stays visible, idle cycle will continue from here
   }, []);
 
-  const handleNavClick = useCallback((e: React.MouseEvent | React.TouchEvent, idx: number) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleNavClick = useCallback((shapeIdx: number) => {
+    // On click, show the shape and pause briefly before resuming idle
     isHoveringRef.current = true;
-    showShape(idx);
+    showShape(shapeIdx);
     setTimeout(() => {
       isHoveringRef.current = false;
-    }, 5000);
+    }, 2000);
   }, [showShape]);
 
   // Menu Open/Close Animation Effect
@@ -370,18 +369,16 @@ export default function Header() {
             <div className="menu-content-wrapper">
               <ul className="menu-list">
                 {NAV_LINKS.map((link, idx) => {
-                  const sIdx = (idx % 5);
+                  const shapeIdx = (idx % 5);
                   return (
-                    <li key={link.href} className="menu-list-item" data-shape={(sIdx + 1).toString()}>
+                    <li key={link.href} className="menu-list-item" data-shape={(shapeIdx + 1).toString()}>
                       <button
                         type="button"
                         className="nav-link w-full text-left"
                         style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent', userSelect: 'none' }}
-                        onMouseEnter={() => handleNavHover(sIdx)}
+                        onMouseEnter={() => handleNavHover(shapeIdx)}
                         onMouseLeave={handleNavLeave}
-                        onClick={(e) => handleNavClick(e, sIdx)}
-                        onTouchStart={(e) => { e.preventDefault(); handleNavHover(sIdx); }}
-                        onTouchEnd={(e) => { e.preventDefault(); handleNavLeave(); }}
+                        onClick={() => handleNavClick(shapeIdx)}
                       >
                         <p className="nav-link-text">{link.label}</p>
                         <div className="nav-link-hover-bg"></div>

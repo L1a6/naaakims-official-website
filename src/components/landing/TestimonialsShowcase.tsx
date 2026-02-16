@@ -362,7 +362,7 @@ export default function TestimonialsShowcase() {
       </div>
 
       {/* ━━━━ CHAPTERS — elegant marquee ticker ━━━━━━━━━━ */}
-      <div ref={chapterRef} className="relative border-t border-[#00D084]/8 overflow-hidden py-5 sm:py-7" style={{ background: 'linear-gradient(180deg, #f2f7f4 0%, #eef4f0 100%)' }}>
+      <div ref={chapterRef} className="relative border-t border-gray-100 overflow-hidden py-5 sm:py-7 bg-white">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 mb-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-gray-300 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em]" style={{ fontFamily: 'var(--font-inter)' }}>
