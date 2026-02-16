@@ -301,20 +301,6 @@ export default function ProgramsShowcase() {
                         Learn More
                         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="sm:w-3 sm:h-3"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </Link>
-
-                      {/* Mobile stat inline */}
-                      <div className="sm:hidden flex items-center gap-2 bg-white/6 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-1.5">
-                        <span className="text-white text-[14px] font-bold" style={{ fontFamily: 'var(--font-poppins)' }}>{prog.stat}</span>
-                        <span className="text-white/40 text-[8px] uppercase tracking-wider leading-tight">{prog.statLabel}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Desktop stat badge */}
-                  <div className="prog-slide-stat hidden lg:flex absolute right-14 top-1/2 -translate-y-1/2 flex-col items-center">
-                    <div className="bg-white/[0.07] backdrop-blur-md border border-white/10 rounded-xl px-6 py-5 text-center">
-                      <span className="text-white text-[clamp(1.4rem,2.5vw,2rem)] font-bold tracking-tight block" style={{ fontFamily: 'var(--font-poppins)' }}>{prog.stat}</span>
-                      <span className="text-white/40 text-[10px] font-medium uppercase tracking-[0.15em] block mt-1">{prog.statLabel}</span>
                     </div>
                   </div>
                 </div>
@@ -353,8 +339,8 @@ export default function ProgramsShowcase() {
       <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #001a0e 0%, #002a18 50%, #001a0e 100%)' }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-50 bg-[#00D084]/5 rounded-full blur-[100px] pointer-events-none" />
 
-        <div ref={impactRef.ref} className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-10 sm:py-14">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 sm:gap-8">
+        <div ref={impactRef.ref} className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-6 sm:py-14">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
             <div className="shrink-0">
               <div className="flex items-center gap-3 mb-1">
                 <span className="h-px w-4 bg-[#00D084]/50" />
@@ -365,11 +351,11 @@ export default function ProgramsShowcase() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 lg:gap-10">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 lg:gap-10">
               {HIGHLIGHTS.map((h) => (
                 <div key={h.label} className="imp-item text-center sm:text-left">
-                  <span className="text-white text-[clamp(1.1rem,2vw,1.45rem)] font-bold tracking-tight block" style={{ fontFamily: 'var(--font-poppins)' }}>{h.num}</span>
-                  <span className="text-white/30 text-[9px] sm:text-[10px] font-medium uppercase tracking-[0.15em] leading-tight block mt-0.5">{h.label}</span>
+                  <span className="text-white text-[clamp(1rem,2vw,1.45rem)] font-bold tracking-tight block" style={{ fontFamily: 'var(--font-poppins)' }}>{h.num}</span>
+                  <span className="text-white/30 text-[8px] sm:text-[10px] font-medium uppercase tracking-[0.15em] leading-tight block mt-0.5">{h.label}</span>
                 </div>
               ))}
             </div>

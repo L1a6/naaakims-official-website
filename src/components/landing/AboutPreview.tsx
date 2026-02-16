@@ -253,14 +253,14 @@ export default function AboutPreview() {
               </div>
               <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top right, rgba(0,80,42,0.25) 0%, transparent 60%)' }} />
             </div>
-            <div className="absolute -bottom-5 -left-4 sm:-left-6 bg-white rounded-lg shadow-lg px-5 py-4 border border-gray-100">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#00D084]/10 flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5 text-[#008751]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/></svg>
+            <div className="absolute -bottom-5 -left-4 sm:-left-6 bg-white/80 backdrop-blur-xl rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] px-5 py-4 border border-white/60 ring-1 ring-black/[0.03]">
+              <div className="flex items-center gap-3.5">
+                <div className="relative w-11 h-11 rounded-xl bg-linear-to-br from-[#00D084] to-[#008751] flex items-center justify-center shrink-0 shadow-sm shadow-[#00D084]/25">
+                  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/></svg>
                 </div>
                 <div>
-                  <p className="text-gray-900 text-sm font-bold leading-tight" style={{ fontFamily: 'var(--font-poppins)' }}>20+ Chapters</p>
-                  <p className="text-gray-500 text-[11px] leading-snug">Across Nigeria &amp; Beyond</p>
+                  <p className="text-gray-900 text-[15px] font-bold leading-tight tracking-[-0.01em]" style={{ fontFamily: 'var(--font-poppins)' }}>20+ Chapters</p>
+                  <p className="text-gray-400 text-[11px] font-medium leading-snug tracking-wide">Across Nigeria & Beyond</p>
                 </div>
               </div>
             </div>
@@ -295,74 +295,70 @@ export default function AboutPreview() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   MobilePillarCarousel — auto-sliding + swipeable + taller cards
+   MobilePillarCarousel — peek carousel showing adjacent cards
    ───────────────────────────────────────────────────────────── */
 function MobilePillarCarousel({ pillars, visible }: { pillars: typeof PILLARS; visible: boolean }) {
   const [active, setActive] = useState(0);
   const [isAnim, setIsAnim] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef  = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
-  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const entered = useRef(false);
 
   const goTo = (idx: number) => {
     if (isAnim || idx === active) return;
     setIsAnim(true);
-    const cont = containerRef.current;
-    if (!cont) { setIsAnim(false); return; }
 
-    const curr = cont.querySelector(`.mp-slide[data-idx="${active}"]`) as HTMLElement;
-    const next = cont.querySelector(`.mp-slide[data-idx="${idx}"]`) as HTMLElement;
-    if (!curr || !next) { setIsAnim(false); return; }
+    if (!trackRef.current) { setIsAnim(false); return; }
+    const cards = trackRef.current.querySelectorAll<HTMLElement>('.mp-card');
 
-    const dir = idx > active ? 1 : -1;
-    next.style.visibility = 'visible';
-    next.style.zIndex = '3';
-    curr.style.zIndex = '2';
-
-    const tl = gsap.timeline({
-      onComplete: () => { setActive(idx); setIsAnim(false); curr.style.visibility = 'hidden'; },
+    // Animate all cards to new positions
+    cards.forEach((card, i) => {
+      const offset = i - idx;
+      gsap.to(card, {
+        x: `${offset * 82}%`,
+        scale: offset === 0 ? 1 : 0.82,
+        opacity: Math.abs(offset) > 1 ? 0 : offset === 0 ? 1 : 0.35,
+        filter: offset === 0 ? 'blur(0px)' : 'blur(3px)',
+        zIndex: offset === 0 ? 5 : 2,
+        duration: 0.6,
+        ease: 'power3.out',
+        onComplete: () => {
+          if (i === idx) { setActive(idx); setIsAnim(false); }
+        },
+      });
     });
-
-    tl.to(curr, { xPercent: dir * -100, opacity: 0, duration: 0.5, ease: 'power3.inOut' });
-    tl.fromTo(next,
-      { xPercent: dir * 100, opacity: 0 },
-      { xPercent: 0, opacity: 1, duration: 0.6, ease: 'power3.out' },
-      '-=0.25',
-    );
-    const img = next.querySelector('.mp-img');
-    if (img) tl.fromTo(img, { scale: 1.1 }, { scale: 1, duration: 1.2, ease: 'power2.out' }, '-=0.5');
   };
 
   // Auto-advance
   useEffect(() => {
     if (!visible) return;
-    autoRef.current = setInterval(() => {
-      setActive((prev) => {
-        const next = (prev + 1) % pillars.length;
-        return prev; // trigger goTo from separate effect
-      });
-    }, 4000);
-    return () => { if (autoRef.current) clearInterval(autoRef.current); };
-  }, [visible, pillars.length]);
-
-  useEffect(() => {
-    if (!visible) return;
     const interval = setInterval(() => {
       const next = (active + 1) % pillars.length;
       goTo(next);
-    }, 4000);
+    }, 4500);
     return () => clearInterval(interval);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, visible]);
 
-  // Entrance animation
+  // Entrance — position all cards
   useEffect(() => {
-    if (!visible || entered.current || !containerRef.current) return;
+    if (!visible || entered.current || !trackRef.current) return;
     entered.current = true;
-    const first = containerRef.current.querySelector('.mp-slide[data-idx="0"]');
+    const cards = trackRef.current.querySelectorAll<HTMLElement>('.mp-card');
+    cards.forEach((card, i) => {
+      const offset = i - 0;
+      gsap.set(card, {
+        x: `${offset * 82}%`,
+        scale: offset === 0 ? 1 : 0.82,
+        opacity: Math.abs(offset) > 1 ? 0 : offset === 0 ? 1 : 0.35,
+        filter: offset === 0 ? 'blur(0px)' : 'blur(3px)',
+        zIndex: offset === 0 ? 5 : 2,
+      });
+    });
+    // Animate first card entrance
+    const first = cards[0];
     if (first) {
-      gsap.fromTo(first, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8, ease: 'power3.out' });
+      gsap.fromTo(first, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out' });
     }
   }, [visible]);
 
@@ -370,7 +366,7 @@ function MobilePillarCarousel({ pillars, visible }: { pillars: typeof PILLARS; v
   const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
     const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
+    if (Math.abs(diff) > 40) {
       if (diff > 0) goTo((active + 1) % pillars.length);
       else goTo((active - 1 + pillars.length) % pillars.length);
     }
@@ -379,51 +375,53 @@ function MobilePillarCarousel({ pillars, visible }: { pillars: typeof PILLARS; v
   return (
     <div className="lg:hidden">
       <div
-        ref={containerRef}
-        className="relative aspect-3/4 sm:aspect-4/3 rounded-2xl overflow-hidden mx-6 sm:mx-10 shadow-xl"
+        className="relative overflow-hidden mx-2 sm:mx-6"
+        style={{ height: 'clamp(380px, 65vw, 500px)' }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        {pillars.map((p, i) => (
-          <div
-            key={p.title}
-            data-idx={i}
-            className="mp-slide absolute inset-0"
-            style={{ visibility: i === 0 ? 'visible' : 'hidden', zIndex: i === 0 ? 2 : 1 }}
-          >
-            <div className="mp-img absolute inset-0">
-              <Image src={p.image} alt={p.title} fill className="object-cover" sizes="90vw" />
+        <div ref={trackRef} className="absolute inset-0 flex items-center justify-center">
+          {pillars.map((p, i) => (
+            <div
+              key={p.title}
+              className="mp-card absolute rounded-2xl overflow-hidden shadow-xl cursor-pointer"
+              style={{ width: '80%', height: '90%', left: '10%', top: '5%', willChange: 'transform, opacity, filter' }}
+              onClick={() => goTo(i)}
+            >
+              <div className="absolute inset-0">
+                <Image src={p.image} alt={p.title} fill className="object-cover" sizes="85vw" />
+              </div>
+              {/* Dark gradient overlay */}
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,40,22,0.95) 0%, rgba(0,60,32,0.55) 40%, rgba(0,60,32,0.08) 70%, transparent 100%)' }} />
+              {/* Curved green accent */}
+              <div className="absolute bottom-0 left-0 right-0 h-[50%] pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(0,80,42,0.35) 0%, rgba(0,80,42,0.12) 50%, transparent 100%)', borderRadius: '35% 35% 0 0 / 18% 18% 0 0' }} />
+
+              {/* Content */}
+              <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
+                <span className="text-[#00D084]/70 text-[10px] font-mono tracking-[0.3em] block mb-1.5">{p.num}</span>
+                <h3 className="text-white text-[1.15rem] sm:text-[1.3rem] font-bold leading-tight tracking-[-0.01em] mb-2" style={{ fontFamily: 'var(--font-poppins)' }}>
+                  {p.title}
+                </h3>
+                <p className="text-white/65 text-[12px] sm:text-[13px] leading-[1.7] line-clamp-3" style={{ fontFamily: 'var(--font-inter)' }}>
+                  {p.sub}
+                </p>
+              </div>
+
+              {/* Bottom shimmer */}
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-[#00D084]/50 to-transparent" />
             </div>
-            {/* Dark gradient overlay */}
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,40,22,0.95) 0%, rgba(0,60,32,0.6) 40%, rgba(0,60,32,0.1) 70%, transparent 100%)' }} />
-            {/* Curved green accent overlay */}
-            <div className="absolute bottom-0 left-0 right-0 h-[55%] pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(0,80,42,0.4) 0%, rgba(0,80,42,0.15) 50%, transparent 100%)', borderRadius: '35% 35% 0 0 / 18% 18% 0 0' }} />
+          ))}
+        </div>
 
-            {/* Content */}
-            <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
-              <span className="text-[#00D084]/70 text-[10px] font-mono tracking-[0.3em] block mb-1.5">{p.num}</span>
-              <h3 className="text-white text-[1.15rem] sm:text-[1.3rem] font-bold leading-tight tracking-[-0.01em] mb-2" style={{ fontFamily: 'var(--font-poppins)' }}>
-                {p.title}
-              </h3>
-              <p className="text-white/65 text-[12px] sm:text-[13px] leading-[1.7] line-clamp-3" style={{ fontFamily: 'var(--font-inter)' }}>
-                {p.sub}
-              </p>
-            </div>
-
-            {/* Top shimmer */}
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-[#00D084]/50 to-transparent" />
-          </div>
-        ))}
-
-        {/* Dots + counter */}
-        <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+        {/* Dots */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2.5">
           {pillars.map((_, i) => (
             <button
               key={i}
               onClick={() => goTo(i)}
               className={cn(
                 'rounded-full transition-all duration-500',
-                i === active ? 'w-6 h-2 bg-[#00D084]' : 'w-2 h-2 bg-white/30',
+                i === active ? 'w-7 h-2 bg-[#00D084] shadow-[0_0_8px_rgba(0,208,132,0.4)]' : 'w-2 h-2 bg-white/30',
               )}
             />
           ))}

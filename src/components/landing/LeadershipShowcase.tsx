@@ -16,7 +16,7 @@ if (typeof window !== 'undefined') {
    ───────────────────────────────────────────────────────────── */
 const PRESIDENT = {
   name: 'John Doe',
-  role: 'National President',
+  role: 'Worldwide President',
   quote: '"Our mission is simple — to build a world-class network of medical professionals rooted in excellence, service, and the shared identity of Akwa Ibom."',
   image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80',
   chapter: 'University of Uyo',
@@ -150,7 +150,7 @@ function ExecutiveCard({
       {/* Image container */}
       <div
         ref={imageRef}
-        className="relative overflow-hidden rounded-2xl aspect-3/4 shadow-lg"
+        className="relative overflow-hidden rounded-xl sm:rounded-2xl aspect-square sm:aspect-3/4 shadow-lg"
       >
         <Image
           src={exec.image}
@@ -161,7 +161,7 @@ function ExecutiveCard({
         />
 
         {/* Permanent bottom gradient */}
-        <div className="absolute inset-0 bg-linear-to-t from-[#001a0e]/80 via-[#001a0e]/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-gray-900/80 via-gray-900/20 to-transparent" />
 
         {/* Green accent shimmer line — bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-[#00D084]/60 to-transparent" />
@@ -187,11 +187,11 @@ function ExecutiveCard({
       </div>
 
       {/* Text below card */}
-      <div className="mt-4 px-1">
-        <h4 className="exec-txt text-white text-[15px] sm:text-[16px] font-bold tracking-[-0.01em] leading-tight" style={{ fontFamily: 'var(--font-poppins)' }}>
+      <div className="mt-3 sm:mt-4 px-0.5">
+        <h4 className="exec-txt text-gray-900 text-[13px] sm:text-[15px] lg:text-[16px] font-bold tracking-[-0.01em] leading-tight" style={{ fontFamily: 'var(--font-poppins)' }}>
           {exec.name}
         </h4>
-        <p className="exec-txt text-white/40 text-[11px] sm:text-[12px] font-medium uppercase tracking-[0.12em] mt-1" style={{ fontFamily: 'var(--font-inter)' }}>
+        <p className="exec-txt text-gray-500 text-[10px] sm:text-[11px] lg:text-[12px] font-medium uppercase tracking-[0.12em] mt-0.5 sm:mt-1" style={{ fontFamily: 'var(--font-inter)' }}>
           {exec.role}
         </p>
       </div>
@@ -274,13 +274,14 @@ export default function LeadershipShowcase() {
   }, [ctaRef.vis]);
 
   return (
+    <>
     <section className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #001a0e 0%, #00120a 50%, #001a0e 100%)' }}>
       {/* ─── AMBIENT GLOW ─────────────────────────────────── */}
       <div className="absolute top-0 left-1/4 w-125 h-125 bg-[#00D084]/3 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-100 h-100 bg-[#008751]/4 rounded-full blur-[100px] pointer-events-none" />
 
       {/* ─── HEADER ──────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-20 sm:pt-28 lg:pt-32 pb-12 sm:pb-16">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-16 sm:pt-24 lg:pt-28 pb-10 sm:pb-14">
         <div ref={headerRef.ref} className="text-center max-w-2xl mx-auto">
           <div className="lead-hdr flex items-center justify-center gap-3 mb-4">
             <span className="h-px w-6 bg-[#00D084]/50" />
@@ -299,7 +300,7 @@ export default function LeadershipShowcase() {
       </div>
 
       {/* ─── PRESIDENT — cinematic hero card ──────────────── */}
-      <div ref={presidentRef.ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-16 sm:pb-20">
+      <div ref={presidentRef.ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-12 sm:pb-16">
         <div className="pres-card relative rounded-2xl overflow-hidden shadow-2xl opacity-0">
           <div className="grid lg:grid-cols-2">
             {/* Left — image with cinematic wipe */}
@@ -326,7 +327,7 @@ export default function LeadershipShowcase() {
               <div className="absolute top-6 right-6 w-12 h-12 border-t border-r border-[#00D084]/20 rounded-tr-lg" />
 
               <span className="pres-txt text-[#00D084] text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] mb-3" style={{ fontFamily: 'var(--font-inter)' }}>
-                National President
+                Worldwide President
               </span>
               <h3 className="pres-txt text-white text-[clamp(1.5rem,3vw,2.2rem)] font-bold leading-[1.15] tracking-[-0.02em] mb-2" style={{ fontFamily: 'var(--font-poppins)' }}>
                 {PRESIDENT.name}
@@ -362,42 +363,62 @@ export default function LeadershipShowcase() {
         </div>
       </div>
 
-      {/* ─── EXECUTIVE GRID — 4 cards ────────────────────── */}
-      <div ref={gridRef.ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-16 sm:pb-20">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-          {EXECUTIVES.map((exec, i) => (
-            <ExecutiveCard
-              key={exec.name}
-              exec={exec}
-              index={i}
-              visible={gridRef.vis}
-            />
-          ))}
-        </div>
-      </div>
+      {/* President section end — close dark green section */}
+    </section>
 
-      {/* ─── VIEW ALL CTA — elegant bottom row ───────────── */}
-      <div ref={ctaRef.ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-20 sm:pb-28 lg:pb-32">
-        <div className="lead-cta flex flex-col sm:flex-row items-center justify-between gap-6 py-8 border-t border-white/6">
+    {/* ─── EXECUTIVE GRID — separate warm green-tinted section ─── */}
+    <section className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #f2f7f4 0%, #f7faf8 50%, #f2f7f4 100%)' }}>
+      {/* Ambient glow */}
+      <div className="absolute -top-32 right-0 w-96 h-96 bg-[#00D084]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-[#008751]/4 rounded-full blur-[100px] pointer-events-none" />
+
+      {/* Top decorative border */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-[#00D084]/15 to-transparent" />
+
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-14 sm:py-20 lg:py-24">
+          <div className="flex items-center gap-3 mb-2.5">
+            <span className="h-px w-6 bg-[#00D084]/50" />
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#00D084]" style={{ fontFamily: 'var(--font-inter)' }}>Executive Team</span>
+          </div>
+          <h3 className="text-gray-900 text-[clamp(1.2rem,2.5vw,1.8rem)] font-bold tracking-[-0.02em] mb-6 sm:mb-8" style={{ fontFamily: 'var(--font-poppins)' }}>
+            The Team Driving <span className="text-[#008751]">NAAKIMS</span> Forward
+          </h3>
+
+          <div ref={gridRef.ref} className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-5">
+            {EXECUTIVES.map((exec, i) => (
+              <ExecutiveCard
+                key={exec.name}
+                exec={exec}
+                index={i}
+                visible={gridRef.vis}
+              />
+            ))}
+          </div>
+        </div>
+
+      {/* ─── VIEW ALL CTA ───────────────────────────────── */}
+      <div ref={ctaRef.ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-12 sm:pb-16">
+        <div className="lead-cta flex flex-col sm:flex-row items-center justify-between gap-5 py-5 border-t border-gray-200">
           <div>
-            <p className="lead-cta text-white/70 text-[14px] sm:text-[15px] font-medium" style={{ fontFamily: 'var(--font-poppins)' }}>
+            <p className="lead-cta text-gray-600 text-[13px] sm:text-[14px] font-medium" style={{ fontFamily: 'var(--font-poppins)' }}>
               Our executives are elected annually by members across all chapters.
             </p>
-            <p className="lead-cta text-white/30 text-[12px] sm:text-[13px] mt-1" style={{ fontFamily: 'var(--font-inter)' }}>
+            <p className="lead-cta text-gray-400 text-[11px] sm:text-[12px] mt-1" style={{ fontFamily: 'var(--font-inter)' }}>
               10+ chapters · 25+ universities worldwide
             </p>
           </div>
           <Link
             href="/executives"
-            className="lead-cta group shrink-0 inline-flex items-center gap-3 px-6 py-3 rounded-full border border-[#00D084]/30 text-[#00D084] text-[13px] font-semibold tracking-wide hover:bg-[#00D084]/10 active:scale-[0.97] transition-all duration-300"
+            className="lead-cta group shrink-0 inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 text-gray-600 text-[13px] font-semibold tracking-wide hover:border-[#00D084] hover:text-[#008751] active:scale-[0.97] transition-all duration-300"
           >
             <span>View All Leaders</span>
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#00D084]/15 group-hover:bg-[#00D084]/25 transition-colors duration-300">
+            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 group-hover:bg-[#00D084]/15 transition-colors duration-300">
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </span>
           </Link>
         </div>
       </div>
     </section>
+    </>
   );
 }

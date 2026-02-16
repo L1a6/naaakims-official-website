@@ -10,6 +10,12 @@ import { NAV_LINKS } from '@/lib/constants';
 // Register GSAP Plugins safely
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(CustomEase);
+  try {
+    CustomEase.create('main', '0.65, 0.01, 0.05, 0.99');
+    gsap.defaults({ ease: 'main', duration: 0.7 });
+  } catch {
+    gsap.defaults({ ease: 'power2.out', duration: 0.7 });
+  }
 }
 
 export default function Header() {
@@ -27,92 +33,124 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Initial Setup & Hover Effects
+  // Initial Setup & Hover/Click Shape Effects
+  // Re-run when menu opens so DOM is visible and listeners work
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    // Create custom easing
-    try {
-      if (!gsap.parseEase('main')) {
-        CustomEase.create('main', '0.65, 0.01, 0.05, 0.99');
-        gsap.defaults({ ease: 'main', duration: 0.7 });
-      }
-    } catch (e) {
-      console.warn('CustomEase failed to load, falling back to default.', e);
-      gsap.defaults({ ease: 'power2.out', duration: 0.7 });
-    }
+    if (!containerRef.current || !isMenuOpen) return;
 
     const ctx = gsap.context(() => {
-      // Shape Hover
       const menuItems = containerRef.current!.querySelectorAll('.menu-list-item[data-shape]');
       const shapesContainer = containerRef.current!.querySelector('.ambient-background-shapes');
+      if (!shapesContainer) return;
 
+      const allShapes = shapesContainer.querySelectorAll('.bg-shape');
+      let activeShapeIdx = 0;
+      let idleTimer: ReturnType<typeof setTimeout> | null = null;
+      let idleInterval: ReturnType<typeof setInterval> | null = null;
+      let userSelected = false;
+
+      // Helper: show a specific shape by index (0-based)
+      const showShape = (idx: number, intense = false) => {
+        allShapes.forEach((s, i) => {
+          const els = s.querySelectorAll('.shape-element');
+          if (i === idx) {
+            s.classList.add('active');
+            gsap.killTweensOf(els);
+            gsap.fromTo(els,
+              { scale: intense ? 0.2 : 0.4, opacity: 0, rotation: gsap.utils.random(-20, 20) },
+              { scale: 1, opacity: 1, rotation: 0, duration: intense ? 0.8 : 1.1, stagger: 0.07, ease: intense ? 'back.out(1.7)' : 'power2.out', overwrite: 'auto' }
+            );
+            // Subtle float
+            gsap.to(els, {
+              y: gsap.utils.random(-6, 6), x: gsap.utils.random(-5, 5),
+              duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: 0.1, delay: 0.4,
+            });
+          } else {
+            gsap.killTweensOf(els);
+            gsap.to(els, { scale: 0.5, opacity: 0, duration: 0.4, ease: 'power2.in', overwrite: 'auto' });
+            s.classList.remove('active');
+          }
+        });
+        activeShapeIdx = idx;
+      };
+
+      // Idle cycle — rotate shapes when user hasn't interacted
+      const startIdleCycle = () => {
+        stopIdleCycle();
+        idleInterval = setInterval(() => {
+          if (userSelected) return;
+          const next = (activeShapeIdx + 1) % allShapes.length;
+          showShape(next, false);
+        }, 3800);
+      };
+
+      const stopIdleCycle = () => {
+        if (idleInterval) { clearInterval(idleInterval); idleInterval = null; }
+        if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+      };
+
+      const resumeIdleAfterDelay = () => {
+        stopIdleCycle();
+        idleTimer = setTimeout(() => {
+          userSelected = false;
+          startIdleCycle();
+        }, 8000); // resume idle 8s after last interaction
+      };
+
+      // Show first shape immediately
+      showShape(0, false);
+      startIdleCycle();
+
+      // Attach hover + click handlers to each nav item
       menuItems.forEach((item) => {
-        const shapeIndex = item.getAttribute('data-shape');
-        const shape = shapesContainer ? shapesContainer.querySelector(`.bg-shape-${shapeIndex}`) : null;
-
-        if (!shape) return;
-
-        const shapeEls = shape.querySelectorAll('.shape-element');
+        const shapeIndex = parseInt(item.getAttribute('data-shape') || '1', 10) - 1;
 
         const onEnter = () => {
-          if (shapesContainer) {
-            shapesContainer.querySelectorAll('.bg-shape').forEach((s) => s.classList.remove('active'));
-          }
-          shape.classList.add('active');
-
-          gsap.fromTo(
-            shapeEls,
-            { scale: 0.3, opacity: 0, rotation: -15 },
-            { scale: 1, opacity: 1, rotation: 0, duration: 0.7, stagger: 0.06, ease: 'back.out(1.7)', overwrite: 'auto' }
-          );
+          userSelected = true;
+          stopIdleCycle();
+          showShape(shapeIndex, true);
         };
 
         const onLeave = () => {
-          gsap.to(shapeEls, {
-            scale: 0.6,
-            opacity: 0,
-            duration: 0.35,
-            ease: 'power2.in',
-            onComplete: () => shape.classList.remove('active'),
-            overwrite: 'auto',
-          });
+          // Don't hide — keep shape visible, just resume idle after delay
+          resumeIdleAfterDelay();
         };
 
-        // Click also triggers the shape (for mobile tap / nav selection)
-        const onClick = () => {
-          if (shapesContainer) {
-            shapesContainer.querySelectorAll('.bg-shape').forEach((s) => s.classList.remove('active'));
-          }
-          shape.classList.add('active');
-
-          gsap.fromTo(
-            shapeEls,
-            { scale: 0, opacity: 0, rotation: -25 },
-            { scale: 1, opacity: 1, rotation: 0, duration: 0.85, stagger: 0.05, ease: 'back.out(2)', overwrite: 'auto' }
-          );
+        const onClick = (e: Event) => {
+          e.preventDefault();
+          e.stopPropagation();
+          userSelected = true;
+          stopIdleCycle();
+          showShape(shapeIndex, true);
+          resumeIdleAfterDelay();
         };
 
         item.addEventListener('mouseenter', onEnter);
         item.addEventListener('mouseleave', onLeave);
         item.addEventListener('click', onClick);
 
-        (item as any)._cleanup = () => {
+        (item as any)._shapeCleanup = () => {
           item.removeEventListener('mouseenter', onEnter);
           item.removeEventListener('mouseleave', onLeave);
           item.removeEventListener('click', onClick);
         };
       });
+
+      // Store cleanup ref
+      (containerRef.current as any)._idleCleanup = () => {
+        stopIdleCycle();
+      };
     }, containerRef);
 
     return () => {
       ctx.revert();
       if (containerRef.current) {
         const items = containerRef.current.querySelectorAll('.menu-list-item[data-shape]');
-        items.forEach((item: any) => item._cleanup && item._cleanup());
+        items.forEach((item: any) => item._shapeCleanup && item._shapeCleanup());
+        (containerRef.current as any)?._idleCleanup?.();
       }
     };
-  }, []);
+  }, [isMenuOpen]);
 
   // Menu Open/Close Animation Effect
   useEffect(() => {
@@ -289,70 +327,71 @@ export default function Header() {
               <div className="backdrop-layer second"></div>
               <div className="backdrop-layer"></div>
 
-              {/* Abstract shapes container — cute bubble/round designs per nav link */}
+              {/* Abstract shapes container */}
               <div className="ambient-background-shapes">
-                {/* Shape 1: Floating soap bubbles */}
+                {/* Shape 1: Floating circles */}
                 <svg className="bg-shape bg-shape-1" viewBox="0 0 400 400" fill="none">
-                  <circle className="shape-element" cx="80" cy="100" r="55" fill="rgba(0,208,132,0.12)" stroke="rgba(0,208,132,0.25)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="290" cy="70" r="75" fill="rgba(0,135,81,0.10)" stroke="rgba(0,135,81,0.20)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="200" cy="280" r="95" fill="rgba(0,184,114,0.08)" stroke="rgba(0,184,114,0.18)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="340" cy="300" r="35" fill="rgba(0,208,132,0.18)" stroke="rgba(0,208,132,0.30)" strokeWidth="1" />
-                  <circle className="shape-element" cx="50" cy="300" r="25" fill="rgba(0,208,132,0.22)" stroke="rgba(0,208,132,0.35)" strokeWidth="1" />
-                  <circle className="shape-element" cx="160" cy="160" r="15" fill="rgba(0,208,132,0.40)" />
-                  <circle className="shape-element" cx="350" cy="180" r="12" fill="rgba(0,184,114,0.35)" />
-                  <circle className="shape-element" cx="120" cy="220" r="8" fill="rgba(0,208,132,0.50)" />
+                  <circle className="shape-element" cx="80" cy="120" r="40" fill="rgba(0,208,132,0.15)" />
+                  <circle className="shape-element" cx="300" cy="80" r="60" fill="rgba(0,184,114,0.12)" />
+                  <circle className="shape-element" cx="200" cy="300" r="80" fill="rgba(0,135,81,0.10)" />
+                  <circle className="shape-element" cx="350" cy="280" r="30" fill="rgba(0,208,132,0.15)" />
                 </svg>
 
-                {/* Shape 2: Orbiting rings / planetary system */}
+                {/* Shape 2: Wave pattern */}
                 <svg className="bg-shape bg-shape-2" viewBox="0 0 400 400" fill="none">
-                  <circle className="shape-element" cx="200" cy="200" r="140" fill="none" stroke="rgba(0,208,132,0.15)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="200" cy="200" r="100" fill="none" stroke="rgba(0,135,81,0.12)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="200" cy="200" r="55" fill="none" stroke="rgba(0,184,114,0.18)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="200" cy="200" r="22" fill="rgba(0,208,132,0.25)" />
-                  <circle className="shape-element" cx="340" cy="200" r="14" fill="rgba(0,208,132,0.45)" />
-                  <circle className="shape-element" cx="200" cy="60" r="12" fill="rgba(0,135,81,0.40)" />
-                  <circle className="shape-element" cx="100" cy="260" r="10" fill="rgba(0,184,114,0.45)" />
-                  <circle className="shape-element" cx="300" cy="300" r="8" fill="rgba(0,208,132,0.50)" />
+                  <path
+                    className="shape-element"
+                    d="M0 200 Q100 100, 200 200 T 400 200"
+                    stroke="rgba(0,208,132,0.2)"
+                    strokeWidth="60"
+                    fill="none"
+                  />
+                  <path
+                    className="shape-element"
+                    d="M0 280 Q100 180, 200 280 T 400 280"
+                    stroke="rgba(0,135,81,0.15)"
+                    strokeWidth="40"
+                    fill="none"
+                  />
                 </svg>
 
-                {/* Shape 3: Scattered pearls / confetti dots */}
+                {/* Shape 3: Grid dots */}
                 <svg className="bg-shape bg-shape-3" viewBox="0 0 400 400" fill="none">
-                  <circle className="shape-element" cx="60" cy="80" r="20" fill="rgba(0,208,132,0.30)" />
-                  <circle className="shape-element" cx="180" cy="50" r="28" fill="rgba(0,135,81,0.22)" />
-                  <circle className="shape-element" cx="320" cy="100" r="35" fill="rgba(0,184,114,0.15)" stroke="rgba(0,184,114,0.25)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="100" cy="200" r="45" fill="rgba(0,208,132,0.10)" stroke="rgba(0,208,132,0.20)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="300" cy="230" r="55" fill="rgba(0,135,81,0.08)" stroke="rgba(0,135,81,0.18)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="200" cy="330" r="40" fill="rgba(0,208,132,0.12)" stroke="rgba(0,208,132,0.22)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="70" cy="340" r="16" fill="rgba(0,184,114,0.35)" />
-                  <circle className="shape-element" cx="350" cy="350" r="12" fill="rgba(0,208,132,0.45)" />
-                  <circle className="shape-element" cx="240" cy="160" r="10" fill="rgba(0,208,132,0.50)" />
+                  <circle className="shape-element" cx="50" cy="50" r="8" fill="rgba(0,208,132,0.3)" />
+                  <circle className="shape-element" cx="150" cy="50" r="8" fill="rgba(0,184,114,0.3)" />
+                  <circle className="shape-element" cx="250" cy="50" r="8" fill="rgba(0,135,81,0.3)" />
+                  <circle className="shape-element" cx="350" cy="50" r="8" fill="rgba(0,208,132,0.3)" />
+                  <circle className="shape-element" cx="100" cy="150" r="12" fill="rgba(0,184,114,0.25)" />
+                  <circle className="shape-element" cx="200" cy="150" r="12" fill="rgba(0,135,81,0.25)" />
+                  <circle className="shape-element" cx="300" cy="150" r="12" fill="rgba(0,208,132,0.25)" />
+                  <circle className="shape-element" cx="50" cy="250" r="10" fill="rgba(0,135,81,0.3)" />
+                  <circle className="shape-element" cx="150" cy="250" r="10" fill="rgba(0,208,132,0.3)" />
+                  <circle className="shape-element" cx="250" cy="250" r="10" fill="rgba(0,184,114,0.3)" />
+                  <circle className="shape-element" cx="350" cy="250" r="10" fill="rgba(0,135,81,0.3)" />
+                  <circle className="shape-element" cx="100" cy="350" r="6" fill="rgba(0,208,132,0.3)" />
+                  <circle className="shape-element" cx="200" cy="350" r="6" fill="rgba(0,184,114,0.3)" />
+                  <circle className="shape-element" cx="300" cy="350" r="6" fill="rgba(0,135,81,0.3)" />
                 </svg>
 
-                {/* Shape 4: Bubbly cluster / molecular grouping */}
+                {/* Shape 4: Organic blobs */}
                 <svg className="bg-shape bg-shape-4" viewBox="0 0 400 400" fill="none">
-                  <circle className="shape-element" cx="160" cy="140" r="65" fill="rgba(0,208,132,0.10)" stroke="rgba(0,208,132,0.18)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="260" cy="120" r="50" fill="rgba(0,135,81,0.12)" stroke="rgba(0,135,81,0.20)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="200" cy="240" r="80" fill="rgba(0,184,114,0.07)" stroke="rgba(0,184,114,0.15)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="120" cy="300" r="45" fill="rgba(0,208,132,0.12)" stroke="rgba(0,208,132,0.22)" strokeWidth="1.5" />
-                  <circle className="shape-element" cx="320" cy="280" r="35" fill="rgba(0,135,81,0.15)" stroke="rgba(0,135,81,0.25)" strokeWidth="1" />
-                  <circle className="shape-element" cx="210" cy="170" r="18" fill="rgba(0,208,132,0.35)" />
-                  <circle className="shape-element" cx="300" cy="180" r="10" fill="rgba(0,184,114,0.45)" />
-                  <circle className="shape-element" cx="80" cy="200" r="8" fill="rgba(0,208,132,0.50)" />
+                  <path
+                    className="shape-element"
+                    d="M100 100 Q150 50, 200 100 Q250 150, 200 200 Q150 250, 100 200 Q50 150, 100 100"
+                    fill="rgba(0,208,132,0.12)"
+                  />
+                  <path
+                    className="shape-element"
+                    d="M250 200 Q300 150, 350 200 Q400 250, 350 300 Q300 350, 250 300 Q200 250, 250 200"
+                    fill="rgba(0,135,81,0.10)"
+                  />
                 </svg>
 
-                {/* Shape 5: Galaxy spiral dots */}
+                {/* Shape 5: Diagonal lines */}
                 <svg className="bg-shape bg-shape-5" viewBox="0 0 400 400" fill="none">
-                  <circle className="shape-element" cx="200" cy="200" r="110" fill="none" stroke="rgba(0,208,132,0.10)" strokeWidth="1" strokeDasharray="6 8" />
-                  <circle className="shape-element" cx="200" cy="200" r="70" fill="none" stroke="rgba(0,135,81,0.12)" strokeWidth="1" strokeDasharray="4 6" />
-                  <circle className="shape-element" cx="200" cy="200" r="30" fill="rgba(0,208,132,0.20)" />
-                  <circle className="shape-element" cx="310" cy="200" r="22" fill="rgba(0,208,132,0.30)" />
-                  <circle className="shape-element" cx="200" cy="90" r="18" fill="rgba(0,184,114,0.28)" />
-                  <circle className="shape-element" cx="90" cy="200" r="16" fill="rgba(0,135,81,0.32)" />
-                  <circle className="shape-element" cx="200" cy="310" r="20" fill="rgba(0,208,132,0.25)" />
-                  <circle className="shape-element" cx="270" cy="130" r="13" fill="rgba(0,184,114,0.40)" />
-                  <circle className="shape-element" cx="130" cy="270" r="11" fill="rgba(0,208,132,0.42)" />
-                  <circle className="shape-element" cx="280" cy="280" r="9" fill="rgba(0,135,81,0.48)" />
-                  <circle className="shape-element" cx="120" cy="130" r="7" fill="rgba(0,208,132,0.50)" />
+                  <line className="shape-element" x1="0" y1="100" x2="300" y2="400" stroke="rgba(0,208,132,0.15)" strokeWidth="30" />
+                  <line className="shape-element" x1="100" y1="0" x2="400" y2="300" stroke="rgba(0,184,114,0.12)" strokeWidth="25" />
+                  <line className="shape-element" x1="200" y1="0" x2="400" y2="200" stroke="rgba(0,135,81,0.10)" strokeWidth="20" />
                 </svg>
               </div>
             </div>
@@ -361,18 +400,14 @@ export default function Header() {
               <ul className="menu-list">
                 {NAV_LINKS.map((link, idx) => (
                   <li key={link.href} className="menu-list-item" data-shape={((idx % 5) + 1).toString()}>
-                    <a
-                      href="#"
-                      className={`nav-link w-inline-block ${activeLink === link.href ? 'active' : ''}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setActiveLink(link.href);
-                        closeMenu();
-                      }}
+                    <button
+                      type="button"
+                      className={`nav-link w-full text-left ${activeLink === link.href ? 'active' : ''}`}
+                      onClick={() => setActiveLink(link.href)}
                     >
                       <p className="nav-link-text">{link.label}</p>
                       <div className="nav-link-hover-bg"></div>
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>

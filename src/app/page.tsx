@@ -3,6 +3,7 @@ import AboutPreview from '@/components/landing/AboutPreview';
 import ProgramsShowcase from '@/components/landing/ProgramsShowcase';
 import LeadershipShowcase from '@/components/landing/LeadershipShowcase';
 import TestimonialsShowcase from '@/components/landing/TestimonialsShowcase';
+import JoinCtaFooter from '@/components/landing/JoinCtaFooter';
 
 export default function Home() {
   return (
@@ -21,6 +22,9 @@ export default function Home() {
 
       {/* Testimonials & Chapters */}
       <TestimonialsShowcase />
+
+      {/* Join CTA & Footer */}
+      <JoinCtaFooter />
     </main>
   );
 }
