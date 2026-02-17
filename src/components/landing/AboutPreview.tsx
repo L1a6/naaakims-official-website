@@ -193,7 +193,7 @@ export default function AboutPreview() {
             <div
               key={s.label}
               className={cn(
-                'flex flex-col items-center justify-center py-1.5 sm:py-5',
+                'flex flex-col items-center justify-center py-2.5 sm:py-5',
                 'transition-all duration-700 ease-out',
                 statsRef.vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3',
               )}

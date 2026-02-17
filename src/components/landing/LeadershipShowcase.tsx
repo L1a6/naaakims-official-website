@@ -365,13 +365,14 @@ export default function LeadershipShowcase() {
         </div>
       </div>
 
-      {/* ─── EXECUTIVE ZONE — premium clean styling ──────── */}
-      <div className="relative" style={{ background: 'linear-gradient(180deg, #fafafa 0%, #ffffff 50%, #fafafa 100%)' }}>
-        {/* Subtle ambient glow */}
-        <div className="absolute -top-32 right-0 w-96 h-96 bg-gray-200/20 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-gray-100/30 rounded-full blur-[100px] pointer-events-none" />
+      {/* ─── EXECUTIVE ZONE — premium green styling ──────── */}
+      <div className="relative" style={{ background: 'linear-gradient(180deg, #f0f9f5 0%, #f5fcf8 50%, #f0f9f5 100%)' }}>
+        {/* Premium green ambient glow */}
+        <div className="absolute -top-32 right-0 w-96 h-96 bg-[#00D084]/12 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-[#008751]/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-[#00D084]/6 rounded-full blur-[150px] pointer-events-none" />
         {/* Top decorative border */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-gray-200 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-[#00D084]/20 to-transparent" />
 
         <div className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-14 sm:py-20 lg:py-24">
           <div className="flex items-center gap-3 mb-2.5">
@@ -407,10 +408,10 @@ export default function LeadershipShowcase() {
             </div>
             <Link
               href="/executives"
-              className="lead-cta group shrink-0 inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 text-gray-600 text-[13px] font-semibold tracking-wide hover:border-[#00D084] hover:text-[#008751] active:scale-[0.97] transition-all duration-300"
+              className="lead-cta group shrink-0 inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 text-gray-600 text-[13px] font-semibold tracking-wide hover:border-[#00D084] hover:text-[#00D084] hover:bg-[#00D084]/5 active:scale-[0.97] transition-all duration-300"
             >
               <span>View All Leaders</span>
-              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 group-hover:bg-[#00D084]/15 transition-colors duration-300">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 group-hover:bg-[#00D084]/20 transition-colors duration-300">
                 <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </span>
             </Link>

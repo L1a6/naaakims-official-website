@@ -239,7 +239,7 @@ export default function HeroSlideshow() {
             <h1
               className={cn(
                 'text-white font-normal leading-[1.1] tracking-[-0.03em] mb-4',
-                'text-[clamp(1.65rem,5vw,3rem)]',
+                'text-[clamp(1.75rem,5.2vw,3.1rem)]',
               )}
               style={{ fontFamily: 'var(--font-inter)' }}
             >
