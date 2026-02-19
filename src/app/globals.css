@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Override Tailwind v4 default hover variant to work on all devices,
+   including mobile Chrome "Request Desktop Site" mode where the device
+   still reports hover:none despite serving desktop layout. */
+@custom-variant hover (&:hover);
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
