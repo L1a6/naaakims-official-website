@@ -321,7 +321,7 @@ export default function JoinCtaFooter() {
               className="group/dev inline-flex items-center gap-1.5 opacity-[0.18] hover:opacity-40 transition-opacity duration-500"
             >
               <span className="text-[9px] text-white/60 tracking-[0.12em] uppercase" style={{ fontFamily: 'var(--font-inter)' }}>
-                Crafted by
+                Engineered by
               </span>
               <span className="relative text-[9px] font-semibold tracking-[0.06em] text-[#00D084]/70 group-hover/dev:text-[#00D084] transition-colors duration-300" style={{ fontFamily: 'var(--font-poppins)' }}>
                 LD

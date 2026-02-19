@@ -22,7 +22,7 @@ const POSTS = [
     author: 'NAAKIMS Media',
     date: 'Coming Soon',
     readTime: '4 min read',
-    image: '/images/dinnernight.jpg',
+    image: '/images/blog.jpg',
     featured: true,
   },
   {
