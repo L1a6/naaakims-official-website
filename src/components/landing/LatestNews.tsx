@@ -225,6 +225,7 @@ export default function LatestNews() {
                 src={featured.image}
                 alt={featured.title}
                 fill
+                quality={100}
                 className="object-cover group-hover:scale-[1.03] transition-transform duration-[1.2s] ease-out"
                 sizes="100vw"
                 priority
@@ -302,6 +303,7 @@ export default function LatestNews() {
                     src={post.image}
                     alt={post.title}
                     fill
+                    quality={100}
                     className="object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />

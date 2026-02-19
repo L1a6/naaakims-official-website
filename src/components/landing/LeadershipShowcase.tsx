@@ -72,6 +72,7 @@ function ExecutiveCard({ exec, index }: { exec: (typeof EXECUTIVES)[number]; ind
             src={exec.image}
             alt={exec.name}
             fill
+            quality={100}
             className="object-cover"
             sizes="(max-width: 640px) 50vw, 25vw"
           />
@@ -267,7 +268,7 @@ export default function LeadershipShowcase() {
             <div className="grid lg:grid-cols-2">
               {/* Image */}
               <div className="pres-img relative aspect-4/5 lg:aspect-auto overflow-hidden" style={{ minHeight: '400px' }}>
-                <Image src={PRESIDENT.image} alt={PRESIDENT.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" priority />
+                <Image src={PRESIDENT.image} alt={PRESIDENT.name} fill quality={100} className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" priority />
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(0,80,42,0.15) 0%, rgba(0,26,14,0.08) 100%)' }} />
                 <div className="absolute inset-0 bg-linear-to-t from-[#001a0e] via-transparent to-transparent lg:hidden" />
                 <div className="absolute inset-0 bg-linear-to-r from-transparent via-transparent to-[#001a0e] hidden lg:block" />

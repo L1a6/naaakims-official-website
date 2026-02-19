@@ -259,6 +259,7 @@ export default function AboutPreview() {
               fill
               className="object-cover"
               sizes="100vw"
+              quality={100}
               priority
             />
           </div>
@@ -399,6 +400,7 @@ export default function AboutPreview() {
                     src={p.image}
                     alt={p.title}
                     fill
+                    quality={100}
                     className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     sizes="50vw"
                   />
@@ -464,7 +466,7 @@ function MobilePillars() {
             )}
             style={{ height: i === active ? '180px' : '70px' }}
           >
-            <Image src={p.image} alt={p.title} fill className="object-cover" sizes="100vw" />
+            <Image src={p.image} alt={p.title} fill quality={100} className="object-cover" sizes="100vw" />
             {/* Dark gradient always present */}
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)' }} />
             {/* Subtle green overlay only on active card image */}

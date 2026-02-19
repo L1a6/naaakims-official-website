@@ -145,7 +145,7 @@ export default function HeroSlideshow() {
               transform: i === active ? 'scale(1.08)' : 'scale(1)',
             }}
           >
-            <Image src={s.src} alt={s.alt} fill className="object-cover" priority={i === 0} quality={85} sizes="100vw" />
+            <Image src={s.src} alt={s.alt} fill className="object-cover" priority={i === 0} quality={100} sizes="100vw" />
           </div>
         ))}
       </div>

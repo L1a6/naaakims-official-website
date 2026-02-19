@@ -17,8 +17,8 @@ if (typeof window !== 'undefined') {
 const PROGRAMS = [
   {
     tag: 'Social',
-    title: 'NAAKIMS Dinner Night',
-    body: 'An elegant evening of celebration, networking, and camaraderie — bringing together members, alumni, and distinguished guests for a night of fine dining and cultural showcases.',
+    title: 'Dinner & Awards Night',
+    body: 'Our flagship event — an elegant evening of celebration, networking, and recognition, bringing together members, alumni, and distinguished guests for a night of fine dining, awards, and cultural showcases.',
     image: '/images/dinnernight.jpg',
     stat: '500+',
     statLabel: 'Annual Guests',
@@ -224,7 +224,7 @@ export default function ProgramsShowcase() {
               >
                 {/* Full-bleed image */}
                 <div className="ps-img absolute inset-0">
-                  <Image src={prog.image} alt={prog.title} fill className="object-cover" sizes="100vw" priority={i === 0} />
+                  <Image src={prog.image} alt={prog.title} fill className="object-cover" sizes="100vw" quality={100} priority={i === 0} />
                 </div>
 
                 {/* Cinematic overlays */}

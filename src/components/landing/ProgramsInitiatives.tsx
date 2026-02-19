@@ -15,14 +15,14 @@ if (typeof window !== 'undefined') {
    ───────────────────────────────────────────────────────────── */
 const PROGRAMS = [
   {
-    id: 'convention',
+    id: 'dinnernight',
     num: '01',
-    tag: 'Convention',
-    title: 'National Medical Convention',
-    body: 'Our flagship gathering — three days of keynote lectures, clinical workshops, research presentations, and cultural celebrations uniting all chapters under one roof.',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1400&q=80',
-    stat: '3,000+',
-    statLabel: 'Annual Attendees',
+    tag: 'Social',
+    title: 'Dinner & Awards Night',
+    body: 'Our flagship event — an elegant evening of celebration, networking, and recognition, bringing together members, alumni, and distinguished guests for a night of fine dining, awards, and cultural showcases.',
+    image: '/images/dinnernight.jpg',
+    stat: '500+',
+    statLabel: 'Annual Guests',
     accent: '#00D084',
   },
   {
@@ -30,21 +30,21 @@ const PROGRAMS = [
     num: '02',
     tag: 'Outreach',
     title: 'Community Health Missions',
-    body: 'Health education campaigns, awareness programs, and community engagement initiatives reaching thousands of communities across Akwa Ibom State and beyond.',
-    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=1400&q=80',
+    body: 'Health education campaigns, awareness programs, and community engagement initiatives reaching thousands of communities across Akwa Ibom and beyond.',
+    image: '/images/healthmissions.jpg',
     stat: '50+',
     statLabel: 'Health Campaigns',
     accent: '#008751',
   },
   {
-    id: 'mentorship',
+    id: 'bursary',
     num: '03',
-    tag: 'Leadership',
-    title: 'Mentorship & Career Development',
-    body: 'Pairing students with practising physicians, surgeons, and specialists — structured mentorship that bridges the gap from lecture halls to operating rooms.',
-    image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1400&q=80',
-    stat: '300+',
-    statLabel: 'Active Mentors',
+    tag: 'Welfare',
+    title: 'Student Bursary Programme',
+    body: 'Supporting deserving medical and dental surgery students with financial aid to ease the burden of tuition and academic expenses — because no dream should be limited by finances.',
+    image: '/images/communityimpact.jpg',
+    stat: 'Coming',
+    statLabel: 'Soon',
     accent: '#00B872',
   },
 ] as const;
@@ -173,14 +173,14 @@ export default function ProgramsInitiatives() {
               className="hd-rev text-[clamp(1.8rem,4.5vw,3.2rem)] font-extrabold leading-[1.06] tracking-[-0.035em] text-gray-900 max-w-2xl"
               style={{ fontFamily: 'var(--font-poppins)' }}
             >
-              Programs{' '}&amp;{' '}
-              <span className="text-[#008751]">Initiatives</span>
+              Experiences That{' '}
+              <span className="text-[#008751]">Transform Lives</span>
             </h2>
             <p
               className="hd-rev text-gray-400 text-[14px] sm:text-[15px] leading-[1.85] max-w-sm lg:text-right"
               style={{ fontFamily: 'var(--font-inter)' }}
             >
-              From national conventions to grassroots health missions — a family that empowers, educates, and elevates together.
+              From dinner nights to health missions — a family that empowers, educates, and elevates together.
             </p>
           </div>
         </div>
@@ -207,6 +207,7 @@ export default function ProgramsInitiatives() {
                     src={p.image}
                     alt={p.title}
                     fill
+                    quality={100}
                     className="object-cover"
                     sizes="60vw"
                     priority={i === 0}
@@ -429,6 +430,7 @@ function MobilePrograms({ active, switchTo }: { active: number; switchTo: (i: nu
                     src={p.image}
                     alt={p.title}
                     fill
+                    quality={100}
                     className="object-cover"
                     sizes="100vw"
                   />
