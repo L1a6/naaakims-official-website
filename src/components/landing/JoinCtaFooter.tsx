@@ -318,18 +318,18 @@ export default function JoinCtaFooter() {
               href="https://www.larrydavid.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="dev-credit-shimmer group/dev inline-flex items-center gap-2 hover:opacity-50 transition-opacity duration-500"
+              className="dev-credit-shimmer group/dev inline-flex items-center gap-1 hover:opacity-60 transition-opacity duration-500"
             >
               <span className="text-[8.5px] text-white/50 tracking-[0.15em] uppercase" style={{ fontFamily: 'var(--font-inter)' }}>
                 Engineered by
               </span>
               <span
-                className="text-[9px] font-bold tracking-[0.08em] text-white/60 group-hover/dev:text-white/80 transition-colors duration-300"
+                className="text-[8.5px] font-bold tracking-[0.08em] text-white/60 group-hover/dev:text-white/80 transition-colors duration-300"
                 style={{ fontFamily: 'var(--font-poppins)' }}
               >
                 LD
               </span>
-              <span className="text-[7px] text-white/25 group-hover/dev:text-white/60 transition-colors duration-300 leading-none">&rsaquo;</span>
+              <span className="text-[8.5px] text-white/25 group-hover/dev:text-white/60 transition-colors duration-300 leading-none">&rsaquo;</span>
             </a>
           </div>
         </div>
