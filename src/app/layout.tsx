@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/shared/Header";
+import Preloader from "@/components/shared/Preloader";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -35,8 +36,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${poppins.variable} font-sans antialiased`}
       >
-        <Header />
-        {children}
+        <Preloader />
+        <div className="opacity-0" id="page-content" style={{ transition: 'opacity 0.5s ease-out' }}>
+          <Header />
+          {children}
+        </div>
       </body>
     </html>
   );

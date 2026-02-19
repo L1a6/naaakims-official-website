@@ -1,29 +1,20 @@
 import HeroSlideshow from '@/components/landing/HeroSlideshow';
 import AboutPreview from '@/components/landing/AboutPreview';
-import ProgramsShowcase from '@/components/landing/ProgramsShowcase';
+import ProgramsInitiatives from '@/components/landing/ProgramsInitiatives';
 import LeadershipShowcase from '@/components/landing/LeadershipShowcase';
+import LatestNews from '@/components/landing/LatestNews';
 import TestimonialsShowcase from '@/components/landing/TestimonialsShowcase';
 import JoinCtaFooter from '@/components/landing/JoinCtaFooter';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      {/* Hero Section */}
       <HeroSlideshow />
-
-      {/* About NAAKIMS Preview */}
       <AboutPreview />
-
-      {/* Programs & Initiatives */}
-      <ProgramsShowcase />
-
-      {/* Leadership & Executives */}
+      <ProgramsInitiatives />
       <LeadershipShowcase />
-
-      {/* Testimonials & Chapters */}
+      <LatestNews />
       <TestimonialsShowcase />
-
-      {/* Join CTA & Footer */}
       <JoinCtaFooter />
     </main>
   );

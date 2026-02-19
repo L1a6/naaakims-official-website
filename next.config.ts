@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  /* Use webpack for dev to avoid Turbopack panics */
+  devIndicators: false,
   images: {
     remotePatterns: [
       {

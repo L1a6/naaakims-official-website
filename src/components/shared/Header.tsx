@@ -228,7 +228,7 @@ export default function Header() {
 
               {/* Desktop Nav Links - Hidden on mobile, visible on lg and up */}
               <div className="hidden lg:flex items-center gap-5 xl:gap-6 flex-1 justify-center">
-                {NAV_LINKS.slice(0, -1).map((link) => (
+                {NAV_LINKS.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
@@ -241,13 +241,13 @@ export default function Header() {
               </div>
 
               <div className="nav-row__right">
-                {/* Contact CTA - Desktop only */}
+                {/* Join Now CTA - Desktop only */}
                 <Link
-                  href={NAV_LINKS[NAV_LINKS.length - 1].href}
-                  className="hidden lg:flex items-center gap-1 px-3.5 py-1 text-white text-[11px] xl:text-[12px] font-medium rounded-full border border-white/30 hover:border-[#00D084] hover:text-[#00D084] transition-all duration-300 group whitespace-nowrap"
+                  href="/join"
+                  className="hidden lg:flex items-center gap-1.5 px-4 py-1.5 rounded-md text-white text-[11px] xl:text-[12px] font-bold bg-[#008751] hover:bg-[#006d41] transition-all duration-300 group whitespace-nowrap shadow-sm shadow-[#008751]/20 hover:shadow-[#008751]/30"
                 >
-                  {NAV_LINKS[NAV_LINKS.length - 1].label}
-                  <svg className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  Join Now
+                  <svg className="w-2.5 h-2.5 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
@@ -387,6 +387,18 @@ export default function Header() {
                   );
                 })}
               </ul>
+              {/* Mobile Log In CTA — below nav links */}
+              <div className="px-6 pt-6 pb-4 lg:hidden">
+                <Link
+                  href="/portal"
+                  onClick={closeMenu}
+                  className="flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-md bg-[#008751] text-white text-[13px] font-bold tracking-wide hover:bg-[#006d41] active:scale-[0.97] transition-all duration-300"
+                  style={{ fontFamily: 'var(--font-inter)' }}
+                >
+                  Log In to Portal
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </Link>
+              </div>
             </div>
           </nav>
         </div>
