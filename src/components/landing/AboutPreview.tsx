@@ -25,7 +25,7 @@ const PILLARS = [
     num: '01',
     title: 'Academic Excellence',
     sub: 'Mentorship programs, symposiums, and cross‑chapter knowledge exchange that push boundaries in medical education.',
-    image: '/images/naakimsinduction.jpg',
+    image: '/images/academicexcellence.jpg',
     color: '#00D084',
   },
   {
@@ -254,7 +254,7 @@ export default function AboutPreview() {
         >
           <div className="about-inner-img absolute inset-0">
             <Image
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80"
+              src="/images/aboutus.jpg"
               alt="NAAKIMS students collaborating"
               fill
               className="object-cover"

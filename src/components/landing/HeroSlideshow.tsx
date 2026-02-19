@@ -12,8 +12,8 @@ const SLIDES = [
   {
     src: '/images/hero1.jpg',
     alt: 'NAAKIMS students celebrating excellence',
-    line1: 'Tomorrow\u2019s Healthcare Leaders',
-    line2: 'Start Right Here',
+    line1: 'Uniting Akwa Ibom',
+    line2: 'Students Across Continents',
   },
   {
     src: '/images/hero2.jpg',
@@ -24,8 +24,8 @@ const SLIDES = [
   {
     src: '/images/hero3.jpg',
     alt: 'NAAKIMS students studying',
-    line1: 'Uniting Akwa Ibom',
-    line2: 'Students Across Continents',
+    line1: 'Tomorrow\u2019s Healthcare Leaders',
+    line2: 'Start Right Here',
   },
   {
     src: '/images/hero4.jpg',

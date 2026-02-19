@@ -187,17 +187,17 @@ export default function ProgramsShowcase() {
           <div className="max-w-2xl">
             <div className="ph-rev flex items-center gap-3 mb-4">
               <span className="h-0.75 w-9 rounded-full bg-[#00D084]" />
-              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.28em] text-[#00D084]" style={{ fontFamily: 'var(--font-inter)' }}>What We Do</span>
+              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.28em] text-[#00D084]" style={{ fontFamily: 'var(--font-inter)' }}>The NAAKIMS Experience</span>
             </div>
             <h2 className="ph-rev text-[clamp(1.6rem,3.5vw,2.6rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-gray-900 mb-3" style={{ fontFamily: 'var(--font-poppins)' }}>
-              Programs That{' '}<span className="text-[#008751]">Transform</span> Lives
+              Experiences That{' '}<span className="text-[#008751]">Transform</span> Lives
             </h2>
             <p className="ph-rev text-gray-500 text-[14px] sm:text-[15px] leading-[1.75] max-w-xl" style={{ fontFamily: 'var(--font-inter)' }}>
               From national conventions to grassroots health missions, every NAAKIMS initiative empowers, educates, and elevates.
             </p>
           </div>
           <Link href="/events" className="ph-rev group shrink-0 text-[13px] font-semibold text-[#008751] hover:text-[#006d41] transition-colors inline-flex items-center gap-2 self-start sm:self-auto">
-            View All Programs
+            View All Experiences
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-0.5 transition-transform"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </Link>
         </div>

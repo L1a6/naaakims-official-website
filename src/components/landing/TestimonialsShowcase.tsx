@@ -15,32 +15,32 @@ if (typeof window !== 'undefined') {
    ───────────────────────────────────────────────────────────── */
 const TESTIMONIALS = [
   {
-    quote: 'NAAKIMS gave me a family away from home. The mentorship I received here shaped my entire career trajectory in surgery.',
-    name: 'Dr. Aniekan Udosen',
-    role: 'Consultant Surgeon, UUTH',
-    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=400&q=80',
+    quote: 'NAAKIMS gave me a family away from home. The mentorship I received here shaped my entire career trajectory in medicine.',
+    name: 'Aniefiok Idongesit',
+    role: 'Medical Student',
+    image: '/images/testimonials1.jpg',
     chapter: 'University of Uyo',
   },
   {
     quote: 'From free health missions in rural communities to national conventions, NAAKIMS prepared me for real-world medicine beyond textbooks.',
-    name: 'Dr. Iniobong Essien',
-    role: 'Family Medicine Resident',
-    image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=80',
+    name: 'Iniobong Essien',
+    role: 'Medical Student',
+    image: '/images/testimonial2.jpg',
     chapter: 'University of Calabar',
   },
   {
     quote: 'The leadership skills and network I built through NAAKIMS Worldwide opened doors I never even knew existed. Truly transformative.',
     name: 'Dr. Emem Akpan',
-    role: 'Public Health Specialist',
-    image: 'https://images.unsplash.com/photo-1594824476967-48c8b964ac31?auto=format&fit=crop&w=400&q=80',
+    role: 'Patron, Public Health Specialist',
+    image: '/images/testimonials3.jpg',
     chapter: 'University of Lagos',
   },
   {
     quote: 'Being part of NAAKIMS international chapters taught me that our Akwa Ibom identity is a superpower in global medicine.',
-    name: 'Dr. Uduak Obot',
-    role: 'Pediatrician, London NHS',
-    image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=400&q=80',
-    chapter: 'UK Chapter',
+    name: 'Imaobong Clement',
+    role: 'General Secretary, NAAKIMS WW',
+    image: '/images/generalsecretary.jpg',
+    chapter: 'University of Uyo',
   },
 ];
 
