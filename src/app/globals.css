@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Lower lg breakpoint from 1024px → 960px so Chrome mobile
+   "Request Desktop Site" (~980px viewport) triggers desktop styles. */
+@theme {
+  --breakpoint-lg: 960px;
+}
+
 /* Override Tailwind v4 default hover variant to work on all devices,
    including mobile Chrome "Request Desktop Site" mode where the device
    still reports hover:none despite serving desktop layout. */
