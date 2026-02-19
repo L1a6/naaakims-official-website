@@ -73,6 +73,16 @@ html {
   animation: fadeIn 0.4s ease-out forwards;
 }
 
+/* Premium shimmer sweep for developer credit */
+@keyframes dev-shimmer {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.45; }
+}
+
+.dev-credit-shimmer {
+  animation: dev-shimmer 6s ease-in-out infinite;
+}
+
 /* ─── GSAP Menu Styles ───────────────────────────────────── */
 
 /* Header bar */

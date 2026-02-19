@@ -257,7 +257,7 @@ export default function LeadershipShowcase() {
               The Visionaries{' '}<span className="text-[#00D084]">Behind</span> NAAKIMS
             </h2>
             <p className="lh-rev text-white/30 text-[14px] sm:text-[15px] leading-[1.85] max-w-xl mx-auto" style={{ fontFamily: 'var(--font-inter)' }}>
-              Elected by members, driven by purpose — meet the executives leading NAAKIMS into its next era of impact and excellence.
+              Elected by members, driven by purpose. Meet the executives leading NAAKIMS into its next era of impact and excellence.
             </p>
           </div>
         </div>
@@ -351,7 +351,7 @@ export default function LeadershipShowcase() {
         <div ref={ctaRef} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-10 sm:py-14">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-5 pt-8 border-t border-[#00D084]/10">
             <p className="lc-rev text-gray-400 text-[13px] sm:text-[14px] leading-[1.8] max-w-xs" style={{ fontFamily: 'var(--font-inter)' }}>
-              Elected by members, driven by purpose — leading NAAKIMS into its next era.
+              Elected by members, driven by purpose. Leading NAAKIMS into its next era.
             </p>
             <span
               className="lc-rev group shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 rounded-lg bg-[#008751] text-white text-[12px] sm:text-[13px] font-bold tracking-wide transition-all duration-300 shadow-lg shadow-[#008751]/20"

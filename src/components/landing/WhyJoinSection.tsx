@@ -142,7 +142,7 @@ export default function WhyJoinSection() {
             <span className="h-0.75 w-9 rounded-full bg-[#00D084]" />
           </div>
           <h2 className="wj-rev text-[clamp(1.6rem,3.8vw,2.8rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-gray-900 mb-4" style={{ fontFamily: 'var(--font-poppins)' }}>
-            More Than an Association{' — '}<span className="text-[#008751]">A Family</span>
+            More Than an Association.{' '}<span className="text-[#008751]">A Family</span>
           </h2>
           <p className="wj-rev text-gray-500 text-[14px] sm:text-[15px] leading-[1.8]" style={{ fontFamily: 'var(--font-inter)' }}>
             Being a part of NAAKIMS means gaining access to a network, resources, and experiences that shape your medical career and personal growth.

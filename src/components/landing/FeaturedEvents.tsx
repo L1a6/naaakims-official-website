@@ -143,7 +143,7 @@ export default function FeaturedEvents() {
               Where <span className="text-[#008751]">Excellence</span> Meets Community
             </h2>
             <p className="ev-hdr text-gray-500 text-[14px] sm:text-[15px] leading-[1.75]" style={{ fontFamily: 'var(--font-inter)' }}>
-              From national conventions to local health missions — every NAAKIMS event is designed to inspire, connect, and transform.
+              From national conventions to local health missions. Every NAAKIMS event is designed to inspire, connect, and transform.
             </p>
           </div>
           <Link

@@ -16,7 +16,7 @@ if (typeof window !== 'undefined') {
 const POSTS = [
   {
     title: 'NAAKIMS Worldwide Dinner Night: An Unforgettable Evening Awaits',
-    excerpt: 'Get ready for the grandest gathering in NAAKIMS history — an elegant dinner night uniting members, alumni, executives, and distinguished guests from across the globe for an evening of celebration, networking, and excellence.',
+    excerpt: 'Get ready for the grandest gathering in NAAKIMS history. An elegant dinner night uniting members, alumni, executives, and distinguished guests from across the globe for an evening of celebration, networking, and excellence.',
     category: 'Upcoming Event',
     categoryColor: '#F59E0B',
     author: 'NAAKIMS Media',

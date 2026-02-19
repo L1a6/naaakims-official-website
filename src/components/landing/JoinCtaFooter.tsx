@@ -318,18 +318,18 @@ export default function JoinCtaFooter() {
               href="https://www.larrydavid.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="group/dev inline-flex items-center gap-1.5 opacity-[0.18] hover:opacity-40 transition-opacity duration-500"
+              className="dev-credit-shimmer group/dev inline-flex items-center gap-2 hover:opacity-50 transition-opacity duration-500"
             >
-              <span className="text-[9px] text-white/60 tracking-[0.12em] uppercase" style={{ fontFamily: 'var(--font-inter)' }}>
+              <span className="text-[8.5px] text-white/50 tracking-[0.15em] uppercase" style={{ fontFamily: 'var(--font-inter)' }}>
                 Engineered by
               </span>
-              <span className="relative text-[9px] font-semibold tracking-[0.06em] text-[#00D084]/70 group-hover/dev:text-[#00D084] transition-colors duration-300" style={{ fontFamily: 'var(--font-poppins)' }}>
+              <span
+                className="text-[9px] font-bold tracking-[0.08em] text-white/60 group-hover/dev:text-white/80 transition-colors duration-300"
+                style={{ fontFamily: 'var(--font-poppins)' }}
+              >
                 LD
-                <span className="absolute -bottom-px left-0 right-0 h-px bg-[#00D084]/0 group-hover/dev:bg-[#00D084]/40 transition-all duration-300" />
               </span>
-              <svg className="w-2 h-2 text-white/30 group-hover/dev:text-[#00D084]/50 transition-colors duration-300" viewBox="0 0 16 16" fill="none">
-                <path d="M5 3l6 5-6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <span className="text-[7px] text-white/25 group-hover/dev:text-white/60 transition-colors duration-300 leading-none">&rsaquo;</span>
             </a>
           </div>
         </div>

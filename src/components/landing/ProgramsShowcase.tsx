@@ -18,7 +18,7 @@ const PROGRAMS = [
   {
     tag: 'Social',
     title: 'Dinner & Awards Night',
-    body: 'Our flagship event — an elegant evening of celebration, networking, and recognition, bringing together members, alumni, and distinguished guests for a night of fine dining, awards, and cultural showcases.',
+    body: 'Our flagship event: an elegant evening of celebration, networking, and recognition, bringing together members, alumni, and distinguished guests for a night of fine dining, awards, and cultural showcases.',
     image: '/images/dinnernight.jpg',
     stat: '500+',
     statLabel: 'Annual Guests',
@@ -34,7 +34,7 @@ const PROGRAMS = [
   {
     tag: 'Welfare',
     title: 'Student Bursary Programme',
-    body: 'Supporting deserving medical and dental surgery students with financial aid to ease the burden of tuition and academic expenses — because no dream should be limited by finances.',
+    body: 'Supporting deserving medical and dental surgery students with financial aid to ease the burden of tuition and academic expenses. Because no dream should be limited by finances.',
     image: '/images/communityimpact.jpg',
     stat: 'Coming',
     statLabel: 'Soon',

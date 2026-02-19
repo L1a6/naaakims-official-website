@@ -318,7 +318,7 @@ export default function AboutPreview() {
               style={{ fontFamily: 'var(--font-inter)' }}
             >
               Through mentorship, community health outreach, inter-chapter events, and a shared commitment to service,
-              we are shaping the next generation of world-class healthcare leaders — one student at a time.
+              we are shaping the next generation of world-class healthcare leaders, one student at a time.
             </p>
 
             {/* Premium CTA group */}

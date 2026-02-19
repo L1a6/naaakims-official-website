@@ -19,7 +19,7 @@ const PROGRAMS = [
     num: '01',
     tag: 'Social',
     title: 'Dinner & Awards Night',
-    body: 'Our flagship event — an elegant evening of celebration, networking, and recognition, bringing together members, alumni, and distinguished guests for a night of fine dining, awards, and cultural showcases.',
+    body: 'Our flagship event: an elegant evening of celebration, networking, and recognition, bringing together members, alumni, and distinguished guests for a night of fine dining, awards, and cultural showcases.',
     image: '/images/dinnernight.jpg',
     stat: '500+',
     statLabel: 'Annual Guests',
@@ -41,7 +41,7 @@ const PROGRAMS = [
     num: '03',
     tag: 'Welfare',
     title: 'Student Bursary Programme',
-    body: 'Supporting deserving medical and dental surgery students with financial aid to ease the burden of tuition and academic expenses — because no dream should be limited by finances.',
+    body: 'Supporting deserving medical and dental surgery students with financial aid to ease the burden of tuition and academic expenses. Because no dream should be limited by finances.',
     image: '/images/bursary.jpg',
     stat: 'Coming',
     statLabel: 'Soon',
@@ -180,7 +180,7 @@ export default function ProgramsInitiatives() {
               className="hd-rev text-gray-400 text-[14px] sm:text-[15px] leading-[1.85] max-w-sm lg:text-right"
               style={{ fontFamily: 'var(--font-inter)' }}
             >
-              From dinner nights to health missions — a family that empowers, educates, and elevates together.
+              From dinner nights to health missions. A family that empowers, educates, and elevates together.
             </p>
           </div>
         </div>
@@ -200,7 +200,7 @@ export default function ProgramsInitiatives() {
               {PROGRAMS.map((p, i) => (
                 <div
                   key={p.id}
-                  className="absolute inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                  className="absolute inset-0 transition-opacity duration-700 ease-in-out"
                   style={{ opacity: i === active ? 1 : 0 }}
                 >
                   <Image
