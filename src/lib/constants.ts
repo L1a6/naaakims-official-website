@@ -135,7 +135,7 @@ export const SOCIAL_MEDIA = {
 // ============================================================================
 
 export const CONTACT_INFO = {
-  EMAIL: 'info@naakims.org', // Update with actual email
+  EMAIL: 'info@naakims.com', // Update with actual email
   PHONE: '+234 XXX XXX XXXX', // Update with actual phone
   ADDRESS: 'Akwa Ibom State, Nigeria', // Update with actual address
   OFFICE_HOURS: 'Monday - Friday, 9:00 AM - 5:00 PM',
@@ -262,7 +262,7 @@ export const SEO_DEFAULTS = {
     'healthcare leaders',
   ],
   OG_IMAGE: '/images/og-image.jpg',
-  SITE_URL: 'https://naakims.org', // Update with actual domain
+  SITE_URL: 'https://naakims.com', // Update with actual domain
 } as const;
 
 // ============================================================================

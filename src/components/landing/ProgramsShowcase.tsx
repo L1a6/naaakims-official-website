@@ -16,28 +16,28 @@ if (typeof window !== 'undefined') {
    ───────────────────────────────────────────────────────────── */
 const PROGRAMS = [
   {
-    tag: 'Annual',
-    title: 'National Medical Convention',
-    body: 'Our flagship gathering — three days of keynote lectures, clinical workshops, research presentations, and cultural celebrations uniting all chapters under one roof.',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1400&q=80',
-    stat: '3,000+',
-    statLabel: 'Annual Attendees',
+    tag: 'Social',
+    title: 'NAAKIMS Dinner Night',
+    body: 'An elegant evening of celebration, networking, and camaraderie — bringing together members, alumni, and distinguished guests for a night of fine dining and cultural showcases.',
+    image: '/images/dinnernight.jpg',
+    stat: '500+',
+    statLabel: 'Annual Guests',
   },
   {
     tag: 'Outreach',
     title: 'Community Health Missions',
     body: 'Health education campaigns, awareness programs, and community engagement initiatives reaching thousands of communities across Akwa Ibom and beyond.',
-    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=1400&q=80',
+    image: '/images/healthmissions.jpg',
     stat: '50+',
     statLabel: 'Health Campaigns',
   },
   {
-    tag: 'Leadership',
-    title: 'Mentorship & Career Development',
-    body: 'Pairing students with practicing physicians, surgeons, and specialists — structured mentorship that bridges the gap from lecture halls to operating rooms.',
-    image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1400&q=80',
-    stat: '300+',
-    statLabel: 'Active Mentorship Pairs',
+    tag: 'Welfare',
+    title: 'Student Bursary Programme',
+    body: 'Supporting deserving medical and dental surgery students with financial aid to ease the burden of tuition and academic expenses — because no dream should be limited by finances.',
+    image: '/images/communityimpact.jpg',
+    stat: 'Coming',
+    statLabel: 'Soon',
   },
 ];
 

@@ -25,21 +25,21 @@ const PILLARS = [
     num: '01',
     title: 'Academic Excellence',
     sub: 'Mentorship programs, symposiums, and cross‑chapter knowledge exchange that push boundaries in medical education.',
-    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80',
+    image: '/images/naakimsinduction.jpg',
     color: '#00D084',
   },
   {
     num: '02',
     title: 'Global Unity',
     sub: 'Connecting Akwa Ibom medical students across Nigeria and beyond into one powerful united voice for change.',
-    image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80',
+    image: '/images/globalunity.jpg',
     color: '#008751',
   },
   {
     num: '03',
     title: 'Community Impact',
     sub: 'Healthcare outreach, community service, and public health advocacy driven by deep compassion and purpose.',
-    image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=900&q=80',
+    image: '/images/communityimpact.jpg',
     color: '#00B872',
   },
 ];
@@ -404,8 +404,8 @@ export default function AboutPreview() {
                   />
                 </div>
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-black/5 group-hover:from-black/90 transition-all duration-500" />
-                {/* Green hover overlay */}
-                <div className="absolute inset-0 bg-[#008751]/0 group-hover:bg-[#008751]/15 transition-all duration-600 z-1" />
+                {/* Subtle green tint on image only */}
+                <div className="absolute inset-0 bg-[#008751]/0 group-hover:bg-[#008751]/12 transition-all duration-600" />
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-[#00D084]/0 group-hover:via-[#00D084]/70 to-transparent transition-all duration-700" />
                 <div className="absolute inset-0 flex flex-col justify-end p-7">
                   <span className="text-white/20 text-[10px] font-mono tracking-[0.3em] mb-2 group-hover:text-[#00D084]/40 transition-colors duration-500">{p.num}</span>
@@ -467,8 +467,8 @@ function MobilePillars() {
             <Image src={p.image} alt={p.title} fill className="object-cover" sizes="100vw" />
             {/* Dark gradient always present */}
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)' }} />
-            {/* Green tint only on active card */}
-            <div className={cn('absolute inset-0 transition-all duration-500 z-1', i === active ? 'bg-[#008751]/70' : 'bg-transparent')} />
+            {/* Subtle green overlay only on active card image */}
+            <div className={cn('absolute inset-0 transition-all duration-500', i === active ? 'bg-[#008751]/20' : 'bg-transparent')} />
             <div className="absolute inset-0 flex flex-col justify-end p-4">
               <span className="text-white/25 text-[9px] font-mono tracking-[0.2em] mb-1">{p.num}</span>
               <h4 className="text-white text-[14px] font-bold leading-tight" style={{ fontFamily: 'var(--font-poppins)' }}>{p.title}</h4>

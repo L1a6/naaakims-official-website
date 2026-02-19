@@ -10,26 +10,26 @@ import { cn } from '@/lib/utils';
    ──────────────────────────────────────────────────────────── */
 const SLIDES = [
   {
-    src: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1920&q=80',
-    alt: 'Medical graduates celebrating excellence',
+    src: '/images/hero1.jpg',
+    alt: 'NAAKIMS students celebrating excellence',
     line1: 'Tomorrow\u2019s Healthcare Leaders',
     line2: 'Start Right Here',
   },
   {
-    src: 'https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1920&q=80',
-    alt: 'Diverse medical team',
-    line1: 'Excellence in Medical',
-    line2: 'Education Worldwide',
+    src: '/images/hero2.jpg',
+    alt: 'NAAKIMS medical team',
+    line1: 'Advancing Medical',
+    line2: 'Excellence Together',
   },
   {
-    src: 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1920&q=80',
-    alt: 'Medical students studying',
+    src: '/images/hero3.jpg',
+    alt: 'NAAKIMS students studying',
     line1: 'Uniting Akwa Ibom',
     line2: 'Students Across Continents',
   },
   {
-    src: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1920&q=80',
-    alt: 'University students collaborating',
+    src: '/images/hero4.jpg',
+    alt: 'NAAKIMS students collaborating',
     line1: 'United by Origin,',
     line2: 'Driven by Excellence',
   },
@@ -156,14 +156,14 @@ export default function HeroSlideshow() {
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          opacity: 0.35,
+          opacity: 0.28,
           background: 'linear-gradient(135deg, rgba(0,12,6,0.85) 0%, rgba(0,12,6,0.55) 40%, rgba(0,12,6,0.25) 75%, rgba(0,12,6,0.15) 100%)',
         }}
       />
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
-        style={{ background: 'linear-gradient(to right, rgba(0,208,132,0.14) 0%, rgba(0,208,132,0.06) 35%, transparent 70%)' }}
+        style={{ background: 'linear-gradient(to right, rgba(0,208,132,0.08) 0%, rgba(0,208,132,0.03) 35%, transparent 70%)' }}
       />
       <div
         className="absolute inset-x-0 bottom-0 h-64 pointer-events-none"

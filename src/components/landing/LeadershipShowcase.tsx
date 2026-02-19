@@ -14,18 +14,18 @@ if (typeof window !== 'undefined') {
    DATA
    ───────────────────────────────────────────────────────────── */
 const PRESIDENT = {
-  name: 'John Doe',
+  name: 'Ndifreke Okpongete',
   role: 'Worldwide President',
-  quote: '"Our mission is simple — to build a world-class network of medical and dental surgery professionals rooted in excellence, service, and the shared identity of Akwa Ibom."',
+  quote: '\u201COur mission is simple \u2014 to build a world-class network of medical and dental surgery professionals rooted in excellence, service, and the shared identity of Akwa Ibom.\u201D',
   image: '/naakimswwpresident.jpg',
   chapter: 'University of Uyo',
 };
 
 const EXECUTIVES = [
-  { name: 'Jane Ekanem', role: 'Vice President', image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80', chapter: 'University of Calabar' },
-  { name: 'David Udoh', role: 'General Secretary', image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80', chapter: 'University of Lagos' },
-  { name: 'Grace Bassey', role: 'Financial Secretary', image: 'https://images.unsplash.com/photo-1607990283143-e81e7a2c9349?auto=format&fit=crop&w=600&q=80', chapter: 'University of Ibadan' },
-  { name: 'Emmanuel Akpan', role: 'Director of Socials', image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80', chapter: 'Obafemi Awolowo University' },
+  { name: 'Covenant Etim', role: 'VP External', image: '/images/vicepresidentexternal.jpg', chapter: 'University of Uyo' },
+  { name: 'Imaobong Clement', role: 'General Secretary', image: '/images/generalsecretary.jpg', chapter: 'University of Uyo' },
+  { name: 'Assam, Kingsley', role: 'Financial Secretary', image: '/images/financialsecretary.jpg', chapter: 'University of Uyo' },
+  { name: 'Emediong Asuquo', role: 'Treasurer', image: '/images/treasurer.jpg', chapter: 'University of Uyo' },
 ];
 
 /* ─────────────────────────────────────────────────────────────
