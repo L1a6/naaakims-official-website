@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/shared/Header";
@@ -24,6 +24,11 @@ export const metadata: Metadata = {
     description: "Connecting medical students from Akwa Ibom State across continents",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: 1280,
+  initialScale: 0.35,
 };
 
 export default function RootLayout({

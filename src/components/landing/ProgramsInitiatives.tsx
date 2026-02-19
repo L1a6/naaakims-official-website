@@ -42,7 +42,7 @@ const PROGRAMS = [
     tag: 'Welfare',
     title: 'Student Bursary Programme',
     body: 'Supporting deserving medical and dental surgery students with financial aid to ease the burden of tuition and academic expenses — because no dream should be limited by finances.',
-    image: '/images/communityimpact.jpg',
+    image: '/images/bursary.jpg',
     stat: 'Coming',
     statLabel: 'Soon',
     accent: '#00B872',

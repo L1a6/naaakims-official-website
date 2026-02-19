@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { NAV_LINKS, SOCIAL_MEDIA, CONTACT_INFO, BRAND } from '@/lib/constants';
@@ -230,33 +229,32 @@ export default function JoinCtaFooter() {
 
             {/* brand column */}
             <div className="ft-col col-span-2 sm:col-span-4 lg:col-span-5">
-              <Link href="/" className="inline-flex items-center gap-3 mb-5 group">
+              <span className="inline-flex items-center gap-3 mb-5 group cursor-default">
                 <Image
                   src="/logo.png"
                   alt={BRAND.NAME}
                   width={36}
                   height={36}
-                  className="w-9 h-9 rounded-xl object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="w-9 h-9 rounded-xl object-contain"
                 />
-                <span className="text-white/50 text-[13px] font-semibold tracking-[0.01em] group-hover:text-white/70 transition-colors" style={{ fontFamily: 'var(--font-poppins)' }}>
+                <span className="text-white/50 text-[13px] font-semibold tracking-[0.01em]" style={{ fontFamily: 'var(--font-poppins)' }}>
                   {BRAND.NAME}
                 </span>
-              </Link>
+              </span>
               <p className="text-white/25 text-[12.5px] leading-[1.75] max-w-xs mb-5" style={{ fontFamily: 'var(--font-inter)' }}>
                 {BRAND.FULL_NAME}. United by origin, driven by excellence in medical education and community health.
               </p>
               {/* contact info */}
               <div className="space-y-2">
-                <a
-                  href={`mailto:${CONTACT_INFO.EMAIL}`}
-                  className="flex items-center gap-2 text-white/30 text-[12px] hover:text-[#00D084] transition-colors duration-300"
+                <span
+                  className="flex items-center gap-2 text-white/30 text-[12px] cursor-default"
                   style={{ fontFamily: 'var(--font-inter)' }}
                 >
                   <svg className="w-3.5 h-3.5 shrink-0 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                   </svg>
                   {CONTACT_INFO.EMAIL}
-                </a>
+                </span>
                 <p className="flex items-start gap-2 text-white/20 text-[11.5px] leading-relaxed" style={{ fontFamily: 'var(--font-inter)' }}>
                   <svg className="w-3.5 h-3.5 shrink-0 opacity-40 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -298,16 +296,13 @@ export default function JoinCtaFooter() {
             {/* socials */}
             <div className="flex items-center gap-2">
               {SOCIALS.map((s) => (
-                <a
+                <span
                   key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ft-social w-9 h-9 rounded-full bg-white/4 hover:bg-[#00D084]/15 border border-white/6 hover:border-[#00D084]/20 flex items-center justify-center text-white/25 hover:text-[#00D084] transition-all duration-300"
+                  className="ft-social w-9 h-9 rounded-full bg-white/4 hover:bg-[#00D084]/15 border border-white/6 hover:border-[#00D084]/20 flex items-center justify-center text-white/25 hover:text-[#00D084] transition-all duration-300 cursor-pointer"
                   aria-label={s.label}
                 >
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d={s.icon} /></svg>
-                </a>
+                </span>
               ))}
             </div>
 
@@ -315,6 +310,27 @@ export default function JoinCtaFooter() {
             <p className="text-white/15 text-[11px] tracking-wide" style={{ fontFamily: 'var(--font-inter)' }}>
               &copy; {new Date().getFullYear()} {BRAND.NAME}. All rights reserved.
             </p>
+          </div>
+
+          {/* ── Powered-by credit ── */}
+          <div className="mt-6 flex items-center justify-center">
+            <a
+              href="https://www.larrydavid.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/dev inline-flex items-center gap-1.5 opacity-[0.18] hover:opacity-40 transition-opacity duration-500"
+            >
+              <span className="text-[9px] text-white/60 tracking-[0.12em] uppercase" style={{ fontFamily: 'var(--font-inter)' }}>
+                Crafted by
+              </span>
+              <span className="relative text-[9px] font-semibold tracking-[0.06em] text-[#00D084]/70 group-hover/dev:text-[#00D084] transition-colors duration-300" style={{ fontFamily: 'var(--font-poppins)' }}>
+                LD
+                <span className="absolute -bottom-px left-0 right-0 h-px bg-[#00D084]/0 group-hover/dev:bg-[#00D084]/40 transition-all duration-300" />
+              </span>
+              <svg className="w-2 h-2 text-white/30 group-hover/dev:text-[#00D084]/50 transition-colors duration-300" viewBox="0 0 16 16" fill="none">
+                <path d="M5 3l6 5-6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
           </div>
         </div>
       </footer>
