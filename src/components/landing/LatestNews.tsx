@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
@@ -65,7 +64,7 @@ const POSTS = [
 export default function LatestNews() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef  = useRef<HTMLDivElement>(null);
-  const heroRef    = useRef<HTMLAnchorElement>(null);
+  const heroRef    = useRef<HTMLDivElement>(null);
   const gridRef    = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -202,23 +201,21 @@ export default function LatestNews() {
             </p>
           </div>
 
-          <Link
-            href="/blog"
-            className="bn-rev group shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md bg-[#008751] text-white text-[12px] sm:text-[13px] font-bold tracking-wide hover:bg-[#006d41] active:scale-[0.97] transition-all duration-300 shadow-lg shadow-[#008751]/25"
+          <span
+            className="bn-rev group shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 rounded-lg bg-[#008751] text-white text-[12px] sm:text-[13px] font-bold tracking-wide transition-all duration-300 shadow-lg shadow-[#008751]/25"
             style={{ fontFamily: 'var(--font-inter)' }}
           >
             View All Posts
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-0.5 transition-transform">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </Link>
+          </span>
         </div>
 
         {/* ══════════ FEATURED HERO ARTICLE ══════════ */}
-        <Link
+        <div
           ref={heroRef}
-          href="/blog"
-          className="group relative block rounded-2xl overflow-hidden mb-6 sm:mb-8 opacity-0"
+          className="group relative block rounded-2xl overflow-hidden mb-6 sm:mb-8 opacity-0 cursor-default"
           style={{ boxShadow: '0 8px 48px rgba(0,0,0,0.3)' }}
         >
           {/* Full-bleed image */}
@@ -243,21 +240,6 @@ export default function LatestNews() {
 
           {/* Content overlay */}
           <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-12">
-            {/* Category badge */}
-            <div className="hero-txt mb-4">
-              <span
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] backdrop-blur-sm"
-                style={{
-                  color: featured.categoryColor,
-                  background: `${featured.categoryColor}15`,
-                  border: `1px solid ${featured.categoryColor}25`,
-                  fontFamily: 'var(--font-inter)',
-                }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: featured.categoryColor }} />
-                {featured.category}
-              </span>
-            </div>
 
             <h3
               className="hero-txt text-white text-[clamp(1.3rem,3vw,2.2rem)] font-extrabold leading-[1.12] tracking-[-0.025em] mb-3 sm:mb-4 max-w-3xl group-hover:text-[#00D084] transition-colors duration-500"
@@ -267,7 +249,7 @@ export default function LatestNews() {
             </h3>
 
             <p
-              className="hero-txt text-white/40 text-[13px] sm:text-[15px] leading-[1.7] mb-5 max-w-2xl line-clamp-2"
+              className="hero-txt text-white/50 text-[14px] sm:text-[16px] leading-[1.75] mb-6 max-w-2xl line-clamp-2"
               style={{ fontFamily: 'var(--font-inter)' }}
             >
               {featured.excerpt}
@@ -299,23 +281,22 @@ export default function LatestNews() {
             <span className="w-1.5 h-1.5 rounded-full bg-[#00D084] animate-pulse" />
             <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/70" style={{ fontFamily: 'var(--font-inter)' }}>Featured</span>
           </div>
-        </Link>
+        </div>
 
         {/* ══════════ ARTICLE GRID ══════════ */}
-        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {articles.map((post) => (
-            <Link
+            <div
               key={post.title}
-              href="/blog"
-              className="bn-card group relative rounded-xl overflow-hidden block opacity-0"
+              className="bn-card group relative rounded-2xl overflow-hidden block opacity-0 cursor-default"
               style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                boxShadow: '0 2px 16px rgba(0,0,0,0.15)',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.07)',
+                boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
               }}
             >
               {/* Image */}
-              <div className="relative overflow-hidden" style={{ height: '180px' }}>
+              <div className="relative overflow-hidden" style={{ height: '200px' }}>
                 <div className="bn-img absolute inset-0">
                   <Image
                     src={post.image}
@@ -329,59 +310,46 @@ export default function LatestNews() {
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,12,8,0.7) 0%, transparent 50%)' }} />
                 {/* Green accent hover */}
                 <div className="absolute inset-0 bg-[#008751]/0 group-hover:bg-[#008751]/12 transition-all duration-500" />
-
-                {/* Category badge (floating) */}
-                <div className="absolute top-3 left-3">
-                  <span
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.18em] backdrop-blur-sm"
-                    style={{
-                      color: post.categoryColor,
-                      background: `${post.categoryColor}18`,
-                      border: `1px solid ${post.categoryColor}20`,
-                      fontFamily: 'var(--font-inter)',
-                    }}
-                  >
-                    <span className="w-1 h-1 rounded-full" style={{ background: post.categoryColor }} />
-                    {post.category}
-                  </span>
-                </div>
               </div>
 
               {/* Content */}
               <div className="p-5 sm:p-6">
                 <h4
-                  className="text-white text-[15px] sm:text-[16px] font-bold leading-snug tracking-[-0.01em] mb-3 line-clamp-2 group-hover:text-[#00D084] transition-colors duration-400"
+                  className="text-white text-[16px] sm:text-[17px] font-bold leading-[1.35] tracking-[-0.01em] mb-3 line-clamp-2 group-hover:text-[#00D084] transition-colors duration-400"
                   style={{ fontFamily: 'var(--font-poppins)' }}
                 >
                   {post.title}
                 </h4>
 
                 <p
-                  className="text-white/30 text-[12px] sm:text-[13px] leading-[1.7] mb-4 line-clamp-2"
+                  className="text-white/35 text-[13px] sm:text-[14px] leading-[1.75] mb-5 line-clamp-2"
                   style={{ fontFamily: 'var(--font-inter)' }}
                 >
                   {post.excerpt}
                 </p>
 
                 {/* Meta + arrow */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[10px] text-white/25" style={{ fontFamily: 'var(--font-inter)' }}>
-                    <span className="font-semibold text-white/40">{post.author}</span>
+                <div className="flex items-center justify-between pt-4 border-t border-white/6">
+                  <div className="flex items-center gap-2 text-[11px] text-white/25" style={{ fontFamily: 'var(--font-inter)' }}>
+                    <span className="font-semibold text-white/45">{post.author}</span>
                     <span className="w-0.5 h-0.5 bg-white/15 rounded-full" />
                     <span>{post.date}</span>
                   </div>
-                  <svg
-                    width="14" height="14" viewBox="0 0 16 16" fill="none"
-                    className="text-white/15 group-hover:text-[#00D084] group-hover:translate-x-0.5 transition-all duration-300 shrink-0"
-                  >
-                    <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#00D084]/60 group-hover:text-[#00D084] group-hover:gap-2 transition-all duration-300" style={{ fontFamily: 'var(--font-inter)' }}>
+                    Read
+                    <svg
+                      width="12" height="12" viewBox="0 0 16 16" fill="none"
+                      className="group-hover:translate-x-0.5 transition-all duration-300 shrink-0"
+                    >
+                      <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
                 </div>
               </div>
 
               {/* Bottom accent line on hover */}
               <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#00D084] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-            </Link>
+            </div>
           ))}
         </div>
       </div>

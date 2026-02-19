@@ -27,6 +27,7 @@ export default function Preloader() {
   const lettersRef       = useRef<(HTMLSpanElement | null)[]>([]);
   const barFillRef       = useRef<HTMLDivElement>(null);
   const barGlowRef       = useRef<HTMLDivElement>(null);
+  const worldwideRef     = useRef<HTMLSpanElement>(null);
   const statusRef        = useRef<HTMLSpanElement>(null);
   const counterRef       = useRef<HTMLSpanElement>(null);
 
@@ -59,6 +60,20 @@ export default function Preloader() {
           delay: 0.25,
         },
       );
+
+      /* 'Worldwide' label fades in AFTER all letters are visible */
+      if (worldwideRef.current) {
+        gsap.fromTo(
+          worldwideRef.current,
+          { opacity: 0, y: 8, filter: 'blur(4px)' },
+          {
+            opacity: 0.7, y: 0, filter: 'blur(0px)',
+            duration: 0.6,
+            ease: 'power2.out',
+            delay: 0.25 + 0.07 * validLetters.length + 0.3,
+          },
+        );
+      }
     }, overlayRef);
 
     return () => ctx.revert();
@@ -150,6 +165,11 @@ export default function Preloader() {
       });
       tl.to(validLetters, { opacity: 0, y: -30, duration: 0.45, stagger: 0.04, ease: 'power2.in' }, 0.3);
 
+      /* Fade out Worldwide label */
+      if (worldwideRef.current) {
+        tl.to(worldwideRef.current, { opacity: 0, y: -10, duration: 0.3, ease: 'power2.in' }, 0.25);
+      }
+
       /* Start revealing page content BEFORE curtains split so there's no ghost gap */
       tl.add(() => {
         const pageContent = document.getElementById('page-content');
@@ -200,7 +220,12 @@ export default function Preloader() {
       {/* ── Ambient glow ── */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 55% 45% at 50% 48%, rgba(0,208,132,0.03) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 48%, rgba(0,208,132,0.05) 0%, transparent 65%)' }}
+      />
+      {/* ── Subtle vignette ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0,12,6,0.4) 100%)' }}
       />
 
       {/* ── Center content ── */}
@@ -215,11 +240,12 @@ export default function Preloader() {
               className="inline-block font-bold select-none"
               style={{
                 fontFamily: 'var(--font-poppins)',
-                fontSize: 'clamp(2.2rem,7.5vw,4rem)',
-                letterSpacing: '-0.03em',
+                fontSize: 'clamp(2.5rem,8vw,4.5rem)',
+                letterSpacing: '0.06em',
                 color: '#ffffff',
                 lineHeight: 1,
                 opacity: 0,
+                fontWeight: 800,
               }}
             >
               {letter}
@@ -227,10 +253,11 @@ export default function Preloader() {
           ))}
         </div>
 
-        {/* Worldwide label */}
+        {/* Worldwide label — starts hidden, GSAP reveals after letters */}
         <span
-          className="text-white/20 font-semibold uppercase mb-10"
-          style={{ fontFamily: 'var(--font-inter)', fontSize: '9px', letterSpacing: '0.4em' }}
+          ref={worldwideRef}
+          className="text-white/70 font-semibold uppercase mb-16"
+          style={{ fontFamily: 'var(--font-inter)', fontSize: '10px', letterSpacing: '0.4em', opacity: 0 }}
         >
           Worldwide
         </span>

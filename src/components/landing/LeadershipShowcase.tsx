@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
@@ -66,7 +65,7 @@ function ExecutiveCard({ exec, index }: { exec: (typeof EXECUTIVES)[number]; ind
       onMouseLeave={handleLeave}
     >
       {/* ── Photo frame ── */}
-      <div className="relative overflow-hidden rounded aspect-3/4" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.04)' }}>
+      <div className="relative overflow-hidden rounded-lg aspect-3/4" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.04)' }}>
         {/* Photo */}
         <div className="ec-img absolute inset-0 w-full h-full">
           <Image
@@ -106,16 +105,15 @@ function ExecutiveCard({ exec, index }: { exec: (typeof EXECUTIVES)[number]; ind
             className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.22em] mb-2"
             style={{ fontFamily: 'var(--font-inter)', color: 'rgba(0,208,132,0.85)' }}
           >{exec.chapter}</span>
-          <Link
-            href="/executives"
-            className="inline-flex items-center gap-1.5 text-white/50 text-[11px] hover:text-[#00D084] transition-colors duration-200"
+          <span
+            className="inline-flex items-center gap-1.5 text-white/50 text-[11px] transition-colors duration-200"
             style={{ fontFamily: 'var(--font-inter)' }}
           >
             View profile
             <svg width="9" height="9" viewBox="0 0 16 16" fill="none">
               <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </Link>
+          </span>
         </div>
 
         {/* Permanent name plate at very bottom */}
@@ -198,20 +196,25 @@ export default function LeadershipShowcase() {
         );
       }
 
-      /* ── Executive cards: staggered wipe-in ── */
+      /* ── Executive cards: clean staggered entrance (no floating) ── */
       if (gridRef.current) {
         const cards = gridRef.current.querySelectorAll('.exec-card');
         cards.forEach((card, i) => {
           const img = card.querySelector('img');
+
+          // Entrance: simple fade + slide up
           gsap.fromTo(card,
-            { opacity: 0, y: 60, scale: 0.92 },
-            { opacity: 1, y: 0, scale: 1, duration: 1, delay: i * 0.12, ease: 'power3.out',
-              scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none none' } },
+            { opacity: 0, y: 60, scale: 0.95 },
+            { opacity: 1, y: 0, scale: 1,
+              duration: 1, delay: i * 0.12, ease: 'power3.out',
+              scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' } },
           );
+
+          // Image zoom settle
           if (img) gsap.fromTo(img,
             { scale: 1.12 },
             { scale: 1, duration: 1.4, delay: i * 0.12 + 0.1, ease: 'power3.out',
-              scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none none' } },
+              scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' } },
           );
         });
       }
@@ -242,11 +245,11 @@ export default function LeadershipShowcase() {
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")' }} />
 
         {/* ── Header ── */}
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-12 sm:pt-24 lg:pt-32 pb-8 sm:pb-14">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-14">
           <div ref={headerRef} className="text-center max-w-2xl mx-auto">
-            <div className="lh-rev flex items-center justify-center gap-3 mb-5">
+            <div className="lh-rev flex items-center justify-center gap-4 mb-5">
               <span className="h-px w-10 bg-[#00D084]/30" />
-              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.35em] text-[#00D084]/70" style={{ fontFamily: 'var(--font-inter)' }}>Leadership</span>
+              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.35em] text-[#00D084]/70 px-2" style={{ fontFamily: 'var(--font-inter)' }}>Leadership</span>
               <span className="h-px w-10 bg-[#00D084]/30" />
             </div>
             <h2 className="lh-rev text-[clamp(1.8rem,4.2vw,3.2rem)] font-extrabold leading-[1.06] tracking-[-0.03em] text-white mb-5" style={{ fontFamily: 'var(--font-poppins)' }}>
@@ -260,7 +263,7 @@ export default function LeadershipShowcase() {
 
         {/* ── President Card ── */}
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-16 sm:pb-20">
-          <div ref={presRef} className="relative overflow-hidden opacity-0" style={{ boxShadow: '0 25px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)' }}>
+          <div ref={presRef} className="relative overflow-hidden rounded-lg opacity-0" style={{ boxShadow: '0 25px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)' }}>
             <div className="grid lg:grid-cols-2">
               {/* Image */}
               <div className="pres-img relative aspect-4/5 lg:aspect-auto overflow-hidden" style={{ minHeight: '400px' }}>
@@ -292,10 +295,10 @@ export default function LeadershipShowcase() {
                 <div className="mt-10 h-px w-full" style={{ background: 'linear-gradient(to right, rgba(0,208,132,0.3), rgba(0,208,132,0.05), transparent)' }} />
 
                 <div className="pres-txt mt-7">
-                  <Link href="/executives" className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md bg-[#008751] text-white text-[12px] sm:text-[13px] font-bold tracking-wide hover:bg-[#006d41] active:scale-[0.97] transition-all duration-300">
+                  <span className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-lg bg-[#008751] text-white text-[12px] sm:text-[13px] font-bold tracking-wide transition-all duration-300">
                     Meet Full Executive Team
                     <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  </Link>
+                  </span>
                 </div>
               </div>
             </div>
@@ -349,16 +352,15 @@ export default function LeadershipShowcase() {
             <p className="lc-rev text-gray-400 text-[13px] sm:text-[14px] leading-[1.8] max-w-xs" style={{ fontFamily: 'var(--font-inter)' }}>
               Elected by members, driven by purpose — leading NAAKIMS into its next era.
             </p>
-            <Link
-              href="/executives"
-              className="lc-rev group shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md bg-[#008751] text-white text-[12px] sm:text-[13px] font-bold tracking-wide hover:bg-[#006d41] active:scale-[0.97] transition-all duration-300 shadow-lg shadow-[#008751]/20"
+            <span
+              className="lc-rev group shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 rounded-lg bg-[#008751] text-white text-[12px] sm:text-[13px] font-bold tracking-wide transition-all duration-300 shadow-lg shadow-[#008751]/20"
               style={{ fontFamily: 'var(--font-inter)' }}
             >
               View All Leaders
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-0.5 transition-transform">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </Link>
+            </span>
           </div>
         </div>
       </div>

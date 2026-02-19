@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
@@ -50,12 +49,7 @@ const PROGRAMS = [
   },
 ] as const;
 
-const IMPACT = [
-  { num: '50+', label: 'Health Campaigns' },
-  { num: '20+', label: 'Active Chapters' },
-  { num: '25+', label: 'Universities Represented' },
-  { num: '5,000+', label: 'Members Worldwide' },
-];
+const IMPACT: never[] = [];
 
 /* ═════════════════════════════════════════════════════════════
    ProgramsInitiatives
@@ -65,91 +59,45 @@ export default function ProgramsInitiatives() {
   const sectionRef    = useRef<HTMLDivElement>(null);
   const headerRef     = useRef<HTMLDivElement>(null);
   const panelRef      = useRef<HTMLDivElement>(null);
-  const imageWrapRef  = useRef<HTMLDivElement>(null);
   const contentRef    = useRef<HTMLDivElement>(null);
-  const statRef       = useRef<HTMLDivElement>(null);
-  const impactRef     = useRef<HTMLDivElement>(null);
-  const progressRef   = useRef<HTMLDivElement>(null);
 
   const [active, setActive] = useState(0);
+  const [prevActive, setPrevActive] = useState(0);
   const isAnimating = useRef(false);
-  const autoTimer   = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const prog = PROGRAMS[active];
 
-  /* ── Auto-advance ── */
-  const startAuto = useCallback(() => {
-    if (autoTimer.current) clearInterval(autoTimer.current);
-    autoTimer.current = setInterval(() => {
-      setActive((prev) => (prev + 1) % PROGRAMS.length);
-    }, 6000);
-  }, []);
+  /* ── No auto-advance — user controls at will ── */
 
-  useEffect(() => {
-    startAuto();
-    return () => { if (autoTimer.current) clearInterval(autoTimer.current); };
-  }, [startAuto]);
-
-  /* ── Progress bar reset each slide ── */
-  useEffect(() => {
-    if (!progressRef.current) return;
-    gsap.fromTo(progressRef.current, { scaleX: 0 }, { scaleX: 1, duration: 6, ease: 'none' });
-  }, [active]);
-
-  /* ── Switch program with GSAP transition ── */
+  /* ── Switch program with smooth crossfade ── */
   const switchTo = useCallback((idx: number) => {
     if (idx === active || isAnimating.current) return;
     isAnimating.current = true;
-    startAuto();
+    setPrevActive(active);
 
     const tl = gsap.timeline({
       onComplete: () => { isAnimating.current = false; },
     });
 
-    /* Exit: wipe out image and content */
-    if (imageWrapRef.current) {
-      tl.to(imageWrapRef.current, {
-        clipPath: 'inset(0 0 100% 0)',
-        scale: 0.96,
-        duration: 0.5,
-        ease: 'power3.in',
-      }, 0);
-    }
+    /* Fade out content text */
     if (contentRef.current) {
       const els = contentRef.current.querySelectorAll('.prog-anim');
-      tl.to(els, { opacity: 0, y: -16, duration: 0.3, stagger: 0.03, ease: 'power2.in' }, 0);
-    }
-    if (statRef.current) {
-      tl.to(statRef.current, { opacity: 0, scale: 0.85, duration: 0.3, ease: 'power2.in' }, 0);
+      tl.to(els, { opacity: 0, y: -12, duration: 0.35, stagger: 0.03, ease: 'power2.in' }, 0);
     }
 
-    /* Switch state */
-    tl.add(() => setActive(idx), 0.5);
+    /* Switch state (image crossfades via CSS transition) */
+    tl.add(() => setActive(idx), 0.3);
 
-    /* Enter: reveal new content */
-    if (imageWrapRef.current) {
-      tl.fromTo(imageWrapRef.current,
-        { clipPath: 'inset(100% 0 0 0)', scale: 0.96 },
-        { clipPath: 'inset(0% 0 0 0)', scale: 1, duration: 0.9, ease: 'power4.out' },
-        0.55,
-      );
-    }
+    /* Fade in new content text */
     if (contentRef.current) {
       const els = contentRef.current.querySelectorAll('.prog-anim');
       tl.fromTo(els,
-        { opacity: 0, y: 30, clipPath: 'inset(0 0 100% 0)' },
-        { opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 0.8, stagger: 0.08, ease: 'power3.out' },
-        0.65,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.06, ease: 'power3.out' },
+        0.45,
       );
     }
-    if (statRef.current) {
-      tl.fromTo(statRef.current,
-        { opacity: 0, scale: 0.7 },
-        { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2.5)' },
-        0.85,
-      );
-    }
-  }, [active, startAuto]);
+  }, [active]);
 
   /* ── Scroll-triggered entrance ── */
   useEffect(() => {
@@ -180,34 +128,6 @@ export default function ProgramsInitiatives() {
         );
       }
 
-      /* Impact numbers: stagger up */
-      if (impactRef.current) {
-        gsap.fromTo(
-          impactRef.current.querySelectorAll('.imp-card'),
-          { opacity: 0, y: 30, scale: 0.9 },
-          {
-            opacity: 1, y: 0, scale: 1,
-            duration: 0.9, stagger: 0.1, ease: 'power3.out',
-            scrollTrigger: { trigger: impactRef.current, start: 'top 85%', toggleActions: 'play none none none' },
-          },
-        );
-      }
-
-      /* Decorative parallax */
-      const decos = sectionRef.current?.querySelectorAll('.deco-float');
-      decos?.forEach((d) => {
-        gsap.to(d, {
-          y: -50,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1,
-          },
-        });
-      });
-
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -228,18 +148,9 @@ export default function ProgramsInitiatives() {
             backgroundSize: '32px 32px',
           }}
         />
-        {/* Floating gradient orbs */}
-        <div className="deco-float absolute -top-20 right-[10%] w-80 h-80 rounded-full bg-[#00D084]/6 blur-[100px]" />
-        <div className="deco-float absolute bottom-[15%] -left-10 w-64 h-64 rounded-full bg-[#008751]/5 blur-[80px]" />
-        {/* Geometric accent lines */}
-        <svg className="absolute top-32 left-8 w-24 h-24 text-[#00D084]/8 deco-float" viewBox="0 0 100 100" fill="none">
-          <rect x="10" y="10" width="80" height="80" rx="4" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="25" y="25" width="50" height="50" rx="2" stroke="currentColor" strokeWidth="1" />
-        </svg>
-        <svg className="absolute bottom-48 right-12 w-20 h-20 text-[#008751]/6 deco-float" viewBox="0 0 80 80" fill="none">
-          <circle cx="40" cy="40" r="35" stroke="currentColor" strokeWidth="1.5" />
-          <circle cx="40" cy="40" r="18" stroke="currentColor" strokeWidth="1" />
-        </svg>
+        {/* Ambient gradient orbs */}
+        <div className="absolute -top-20 right-[10%] w-80 h-80 rounded-full bg-[#00D084]/6 blur-[100px]" />
+        <div className="absolute bottom-[15%] -left-10 w-64 h-64 rounded-full bg-[#008751]/5 blur-[80px]" />
         {/* Top accent line */}
         <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(0,208,132,0.2), transparent)' }} />
       </div>
@@ -262,14 +173,14 @@ export default function ProgramsInitiatives() {
               className="hd-rev text-[clamp(1.8rem,4.5vw,3.2rem)] font-extrabold leading-[1.06] tracking-[-0.035em] text-gray-900 max-w-2xl"
               style={{ fontFamily: 'var(--font-poppins)' }}
             >
-              Programs That{' '}
-              <span className="text-[#008751]">Transform</span> Lives
+              Programs{' '}&amp;{' '}
+              <span className="text-[#008751]">Initiatives</span>
             </h2>
             <p
               className="hd-rev text-gray-400 text-[14px] sm:text-[15px] leading-[1.85] max-w-sm lg:text-right"
               style={{ fontFamily: 'var(--font-inter)' }}
             >
-              From national conventions to grassroots health missions — every initiative empowers, educates, and elevates.
+              From national conventions to grassroots health missions — a family that empowers, educates, and elevates together.
             </p>
           </div>
         </div>
@@ -284,54 +195,37 @@ export default function ProgramsInitiatives() {
           {/* ─── Desktop: split image + content ─── */}
           <div className="hidden lg:grid lg:grid-cols-12 bg-white" style={{ minHeight: '480px' }}>
 
-            {/* Left — Image Panel */}
+            {/* Left — Image Panel (all images stacked, CSS crossfade) */}
             <div className="relative col-span-7 overflow-hidden bg-gray-100">
-              <div
-                ref={imageWrapRef}
-                className="absolute inset-0"
-              >
-                <Image
-                  src={prog.image}
-                  alt={prog.title}
-                  fill
-                  className="object-cover"
-                  sizes="60vw"
-                  priority
-                />
-                {/* Bottom gradient for text contrast on image edge */}
+              {PROGRAMS.map((p, i) => (
                 <div
-                  className="absolute inset-0"
-                  style={{ background: 'linear-gradient(135deg, rgba(0,18,10,0.35) 0%, transparent 50%)' }}
-                />
-                {/* Green tint overlay on hover state */}
-                <div
-                  className="absolute inset-0"
-                  style={{ background: `linear-gradient(to bottom right, ${prog.accent}12, transparent 60%)` }}
-                />
-              </div>
-
-              {/* Floating stat badge */}
-              <div
-                ref={statRef}
-                className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-xl rounded-xl px-5 py-4 shadow-lg"
-                style={{ border: '1px solid rgba(0,208,132,0.15)' }}
-              >
-                <span
-                  className="text-[clamp(1.4rem,2.5vw,2rem)] font-extrabold block leading-none"
-                  style={{ color: prog.accent, fontFamily: 'var(--font-poppins)' }}
+                  key={p.id}
+                  className="absolute inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                  style={{ opacity: i === active ? 1 : 0 }}
                 >
-                  {prog.stat}
-                </span>
-                <span
-                  className="text-gray-400 text-[9px] font-bold uppercase tracking-[0.2em] mt-1 block"
-                  style={{ fontFamily: 'var(--font-inter)' }}
-                >
-                  {prog.statLabel}
-                </span>
-              </div>
+                  <Image
+                    src={p.image}
+                    alt={p.title}
+                    fill
+                    className="object-cover"
+                    sizes="60vw"
+                    priority={i === 0}
+                  />
+                  {/* Bottom gradient for text contrast on image edge */}
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: 'linear-gradient(135deg, rgba(0,18,10,0.35) 0%, transparent 50%)' }}
+                  />
+                  {/* Green tint overlay */}
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: `linear-gradient(to bottom right, ${p.accent}12, transparent 60%)` }}
+                  />
+                </div>
+              ))}
 
               {/* Slide counter */}
-              <div className="absolute top-6 left-6 flex items-center gap-2">
+              <div className="absolute top-6 left-6 flex items-center gap-2 z-10">
                 <span
                   className="text-white/80 text-[11px] font-mono tracking-wider font-semibold"
                   style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}
@@ -376,16 +270,15 @@ export default function ProgramsInitiatives() {
                 </p>
 
                 <div className="prog-anim">
-                  <Link
-                    href="/events"
-                    className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-md bg-[#008751] text-white text-[13px] font-bold tracking-wide shadow-lg shadow-[#008751]/15 hover:bg-[#006d41] hover:shadow-xl hover:shadow-[#008751]/25 active:scale-[0.97] transition-all duration-300"
+                  <span
+                    className="group inline-flex items-center gap-2 text-[13px] font-semibold text-[#008751] transition-all duration-300"
                     style={{ fontFamily: 'var(--font-inter)' }}
                   >
                     Learn More
-                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-0.5 transition-transform">
-                      <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                      <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                  </Link>
+                  </span>
                 </div>
               </div>
 
@@ -444,14 +337,8 @@ export default function ProgramsInitiatives() {
                   </button>
                 ))}
 
-                {/* Progress bar */}
-                <div className="h-0.5 bg-gray-100">
-                  <div
-                    ref={progressRef}
-                    className="h-full bg-[#00D084] origin-left"
-                    style={{ transform: 'scaleX(0)' }}
-                  />
-                </div>
+                {/* Bottom accent line */}
+                <div className="h-0.5 bg-[#00D084]/20" />
               </div>
             </div>
           </div>
@@ -460,47 +347,6 @@ export default function ProgramsInitiatives() {
           <MobilePrograms active={active} switchTo={switchTo} />
         </div>
 
-        {/* ══════════ IMPACT NUMBERS ══════════ */}
-        <div ref={impactRef} className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-10 sm:mt-14">
-          {IMPACT.map((item) => (
-            <div
-              key={item.label}
-              className="imp-card group relative rounded-xl bg-white px-5 py-5 sm:py-6 text-center overflow-hidden transition-all duration-400 hover:shadow-lg cursor-default"
-              style={{ border: '1px solid rgba(0,135,81,0.08)', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}
-            >
-              {/* Green accent glow on hover */}
-              <div className="absolute inset-0 bg-[#00D084]/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
-              <span
-                className="relative text-[clamp(1.1rem,2.5vw,1.6rem)] font-extrabold text-gray-900 block leading-none tracking-tight"
-                style={{ fontFamily: 'var(--font-poppins)' }}
-              >
-                {item.num}
-              </span>
-              <span
-                className="relative text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-400 mt-1.5 block"
-                style={{ fontFamily: 'var(--font-inter)' }}
-              >
-                {item.label}
-              </span>
-              {/* Bottom accent */}
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#00D084] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-            </div>
-          ))}
-        </div>
-
-        {/* ── Section footer link ── */}
-        <div className="flex justify-center mt-10">
-          <Link
-            href="/events"
-            className="group text-[13px] font-semibold text-[#008751] hover:text-[#006d41] transition-colors inline-flex items-center gap-2"
-            style={{ fontFamily: 'var(--font-inter)' }}
-          >
-            View All Programs & Events
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-0.5 transition-transform">
-              <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-        </div>
       </div>
     </section>
   );
@@ -528,7 +374,7 @@ function MobilePrograms({ active, switchTo }: { active: number; switchTo: (i: nu
             {/* Active indicator */}
             <div
               className={cn(
-                'absolute left-0 top-0 bottom-0 w-0.75 rounded-r-full transition-all duration-500',
+                'absolute left-0 top-0 bottom-0 w-0.5 rounded-r-full transition-all duration-500',
                 isActive ? 'bg-[#00D084]' : 'bg-transparent',
               )}
             />
@@ -538,7 +384,7 @@ function MobilePrograms({ active, switchTo }: { active: number; switchTo: (i: nu
               <div className="flex items-center gap-4">
                 <span
                   className={cn(
-                    'text-[12px] font-bold tabular-nums transition-colors duration-400',
+                    'text-[13px] font-bold tabular-nums transition-all duration-400',
                     isActive ? 'text-[#00D084]' : 'text-gray-300',
                   )}
                   style={{ fontFamily: 'var(--font-inter)' }}
@@ -577,8 +423,8 @@ function MobilePrograms({ active, switchTo }: { active: number; switchTo: (i: nu
                   isActive ? 'max-h-90 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0',
                 )}
               >
-                {/* Image */}
-                <div className="relative rounded-lg overflow-hidden mb-4" style={{ height: '160px' }}>
+                {/* Image first */}
+                <div className="relative rounded-xl overflow-hidden mb-4 shadow-lg" style={{ height: '180px' }}>
                   <Image
                     src={p.image}
                     alt={p.title}
@@ -586,36 +432,31 @@ function MobilePrograms({ active, switchTo }: { active: number; switchTo: (i: nu
                     className="object-cover"
                     sizes="100vw"
                   />
-                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,18,10,0.3), transparent 50%)' }} />
-                  {/* Floating stat */}
-                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-sm rounded-lg px-3 py-2" style={{ border: '1px solid rgba(0,208,132,0.12)' }}>
-                    <span className="text-[15px] font-extrabold block leading-none" style={{ color: p.accent, fontFamily: 'var(--font-poppins)' }}>
-                      {p.stat}
-                    </span>
-                    <span className="text-gray-400 text-[8px] font-bold uppercase tracking-[0.15em]">
-                      {p.statLabel}
-                    </span>
-                  </div>
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(0,18,10,0.45) 0%, transparent 50%)' }} />
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,18,10,0.5), transparent 50%)' }} />
+                  <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom right, ${p.accent}15, transparent 60%)` }} />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ background: `linear-gradient(to right, ${p.accent}, transparent)` }} />
                 </div>
 
+                {/* Brief description */}
                 <p
-                  className="text-gray-500 text-[13px] sm:text-[14px] leading-[1.8] mb-4 pl-8"
+                  className="text-gray-500 text-[13px] sm:text-[14px] leading-[1.85] mb-4"
                   style={{ fontFamily: 'var(--font-inter)' }}
                 >
                   {p.body}
                 </p>
 
-                <div className="pl-8">
-                  <Link
-                    href="/events"
-                    className="inline-flex items-center gap-2 text-[12px] font-bold text-[#008751]"
-                    style={{ fontFamily: 'var(--font-inter)' }}
+                {/* Text CTA */}
+                <div>
+                  <span
+                    className="group inline-flex items-center gap-2 text-[13px] font-semibold transition-all duration-300"
+                    style={{ color: p.accent, fontFamily: 'var(--font-inter)' }}
                   >
                     Learn More
-                    <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
-                      <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                      <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                  </Link>
+                  </span>
                 </div>
               </div>
             </div>

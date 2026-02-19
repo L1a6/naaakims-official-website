@@ -195,21 +195,19 @@ export default function JoinCtaFooter() {
 
               {/* CTA buttons */}
               <div className="cta-el flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link
-                  href="/portal"
-                  className="group relative inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-md bg-[#008751] text-white text-sm font-bold tracking-wide hover:bg-[#006d41] active:scale-[0.98] transition-all duration-300"
+                <span
+                  className="group relative inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-[#008751] text-white text-sm font-bold tracking-wide transition-all duration-300"
                 >
-                  Log In to Portal
-                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">
+                  Get Started
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                </Link>
-                <Link
-                  href="/about"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border border-white/20 text-white text-sm font-medium tracking-wide backdrop-blur-sm hover:bg-white/10 hover:border-white/40 active:scale-[0.98] transition-all duration-300"
+                </span>
+                <span
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg border border-white/20 text-white text-sm font-medium tracking-wide backdrop-blur-sm transition-all duration-300"
                 >
                   Explore NAAKIMS
-                </Link>
+                </span>
               </div>
             </div>
           </div>
@@ -278,14 +276,13 @@ export default function JoinCtaFooter() {
                 <ul className="space-y-2.5">
                   {col.links.map((link) => (
                     <li key={link.label}>
-                      <Link
-                        href={link.href}
-                        className="group/link inline-flex items-center gap-1.5 text-white/30 text-[12.5px] hover:text-[#00D084] transition-colors duration-300"
+                      <span
+                        className="group/link inline-flex items-center gap-1.5 text-white/30 text-[12.5px] transition-colors duration-300"
                         style={{ fontFamily: 'var(--font-inter)' }}
                       >
                         <span className="block w-0 h-px bg-[#00D084] transition-all duration-300 group-hover/link:w-3" />
                         {link.label}
-                      </Link>
+                      </span>
                     </li>
                   ))}
                 </ul>

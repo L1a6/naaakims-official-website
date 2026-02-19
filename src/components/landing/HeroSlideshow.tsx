@@ -2,14 +2,8 @@
 
 import { useEffect, useState, useCallback, useRef } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 /* ────────────────────────────────────────────────────────────
    Curated slides
@@ -55,6 +49,7 @@ export default function HeroSlideshow() {
   const [textIdx, setTextIdx] = useState(0);
   const [phase, setPhase] = useState<Phase>('hidden');
   const [ready, setReady] = useState(false);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
   const firstChange = useRef(true);
 
   /* ── Entrance ──────────────────────────────────────────── */
@@ -68,54 +63,24 @@ export default function HeroSlideshow() {
     return () => { clearTimeout(t); clearTimeout(v); };
   }, []);
 
-  /* ── GSAP ScrollTrigger — scroll-to-zoom + parallax disbanding ── */
+  /* ── Premium GSAP headline animation ────────────────────── */
   useEffect(() => {
-    if (!sectionRef.current) return;
-    const ctx = gsap.context(() => {
-      // Zoom OUT the image as user scrolls away — creates depth
-      if (imageWrapRef.current) {
-        gsap.to(imageWrapRef.current, {
-          scale: 1.15,
-          yPercent: 15,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 0.8,
-          },
-        });
-      }
-      // Parallax text — moves up faster than scroll
-      if (contentRef.current) {
-        gsap.to(contentRef.current, {
-          yPercent: -25,
-          opacity: 0,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: '60% top',
-            scrub: 0.5,
-          },
-        });
-      }
-      // Overlay darken on scroll
-      if (overlayRef.current) {
-        gsap.to(overlayRef.current, {
-          opacity: 0.7,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 0.5,
-          },
-        });
-      }
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+    if (!ready || !headlineRef.current) return;
+    const words = headlineRef.current.querySelectorAll('.hero-word');
+    if (!words.length) return;
+    gsap.killTweensOf(words);
+    gsap.fromTo(words,
+      { opacity: 0, y: 60, rotateX: 40, filter: 'blur(6px)' },
+      {
+        opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)',
+        duration: 1,
+        stagger: { each: 0.08, ease: 'power2.out' },
+        ease: 'power4.out',
+      },
+    );
+  }, [ready, textIdx]);
+
+  /* ── Scroll parallax removed — text stays visible at all times ── */
 
   /* ── Auto-advance slides ───────────────────────────────── */
   useEffect(() => {
@@ -237,19 +202,21 @@ export default function HeroSlideshow() {
             </span>
           </div>
 
-          {/* ── Dynamic Headline — PURE WHITE, strict 2 lines ── */}
+          {/* ── Dynamic Headline — PURE WHITE, GSAP word stagger ── */}
           <h1
-            className={cn('text-white font-semibold leading-[1.08] tracking-[-0.03em] mb-6', 'text-[clamp(1.7rem,5.5vw,4.2rem)]')}
-            style={{ fontFamily: 'var(--font-poppins)' }}
+            ref={headlineRef}
+            className={cn('text-white font-bold leading-[1.15] tracking-[-0.02em] mb-8')}
+            style={{ fontFamily: 'var(--font-poppins)', perspective: '800px', fontSize: 'clamp(1.875rem, 3.5vw, 3rem)' }}
           >
             {ready && (
               <>
-                <span key={`${textIdx}-l1`} className={cn('block', textCls())} style={{ ...textStyle(), ...wordDelay(0) }}>
-                  {slide.line1}
-                </span>
-                <span key={`${textIdx}-l2`} className={cn('block', textCls())} style={{ ...textStyle(), ...wordDelay(1) }}>
-                  {slide.line2}
-                </span>
+                {slide.line1.split(' ').map((word, i) => (
+                  <span key={`${textIdx}-l1-${i}`} className="hero-word inline-block" style={{ marginRight: '0.28em', willChange: 'transform, opacity, filter' }}>{word}</span>
+                ))}
+                <br />
+                {slide.line2.split(' ').map((word, i) => (
+                  <span key={`${textIdx}-l2-${i}`} className="hero-word inline-block" style={{ marginRight: '0.28em', willChange: 'transform, opacity, filter' }}>{word}</span>
+                ))}
               </>
             )}
           </h1>
@@ -277,34 +244,31 @@ export default function HeroSlideshow() {
               ready ? 'opacity-100 translate-y-0 delay-300' : 'opacity-0 translate-y-4',
             )}
           >
-            <Link
-              href="/portal"
+            <span
               className={cn(
                 'group inline-flex items-center justify-center gap-3',
-                'min-w-55 sm:min-w-50 px-10 py-3.75 rounded-md',
+                'min-w-55 sm:min-w-50 px-10 py-3.75 rounded-lg',
                 'bg-[#008751] text-white text-[13px] sm:text-sm font-bold tracking-wide',
-                'hover:bg-[#006d41] shadow-lg shadow-[#008751]/25',
-                'active:scale-[0.97] transition-all duration-300',
+                'shadow-lg shadow-[#008751]/25',
+                'transition-all duration-300',
               )}
             >
-              Log In to Portal
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-0.5 transition-transform"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </Link>
+              Get Started
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </span>
 
-            <Link
-              href="/about"
+            <span
               className={cn(
                 'group inline-flex items-center justify-center gap-3',
-                'min-w-55 sm:min-w-50 px-10 py-3.75 rounded-md',
+                'min-w-55 sm:min-w-50 px-10 py-3.75 rounded-lg',
                 'border border-white/25 text-white text-[13px] sm:text-sm font-semibold tracking-wide',
                 'backdrop-blur-md bg-white/5',
-                'hover:bg-white/12 hover:border-white/40',
-                'active:scale-[0.97] transition-all duration-300',
+                'transition-all duration-300',
               )}
             >
               Explore NAAKIMS
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-0.5 transition-transform"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </Link>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </span>
           </div>
         </div>
       </div>
@@ -312,12 +276,11 @@ export default function HeroSlideshow() {
       {/* ─── SLIDE INDICATORS (bottom-left) ────────────────── */}
       <div className={cn('absolute bottom-8 left-6 sm:left-10 lg:left-16 z-10 flex items-center gap-2', 'transition-opacity duration-700', ready ? 'opacity-100 delay-500' : 'opacity-0')}>
         {SLIDES.map((_, i) => (
-          <button
+          <div
             key={i}
-            onClick={() => setActive(i)}
-            className="relative h-0.5 rounded-full cursor-pointer overflow-hidden transition-all duration-500"
+            className="relative h-0.5 rounded-full overflow-hidden transition-all duration-500"
             style={{ width: i === active ? 40 : 16, backgroundColor: i === active ? 'transparent' : 'rgba(255,255,255,0.20)' }}
-            aria-label={`Go to slide ${i + 1}`}
+            aria-label={`Slide ${i + 1}`}
           >
             {i === active && (
               <>
@@ -325,7 +288,7 @@ export default function HeroSlideshow() {
                 <span className="absolute inset-0 bg-white rounded-full origin-left animate-slide-fill" style={{ animationDuration: `${CYCLE_MS}ms` }} />
               </>
             )}
-          </button>
+          </div>
         ))}
         <span className="text-white/30 text-[10px] font-mono ml-2.5 tabular-nums">
           {String(active + 1).padStart(2, '0')}/{String(SLIDES.length).padStart(2, '0')}
@@ -333,16 +296,15 @@ export default function HeroSlideshow() {
       </div>
 
       {/* ─── SCROLL CTA (bottom-right) ─────────────────────── */}
-      <button
-        onClick={scrollToContent}
-        className={cn('absolute bottom-8 right-6 sm:right-10 lg:right-16 z-10 flex items-center gap-3 group cursor-pointer', 'transition-opacity duration-700', ready ? 'opacity-100 delay-500' : 'opacity-0')}
-        aria-label="Scroll to content"
+      <div
+        className={cn('absolute bottom-8 right-6 sm:right-10 lg:right-16 z-10 flex items-center gap-3 group', 'transition-opacity duration-700', ready ? 'opacity-100 delay-500' : 'opacity-0')}
+        aria-label="Scroll indicator"
       >
-        <span className="text-white/40 text-[10px] uppercase tracking-[0.25em] font-medium group-hover:text-white/70 transition-colors">Scroll</span>
+        <span className="text-white/40 text-[10px] uppercase tracking-[0.25em] font-medium">Scroll</span>
         <span className="relative w-px h-10 bg-white/15 overflow-hidden rounded-full">
           <span className="absolute inset-x-0 h-3 bg-[#00D084] animate-scroll-line rounded-full" />
         </span>
-      </button>
+      </div>
     </section>
   );
 }

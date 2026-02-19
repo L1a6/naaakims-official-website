@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
@@ -251,7 +250,7 @@ export default function AboutPreview() {
         <div
           ref={imageRef}
           className="relative w-full overflow-hidden"
-          style={{ height: 'clamp(300px, 52vh, 540px)' }}
+          style={{ height: 'clamp(240px, 40vh, 480px)' }}
         >
           <div className="about-inner-img absolute inset-0">
             <Image
@@ -323,31 +322,29 @@ export default function AboutPreview() {
 
             {/* Premium CTA group */}
             <div className="abt-reveal flex flex-wrap items-center gap-4">
-              <Link
-                href="/about"
+              <span
                 className={cn(
-                  'group inline-flex items-center gap-3 px-7 py-3.5 rounded-md',
+                  'group inline-flex items-center gap-3 px-7 py-3.5 rounded-lg',
                   'bg-[#008751] text-white text-[13px] font-bold tracking-wide',
-                  'shadow-lg shadow-[#008751]/20 hover:shadow-xl hover:shadow-[#008751]/30',
-                  'hover:bg-[#006d41] active:scale-[0.97] transition-all duration-300',
+                  'shadow-lg shadow-[#008751]/20',
+                  'transition-all duration-300',
                 )}
               >
                 Learn Our Story
-                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-white/20 group-hover:bg-white/30 transition-colors">
+                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-white/20 transition-colors">
                   <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>
-              </Link>
-              <Link
-                href="/chapters"
-                className="group text-[13px] font-semibold text-[#008751] hover:text-[#006d41] transition-colors inline-flex items-center gap-2"
+              </span>
+              <span
+                className="group text-[13px] font-semibold text-[#008751] inline-flex items-center gap-2"
               >
                 Discover Chapters
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-0.5 transition-transform">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                   <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </Link>
+              </span>
             </div>
           </div>
         </div>
@@ -468,9 +465,10 @@ function MobilePillars() {
             style={{ height: i === active ? '180px' : '70px' }}
           >
             <Image src={p.image} alt={p.title} fill className="object-cover" sizes="100vw" />
+            {/* Dark gradient always present */}
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)' }} />
-            {/* Green tint overlay for active card */}
-            <div className={cn('absolute inset-0 transition-all duration-500 z-1', i === active ? 'bg-[#008751]/15' : 'bg-transparent')} />
+            {/* Green tint only on active card */}
+            <div className={cn('absolute inset-0 transition-all duration-500 z-1', i === active ? 'bg-[#008751]/70' : 'bg-transparent')} />
             <div className="absolute inset-0 flex flex-col justify-end p-4">
               <span className="text-white/25 text-[9px] font-mono tracking-[0.2em] mb-1">{p.num}</span>
               <h4 className="text-white text-[14px] font-bold leading-tight" style={{ fontFamily: 'var(--font-poppins)' }}>{p.title}</h4>
