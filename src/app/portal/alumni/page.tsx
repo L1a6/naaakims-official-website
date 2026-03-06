@@ -136,7 +136,7 @@ export default function AlumniDashboard() {
                     className={`group relative overflow-hidden rounded-xl bg-linear-to-br ${action.gradient} p-4 sm:p-5 text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
                   >
                     <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/[0.07] -translate-y-6 translate-x-6 sm:-translate-y-8 sm:translate-x-8" />
-                    <div className="absolute bottom-0 left-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/[0.05] translate-y-6 -translate-x-4 sm:translate-y-8 sm:-translate-x-6" />
+                    <div className="absolute bottom-0 left-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/5 translate-y-6 -translate-x-4 sm:translate-y-8 sm:-translate-x-6" />
                     <div className="relative">
                       <span className={`flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl ${action.iconBg} mb-3`}>
                         {action.icon}
@@ -151,7 +151,7 @@ export default function AlumniDashboard() {
             </div>
 
             {/* Mentees */}
-            <div className="dash-section rounded-xl bg-[#008751]/[0.03] p-4 sm:p-5">
+            <div className="dash-section rounded-xl bg-[#008751]/3 p-4 sm:p-5">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-xs sm:text-sm font-semibold text-gray-900">Your Mentees</h2>
                 <button className="text-[10px] sm:text-xs font-medium text-[#008751] hover:text-[#006d42] transition-colors duration-200">Add Mentee</button>
@@ -257,7 +257,7 @@ export default function AlumniDashboard() {
             </div>
 
             {/* Contribute CTA */}
-            <div className="dash-section rounded-xl bg-[#008751]/[0.04] p-4 sm:p-5">
+            <div className="dash-section rounded-xl bg-[#008751]/4 p-4 sm:p-5">
               <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-1.5">Support Students</h3>
               <p className="text-[10px] sm:text-xs text-gray-400 mb-3.5 leading-relaxed">Help fund student bursaries and chapter activities.</p>
               <Link

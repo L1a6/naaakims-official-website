@@ -226,7 +226,7 @@ export default function ResourcesContent() {
               onClick={() => setSelectedCategory(category)}
               className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium transition-all duration-200 ${
                 selectedCategory === category
-                  ? 'bg-[#008751]/[0.06] text-[#008751]'
+                  ? 'bg-[#008751]/6 text-[#008751]'
                   : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
@@ -256,7 +256,7 @@ export default function ResourcesContent() {
               <div
                 key={resource.id}
                 className={`group flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-3 rounded-xl transition-all duration-200 ${
-                  idx % 2 === 0 ? 'bg-[#008751]/[0.03] hover:bg-[#008751]/[0.06]' : 'bg-gray-50/70 hover:bg-gray-100/70'
+                  idx % 2 === 0 ? 'bg-[#008751]/3 hover:bg-[#008751]/6' : 'bg-gray-50/70 hover:bg-gray-100/70'
                 }`}
               >
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: `${courseConfig?.color || '#008751'}12` }}>

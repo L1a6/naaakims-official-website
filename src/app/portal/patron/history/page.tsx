@@ -40,7 +40,7 @@ export default function PatronHistoryPage() {
 
   return (
     <DashboardLayout memberType="patron" userName="Alhaji Suleiman Bello" userRegNo="NAAKIMS/PAT/2020/0045">
-      <div ref={containerRef} className="max-w-4xl mx-auto space-y-6">
+      <div ref={containerRef} className="max-w-4xl mx-auto space-y-5">
         {/* Header */}
         <div className="hist-section flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -64,12 +64,12 @@ export default function PatronHistoryPage() {
             { label: 'This Year', value: formatCurrency(1000000) },
             { label: 'Avg. Contribution', value: formatCurrency(Math.round(totalContributed / contributions.length)) },
           ].map((stat, i) => (
-            <div key={i} className={`group rounded-xl px-3 py-3 sm:px-4 sm:py-4 transition-all duration-200 ${i % 2 === 0 ? 'bg-[#008751]/[0.03]' : 'bg-gray-50/80'} hover:bg-[#008751]/[0.06]`}>
+            <div key={i} className={`group rounded-xl px-3 py-3 sm:px-4 sm:py-4 transition-all duration-200 ${i % 2 === 0 ? 'bg-[#008751]/3' : 'bg-gray-50/80'} hover:bg-[#008751]/6`}>
               <div className="flex items-center justify-between">
                 <p className="text-[10px] font-semibold text-gray-300 uppercase tracking-widest">{stat.label}</p>
                 <div className="w-1.5 h-1.5 rounded-full bg-[#008751]/30 group-hover:bg-[#008751] transition-colors duration-300" />
               </div>
-              <p className="text-[16px] font-bold text-gray-900 tracking-[-0.02em] mt-1.5">{stat.value}</p>
+              <p className="text-sm sm:text-base font-bold text-gray-900 tracking-[-0.02em] mt-1.5">{stat.value}</p>
             </div>
           ))}
         </div>
@@ -90,13 +90,13 @@ export default function PatronHistoryPage() {
             {contributions.map((item, idx) => (
               <div key={idx} className="hist-row sm:grid grid-cols-12 gap-4 px-5 py-4 hover:bg-gray-50/60 transition-colors duration-200">
                 <div className="col-span-4 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#008751]/6 flex items-center justify-center text-[#008751] shrink-0">
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V7m0 1v8m0 0v1" /></svg>
+                  <div className="w-7 h-7 rounded-lg bg-[#008751]/6 flex items-center justify-center text-[#008751] shrink-0">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V7m0 1v8m0 0v1" /></svg>
                   </div>
-                  <p className="text-gray-800 font-medium text-[13px]">{item.purpose}</p>
+                  <p className="text-gray-800 font-medium text-xs">{item.purpose}</p>
                 </div>
                 <div className="col-span-2 flex items-center">
-                  <p className="text-gray-400 text-[12px]">{item.date}</p>
+                  <p className="text-gray-400 text-[10px] sm:text-[11px]">{item.date}</p>
                 </div>
                 <div className="col-span-3 flex items-center">
                   <p className="text-gray-300 text-[11px] font-mono">{item.reference}</p>
@@ -108,7 +108,7 @@ export default function PatronHistoryPage() {
                   </span>
                 </div>
                 <div className="col-span-2 flex items-center justify-end">
-                  <p className="text-gray-900 font-bold text-[13px]">{formatCurrency(item.amount)}</p>
+                  <p className="text-gray-900 font-bold text-xs">{formatCurrency(item.amount)}</p>
                 </div>
               </div>
             ))}

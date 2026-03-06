@@ -36,7 +36,7 @@ export default function AlumniContributePage() {
 
   return (
     <DashboardLayout memberType="alumni" userName="Dr. Fatima Abubakar" userRegNo="NAAKIMS/ALU/2018/0234">
-      <div ref={containerRef} className="max-w-3xl mx-auto space-y-6">
+      <div ref={containerRef} className="max-w-3xl mx-auto space-y-5">
         {/* Header */}
         <div className="contrib-section">
           <h1 className="text-base sm:text-xl font-semibold text-gray-900 tracking-[-0.025em]">Make a Contribution</h1>
@@ -44,13 +44,13 @@ export default function AlumniContributePage() {
         </div>
 
         {/* Impact Banner */}
-        <div className="contrib-section relative overflow-hidden rounded-2xl p-5 sm:p-6 bg-[#008751] text-white">
+        <div className="contrib-section relative overflow-hidden rounded-xl p-4 sm:p-5 bg-[#008751] text-white">
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
           <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-3xl translate-x-10 -translate-y-10" />
           <div className="relative flex items-center gap-6">
             <div className="flex-1">
               <p className="text-white/60 text-[11px] font-semibold uppercase tracking-widest">Your contributions help</p>
-              <p className="text-[18px] font-bold mt-1">Fund student bursaries, sponsor events, and support health missions</p>
+              <p className="text-sm sm:text-base font-bold mt-1">Fund student bursaries, sponsor events, and support health missions</p>
             </div>
             <div className="hidden sm:flex items-center gap-6">
               {[{ value: '200+', label: 'Students Helped' }, { value: '15', label: 'Chapters' }].map((stat, i) => (
@@ -64,34 +64,34 @@ export default function AlumniContributePage() {
         </div>
 
         {/* Contribution Form */}
-        <div className="contrib-section bg-[#008751]/[0.03] rounded-xl px-4 py-4 sm:px-5 sm:py-5">
+        <div className="contrib-section bg-[#008751]/3 rounded-xl px-4 py-4 sm:px-5 sm:py-5">
           <h2 className="text-xs sm:text-sm font-semibold text-gray-900 mb-3">Select Contribution Area</h2>
-          <div className="grid sm:grid-cols-2 gap-3 mb-6">
+          <div className="grid sm:grid-cols-2 gap-3 mb-4">
             {contributionAreas.map((area) => (
               <button
                 key={area.id}
                 onClick={() => setSelectedArea(area.id)}
-                className={`text-left p-4 rounded-xl ring-1 transition-all duration-300 ${
+                className={`text-left p-3 rounded-xl ring-1 transition-all duration-300 ${
                   selectedArea === area.id
-                    ? 'ring-[#008751] bg-[#008751]/[0.06]'
+                    ? 'ring-[#008751] bg-[#008751]/6'
                     : 'ring-gray-200 hover:ring-gray-300 hover:bg-gray-50/80'
                 }`}
               >
-                <p className={`text-[13px] font-semibold ${selectedArea === area.id ? 'text-[#008751]' : 'text-gray-900'}`}>{area.label}</p>
+                <p className={`text-xs font-semibold ${selectedArea === area.id ? 'text-[#008751]' : 'text-gray-900'}`}>{area.label}</p>
                 <p className="text-[11px] text-gray-400 mt-0.5">{area.description}</p>
               </button>
             ))}
           </div>
 
-          <h2 className="text-[14px] font-semibold text-gray-900 mb-3">Select Amount</h2>
-          <div className="grid grid-cols-3 gap-2.5 mb-4">
+          <h2 className="text-xs sm:text-sm font-semibold text-gray-900 mb-3">Select Amount</h2>
+          <div className="grid grid-cols-3 gap-2.5 mb-3">
             {presetAmounts.map((preset) => (
               <button
                 key={preset}
                 onClick={() => setAmount(preset.toString())}
-                className={`py-3 rounded-xl text-[13px] font-semibold ring-1 transition-all duration-300 ${
+                className={`py-2.5 rounded-xl text-[11px] sm:text-[12px] font-semibold ring-1 transition-all duration-300 ${
                   amount === preset.toString()
-                    ? 'ring-[#008751] bg-[#008751]/[0.06] text-[#008751]'
+                    ? 'ring-[#008751] bg-[#008751]/6 text-[#008751]'
                     : 'ring-gray-200 text-gray-600 hover:ring-gray-300 hover:bg-gray-50'
                 }`}
               >
@@ -100,21 +100,21 @@ export default function AlumniContributePage() {
             ))}
           </div>
 
-          <div className="relative mb-6">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[13px] font-medium">NGN</span>
+          <div className="relative mb-4">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs font-medium">NGN</span>
             <input
               type="text"
               placeholder="Or enter custom amount"
               value={amount}
               onChange={(e) => setAmount(e.target.value.replace(/[^0-9]/g, ''))}
-              className="w-full pl-14 pr-4 py-3.5 rounded-xl ring-1 ring-gray-200 text-[13px] text-gray-900 placeholder:text-gray-300 focus:ring-[#008751] focus:outline-none transition-all duration-300"
+              className="w-full pl-12 pr-4 py-2.5 rounded-xl ring-1 ring-gray-200 text-xs sm:text-sm text-gray-900 placeholder:text-gray-300 focus:ring-[#008751] focus:outline-none transition-all duration-300"
             />
           </div>
 
           {/* Recurring toggle */}
-          <div className="flex items-center justify-between p-4 rounded-xl bg-gray-50/80 mb-6">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50/80 mb-4">
             <div>
-              <p className="text-[13px] font-semibold text-gray-900">Make it monthly</p>
+              <p className="text-xs font-semibold text-gray-900">Make it monthly</p>
               <p className="text-[11px] text-gray-400 mt-0.5">Auto-contribute every month</p>
             </div>
             <button
@@ -127,7 +127,7 @@ export default function AlumniContributePage() {
 
           <button
             disabled={!amount}
-            className="w-full py-3.5 bg-[#008751] text-white rounded-lg text-[13px] font-semibold hover:bg-[#006d42] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
+            className="w-full py-3 bg-[#008751] text-white rounded-lg text-[11px] sm:text-[12px] font-semibold hover:bg-[#006d42] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
           >
             {amount ? `Contribute ${formatCurrency(Number(amount))}` : 'Enter an amount to continue'}
             {amount && <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>}
@@ -147,10 +147,10 @@ export default function AlumniContributePage() {
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" /></svg>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-gray-800 font-medium text-[13px]">{item.purpose}</p>
+                  <p className="text-gray-800 font-medium text-xs">{item.purpose}</p>
                   <p className="text-gray-400 text-[11px] mt-0.5">{item.date}</p>
                 </div>
-                <span className="text-gray-900 font-bold text-[13px] shrink-0">{formatCurrency(item.amount)}</span>
+                <span className="text-gray-900 font-bold text-xs shrink-0">{formatCurrency(item.amount)}</span>
               </div>
             ))}
           </div>

@@ -191,7 +191,7 @@ export default function StudentDashboard() {
                     className={`group relative overflow-hidden rounded-xl bg-linear-to-br ${action.gradient} p-4 sm:p-5 text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
                   >
                     <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/[0.07] -translate-y-6 translate-x-6 sm:-translate-y-8 sm:translate-x-8" />
-                    <div className="absolute bottom-0 left-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/[0.05] translate-y-6 -translate-x-4 sm:translate-y-8 sm:-translate-x-6" />
+                    <div className="absolute bottom-0 left-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/5 translate-y-6 -translate-x-4 sm:translate-y-8 sm:-translate-x-6" />
                     <div className="relative">
                       <span className={`flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl ${action.iconBg} mb-3`}>
                         {action.icon}
@@ -234,7 +234,7 @@ export default function StudentDashboard() {
             </div>
 
             {/* Study Resources */}
-            <div className="dash-section rounded-xl bg-[#008751]/[0.03] p-4 sm:p-5">
+            <div className="dash-section rounded-xl bg-[#008751]/3 p-4 sm:p-5">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-xs sm:text-sm font-semibold text-gray-900">Study Resources</h2>
                 <Link href="/portal/student/resources" className="text-[10px] sm:text-xs font-medium text-[#008751] hover:text-[#006d42] transition-colors duration-200">View all</Link>
@@ -330,7 +330,7 @@ export default function StudentDashboard() {
 
             {/* Upgrade to Alumni */}
             {isEligibleForUpgrade && (
-              <div className="dash-section rounded-xl bg-[#008751]/[0.04] p-4 sm:p-5">
+              <div className="dash-section rounded-xl bg-[#008751]/4 p-4 sm:p-5">
                 <div className="flex items-start gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-[#008751]/8 flex items-center justify-center text-[#008751] shrink-0">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" /></svg>

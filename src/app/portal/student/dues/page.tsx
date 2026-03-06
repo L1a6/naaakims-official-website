@@ -48,7 +48,7 @@ export default function DuesPage() {
 
   return (
     <DashboardLayout memberType="student" userName={mockUser.name} userRegNo={mockUser.regNo}>
-      <div ref={containerRef} className="max-w-4xl mx-auto space-y-6">
+      <div ref={containerRef} className="max-w-4xl mx-auto space-y-5">
         {/* Header */}
         <div className="dues-section">
           <h1 className="text-base sm:text-xl font-semibold text-gray-900 tracking-[-0.025em]">Pay Dues</h1>
@@ -56,21 +56,21 @@ export default function DuesPage() {
         </div>
 
         {/* Current Status */}
-        <div className="dues-section bg-[#008751]/6 border border-[#008751]/10 rounded-xl p-5 flex items-center gap-4">
-          <div className="w-11 h-11 rounded-xl bg-[#008751]/10 flex items-center justify-center shrink-0">
-            <svg className="w-5 h-5 text-[#008751]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="dues-section bg-[#008751]/6 border border-[#008751]/10 rounded-xl p-4 flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-[#008751]/10 flex items-center justify-center shrink-0">
+            <svg className="w-4 h-4 text-[#008751]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <div>
-            <p className="text-gray-900 font-semibold text-[14px]">Your dues are up to date</p>
-            <p className="text-gray-500 text-[12px] mt-0.5">Valid until December 2026</p>
+            <p className="text-gray-900 font-semibold text-xs sm:text-sm">Your dues are up to date</p>
+            <p className="text-gray-500 text-[10px] sm:text-[11px] mt-0.5">Valid until December 2026</p>
           </div>
         </div>
 
         {/* Plan Selection */}
         <div className="dues-section">
-          <h2 className="text-[14px] font-semibold text-gray-900 tracking-[-0.01em] mb-3.5">Select Payment Plan</h2>
+          <h2 className="text-xs sm:text-sm font-semibold text-gray-900 tracking-[-0.01em] mb-3">Select Payment Plan</h2>
           <div className="grid sm:grid-cols-2 gap-3">
             {duesOptions.map((option) => (
               <button
@@ -78,9 +78,9 @@ export default function DuesPage() {
                 type="button"
                 onClick={() => setSelectedPlan(option.id)}
                 className={`
-                  relative p-5 rounded-xl border text-left transition-all duration-300
+                  relative p-4 rounded-xl border text-left transition-all duration-300
                   ${selectedPlan === option.id
-                    ? 'border-[#008751] bg-[#008751]/[0.04]'
+                    ? 'border-[#008751] bg-[#008751]/4'
                     : 'border-gray-200 bg-white hover:border-gray-300'}
                 `}
               >
@@ -89,10 +89,10 @@ export default function DuesPage() {
                     Recommended
                   </span>
                 )}
-                <p className="text-gray-900 font-semibold text-[13px]">{option.label}</p>
-                <p className="text-[22px] font-bold text-gray-900 mt-2 tracking-[-0.02em]">
+                <p className="text-gray-900 font-semibold text-xs">{option.label}</p>
+                <p className="text-lg sm:text-xl font-bold text-gray-900 mt-2 tracking-[-0.02em]">
                   {formatCurrency(option.amount)}
-                  <span className="text-[12px] font-normal text-gray-400 ml-1.5">/ {option.period}</span>
+                  <span className="text-[10px] sm:text-[11px] font-normal text-gray-400 ml-1.5">/ {option.period}</span>
                 </p>
               </button>
             ))}
@@ -104,7 +104,7 @@ export default function DuesPage() {
           <button
             onClick={handlePayment}
             disabled={isProcessing}
-            className="w-full py-3.5 rounded-xl bg-[#008751] text-white font-semibold text-[14px] hover:bg-[#007545] active:scale-[0.99] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-xl bg-[#008751] text-white font-semibold text-xs sm:text-sm hover:bg-[#007545] active:scale-[0.99] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isProcessing ? (
               <>
@@ -127,7 +127,7 @@ export default function DuesPage() {
 
         {/* Payment History */}
         <div className="dues-section">
-          <h2 className="text-[14px] font-semibold text-gray-900 tracking-[-0.01em] mb-3.5">Payment History</h2>
+          <h2 className="text-xs sm:text-sm font-semibold text-gray-900 tracking-[-0.01em] mb-3">Payment History</h2>
           <div className="bg-gray-50/80 rounded-xl overflow-hidden">
             <div className="hidden sm:grid grid-cols-4 px-5 py-3 bg-gray-50/60 border-b border-gray-100/60">
               <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">Reference</p>

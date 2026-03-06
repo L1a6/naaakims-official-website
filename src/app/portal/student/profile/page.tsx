@@ -100,14 +100,14 @@ export default function StudentProfilePage() {
             </svg>
             Back to Dashboard
           </Link>
-          <h1 className="text-lg sm:text-xl font-semibold text-gray-900 tracking-[-0.025em]">Edit Profile</h1>
-          <p className="text-gray-500 text-xs sm:text-sm mt-1">Update your personal information and profile photo</p>
+          <h1 className="text-base sm:text-xl font-semibold text-gray-900 tracking-[-0.025em]">Edit Profile</h1>
+          <p className="text-gray-500 text-xs sm:text-sm mt-0.5">Update your personal information and profile photo</p>
         </div>
 
         <form onSubmit={handleSave} className="space-y-4">
           {/* Profile Photo Section */}
           <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
-            <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Profile Photo</h2>
+            <h2 className="text-xs sm:text-sm font-semibold text-gray-900 mb-3 sm:mb-4">Profile Photo</h2>
             <div className="flex items-center gap-4 sm:gap-6">
               <div className="relative">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-gray-200">
@@ -147,7 +147,7 @@ export default function StudentProfilePage() {
 
           {/* Personal Information */}
           <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
-            <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Personal Information</h2>
+            <h2 className="text-xs sm:text-sm font-semibold text-gray-900 mb-3 sm:mb-4">Personal Information</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">First Name</label>
@@ -190,7 +190,7 @@ export default function StudentProfilePage() {
 
           {/* Academic Information */}
           <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
-            <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Academic Information</h2>
+            <h2 className="text-xs sm:text-sm font-semibold text-gray-900 mb-3 sm:mb-4">Academic Information</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">NAAKIMS ID</label>
@@ -262,18 +262,18 @@ export default function StudentProfilePage() {
           <div className="flex items-center justify-end gap-3 sm:gap-4">
             <Link
               href="/portal/student"
-              className="px-4 sm:px-6 py-2.5 sm:py-3 text-gray-600 text-sm font-medium rounded-xl hover:bg-gray-100 transition-colors"
+              className="px-4 sm:px-5 py-2 sm:py-2.5 text-gray-600 text-xs sm:text-sm font-medium rounded-lg hover:bg-gray-100 transition-colors"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={isSaving}
-              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-[#008751] text-white text-sm font-medium rounded-xl hover:bg-[#007545] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+              className="px-4 sm:px-5 py-2 sm:py-2.5 bg-[#008751] text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-[#007545] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
             >
               {isSaving ? (
                 <>
-                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
@@ -281,7 +281,7 @@ export default function StudentProfilePage() {
                 </>
               ) : saved ? (
                 <>
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   Saved!

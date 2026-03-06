@@ -45,7 +45,7 @@ export default function PatronContributePage() {
 
   return (
     <DashboardLayout memberType="patron" userName="Alhaji Suleiman Bello" userRegNo="NAAKIMS/PAT/2020/0045">
-      <div ref={containerRef} className="max-w-3xl mx-auto space-y-6">
+      <div ref={containerRef} className="max-w-3xl mx-auto space-y-5">
         {/* Header */}
         <div className="contrib-section">
           <h1 className="text-base sm:text-xl font-semibold text-gray-900 tracking-[-0.025em]">Make a Contribution</h1>
@@ -53,12 +53,12 @@ export default function PatronContributePage() {
         </div>
 
         {/* Impact Banner */}
-        <div className="contrib-section relative overflow-hidden rounded-2xl p-5 sm:p-6 bg-[#008751] text-white">
+        <div className="contrib-section relative overflow-hidden rounded-xl p-4 sm:p-5 bg-[#008751] text-white">
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
           <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl translate-x-12 -translate-y-12" />
           <div className="relative">
             <p className="text-white/60 text-[11px] font-semibold uppercase tracking-widest">Your Total Contributions</p>
-            <p className="text-xl sm:text-2xl font-bold mt-1 tracking-[-0.03em]">{formatCurrency(2500000)}</p>
+            <p className="text-lg sm:text-xl font-bold mt-1 tracking-[-0.03em]">{formatCurrency(2500000)}</p>
             <div className="flex items-center gap-6 mt-4">
               {[{ value: '15', label: 'Students Supported' }, { value: '3', label: 'Events Sponsored' }, { value: '500+', label: 'Lives Impacted' }].map((stat, idx) => (
                 <div key={idx}>
@@ -85,34 +85,34 @@ export default function PatronContributePage() {
         </div>
 
         {/* Contribution Form */}
-        <div className="contrib-section bg-[#008751]/[0.03] rounded-xl px-4 py-4 sm:px-5 sm:py-5">
+        <div className="contrib-section bg-[#008751]/3 rounded-xl px-4 py-4 sm:px-5 sm:py-5">
           <h2 className="text-xs sm:text-sm font-semibold text-gray-900 mb-3">Select Contribution Area</h2>
-          <div className="grid sm:grid-cols-2 gap-3 mb-6">
+          <div className="grid sm:grid-cols-2 gap-3 mb-4">
             {contributionAreas.map((area) => (
               <button
                 key={area.id}
                 onClick={() => setSelectedArea(area.id)}
-                className={`text-left p-4 rounded-xl ring-1 transition-all duration-300 ${
+                className={`text-left p-3 rounded-xl ring-1 transition-all duration-300 ${
                   selectedArea === area.id
-                    ? 'ring-[#008751] bg-[#008751]/[0.06]'
+                    ? 'ring-[#008751] bg-[#008751]/6'
                     : 'ring-gray-200 hover:ring-gray-300 hover:bg-gray-50/80'
                 }`}
               >
-                <p className={`text-[13px] font-semibold ${selectedArea === area.id ? 'text-[#008751]' : 'text-gray-900'}`}>{area.label}</p>
+                <p className={`text-xs font-semibold ${selectedArea === area.id ? 'text-[#008751]' : 'text-gray-900'}`}>{area.label}</p>
                 <p className="text-[11px] text-gray-400 mt-0.5">{area.description}</p>
               </button>
             ))}
           </div>
 
-          <h2 className="text-[14px] font-semibold text-gray-900 mb-3">Select Amount</h2>
-          <div className="grid grid-cols-3 gap-2.5 mb-4">
+          <h2 className="text-xs sm:text-sm font-semibold text-gray-900 mb-3">Select Amount</h2>
+          <div className="grid grid-cols-3 gap-2.5 mb-3">
             {presetAmounts.map((preset) => (
               <button
                 key={preset}
                 onClick={() => setAmount(preset.toString())}
-                className={`py-3 rounded-xl text-[13px] font-semibold ring-1 transition-all duration-300 ${
+                className={`py-2.5 rounded-xl text-[11px] sm:text-[12px] font-semibold ring-1 transition-all duration-300 ${
                   amount === preset.toString()
-                    ? 'ring-[#008751] bg-[#008751]/[0.06] text-[#008751]'
+                    ? 'ring-[#008751] bg-[#008751]/6 text-[#008751]'
                     : 'ring-gray-200 text-gray-600 hover:ring-gray-300 hover:bg-gray-50'
                 }`}
               >
@@ -121,33 +121,33 @@ export default function PatronContributePage() {
             ))}
           </div>
 
-          <div className="relative mb-4">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[13px] font-medium">NGN</span>
+          <div className="relative mb-3">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs font-medium">NGN</span>
             <input
               type="text"
               placeholder="Or enter custom amount"
               value={amount}
               onChange={(e) => setAmount(e.target.value.replace(/[^0-9]/g, ''))}
-              className="w-full pl-14 pr-4 py-3.5 rounded-xl ring-1 ring-gray-200 text-[13px] text-gray-900 placeholder:text-gray-300 focus:ring-[#008751] focus:outline-none transition-all duration-300"
+              className="w-full pl-12 pr-4 py-2.5 rounded-xl ring-1 ring-gray-200 text-xs sm:text-sm text-gray-900 placeholder:text-gray-300 focus:ring-[#008751] focus:outline-none transition-all duration-300"
             />
           </div>
 
           {/* Dedication */}
-          <div className="mb-4">
-            <label className="text-[12px] font-medium text-gray-600 mb-1.5 block">Dedicate this contribution (optional)</label>
+          <div className="mb-3">
+            <label className="text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 block uppercase tracking-wider">Dedicate this contribution (optional)</label>
             <input
               type="text"
               placeholder="e.g. In memory of Dr. Aminu Kano"
               value={dedicateTo}
               onChange={(e) => setDedicateTo(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl ring-1 ring-gray-200 text-[13px] text-gray-900 placeholder:text-gray-300 focus:ring-[#008751] focus:outline-none transition-all duration-300"
+              className="w-full px-3.5 py-2.5 rounded-xl ring-1 ring-gray-200 text-xs sm:text-sm text-gray-900 placeholder:text-gray-300 focus:ring-[#008751] focus:outline-none transition-all duration-300"
             />
           </div>
 
           {/* Recurring toggle */}
-          <div className="flex items-center justify-between p-4 rounded-xl bg-gray-50/80 mb-6">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50/80 mb-4">
             <div>
-              <p className="text-[13px] font-semibold text-gray-900">Make it monthly</p>
+              <p className="text-xs font-semibold text-gray-900">Make it monthly</p>
               <p className="text-[11px] text-gray-400 mt-0.5">Auto-contribute every month</p>
             </div>
             <button
@@ -160,7 +160,7 @@ export default function PatronContributePage() {
 
           <button
             disabled={!amount}
-            className="w-full py-3.5 bg-[#008751] text-white rounded-lg text-[13px] font-semibold hover:bg-[#006d42] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
+            className="w-full py-3 bg-[#008751] text-white rounded-lg text-[11px] sm:text-[12px] font-semibold hover:bg-[#006d42] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
           >
             {amount ? `Contribute ${formatCurrency(Number(amount))}` : 'Enter an amount to continue'}
             {amount && <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>}

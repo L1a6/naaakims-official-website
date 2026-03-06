@@ -113,7 +113,7 @@ export default function BursaryPage() {
             <p className="text-xs sm:text-sm text-gray-500 mt-2 max-w-sm mx-auto leading-relaxed">
               Your bursary application has been received. We will verify your details and notify you within 5-7 working days.
             </p>
-            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#008751]/[0.04] text-[#008751] text-xs sm:text-sm font-medium">
+            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#008751]/4 text-[#008751] text-xs sm:text-sm font-medium">
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               Application ID: BUR-2026-{Math.floor(Math.random() * 9000) + 1000}
             </div>
@@ -152,9 +152,9 @@ export default function BursaryPage() {
                   onClick={() => setCurrentStep(step.id)}
                   className={`flex items-center gap-1.5 sm:gap-2 w-full px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg transition-all duration-200 ${
                     currentStep === step.id
-                      ? 'bg-[#008751]/[0.06]'
+                      ? 'bg-[#008751]/6'
                       : idx < currentStepIdx
-                        ? 'bg-[#008751]/[0.03]'
+                        ? 'bg-[#008751]/3'
                         : 'bg-gray-50/80'
                   }`}
                 >
@@ -186,7 +186,7 @@ export default function BursaryPage() {
         <div className="step-content space-y-4">
           {/* Academic Info */}
           {currentStep === 'academic' && (
-            <div className="bursary-section rounded-xl bg-[#008751]/[0.03] px-4 py-5 sm:px-6 sm:py-6 space-y-4">
+            <div className="bursary-section rounded-xl bg-[#008751]/3 px-4 py-5 sm:px-6 sm:py-6 space-y-4">
               <div>
                 <h2 className="text-sm sm:text-base font-semibold text-gray-900">Academic Information</h2>
                 <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5">Confirm these details match your academic records</p>
@@ -249,14 +249,14 @@ export default function BursaryPage() {
                     onClick={() => certificateInputRef.current?.click()}
                     className={`w-full rounded-lg border-[1.5px] border-dashed px-4 py-4 text-center transition-all duration-200 ${
                       certificateFile
-                        ? 'border-[#008751]/30 bg-[#008751]/[0.03]'
+                        ? 'border-[#008751]/30 bg-[#008751]/3'
                         : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/60'
                     }`}
                   >
                     {certificateFile ? (
                       <div className="flex items-center justify-center gap-2">
                         <svg className="w-4 h-4 text-[#008751]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                        <span className="text-xs font-medium text-gray-700 truncate max-w-[200px]">{certificateFile.name}</span>
+                        <span className="text-xs font-medium text-gray-700 truncate max-w-50">{certificateFile.name}</span>
                         <span className="text-[9px] text-gray-400">({(certificateFile.size / 1024 / 1024).toFixed(1)} MB)</span>
                       </div>
                     ) : (
@@ -284,14 +284,14 @@ export default function BursaryPage() {
                     onClick={() => admissionInputRef.current?.click()}
                     className={`w-full rounded-lg border-[1.5px] border-dashed px-4 py-4 text-center transition-all duration-200 ${
                       admissionFile
-                        ? 'border-[#008751]/30 bg-[#008751]/[0.03]'
+                        ? 'border-[#008751]/30 bg-[#008751]/3'
                         : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/60'
                     }`}
                   >
                     {admissionFile ? (
                       <div className="flex items-center justify-center gap-2">
                         <svg className="w-4 h-4 text-[#008751]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                        <span className="text-xs font-medium text-gray-700 truncate max-w-[200px]">{admissionFile.name}</span>
+                        <span className="text-xs font-medium text-gray-700 truncate max-w-50">{admissionFile.name}</span>
                         <span className="text-[9px] text-gray-400">({(admissionFile.size / 1024 / 1024).toFixed(1)} MB)</span>
                       </div>
                     ) : (
@@ -392,7 +392,7 @@ export default function BursaryPage() {
           {/* Review */}
           {currentStep === 'review' && (
             <div className="bursary-section space-y-3">
-              <div className="rounded-xl bg-[#008751]/[0.03] px-4 py-4 sm:px-5">
+              <div className="rounded-xl bg-[#008751]/3 px-4 py-4 sm:px-5">
                 <h3 className="text-[11px] sm:text-[12px] font-semibold text-gray-900 mb-2.5">Academic Details</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                   {[

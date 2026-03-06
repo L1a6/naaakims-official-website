@@ -76,7 +76,7 @@ export default function PatronImpactPage() {
 
   return (
     <DashboardLayout memberType="patron" userName="Alhaji Suleiman Bello" userRegNo="NAAKIMS/PAT/2020/0045">
-      <div ref={containerRef} className="max-w-4xl mx-auto space-y-6">
+      <div ref={containerRef} className="max-w-4xl mx-auto space-y-5">
         {/* Header */}
         <div className="impact-section">
           <h1 className="text-base sm:text-xl font-semibold text-gray-900 tracking-[-0.025em]">Your Impact Report</h1>
@@ -84,7 +84,7 @@ export default function PatronImpactPage() {
         </div>
 
         {/* Hero Stats */}
-        <div className="impact-section relative overflow-hidden rounded-2xl p-5 sm:p-6 bg-[#008751] text-white">
+        <div className="impact-section relative overflow-hidden rounded-xl p-4 sm:p-5 bg-[#008751] text-white">
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
           <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl translate-x-12 -translate-y-12" />
           <div className="relative grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
@@ -107,22 +107,22 @@ export default function PatronImpactPage() {
           <h2 className="text-xs sm:text-sm font-semibold text-gray-900 mb-3">Where Your Money Goes</h2>
           <div className="grid sm:grid-cols-2 gap-3">
             {impactAreas.map((area, idx) => (
-              <div key={idx} className={`impact-card rounded-xl px-4 py-4 sm:px-5 sm:py-5 transition-all duration-200 ${idx % 2 === 0 ? 'bg-[#008751]/[0.03]' : 'bg-gray-50/80'} hover:bg-[#008751]/[0.06]`}>
+              <div key={idx} className={`impact-card rounded-xl px-4 py-4 sm:px-5 sm:py-5 transition-all duration-200 ${idx % 2 === 0 ? 'bg-[#008751]/3' : 'bg-gray-50/80'} hover:bg-[#008751]/6`}>
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-xl bg-[#008751]/6 flex items-center justify-center text-[#008751] shrink-0">
                     {area.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-[13px] font-semibold text-gray-900">{area.title}</h3>
+                    <h3 className="text-xs font-semibold text-gray-900">{area.title}</h3>
                     <p className="text-[11px] text-gray-400 mt-0.5 leading-relaxed">{area.description}</p>
                     <div className="flex items-center gap-4 mt-3">
                       <div>
-                        <p className="text-[15px] font-bold text-[#008751]">{formatCurrency(area.amount)}</p>
+                        <p className="text-sm font-bold text-[#008751]">{formatCurrency(area.amount)}</p>
                         <p className="text-[9px] text-gray-300 uppercase tracking-widest">Contributed</p>
                       </div>
                       <div className="w-px h-8 bg-gray-100" />
                       <div>
-                        <p className="text-[15px] font-bold text-gray-900">{area.beneficiaries}+</p>
+                        <p className="text-sm font-bold text-gray-900">{area.beneficiaries}+</p>
                         <p className="text-[9px] text-gray-300 uppercase tracking-widest">Beneficiaries</p>
                       </div>
                     </div>
@@ -135,9 +135,9 @@ export default function PatronImpactPage() {
 
         {/* Milestones */}
         <div className="impact-section bg-gray-50/80 rounded-xl px-4 py-4 sm:px-5 sm:py-5">
-          <h2 className="text-[13px] font-semibold text-gray-900 mb-4">Your Milestones</h2>
+          <h2 className="text-xs font-semibold text-gray-900 mb-4">Your Milestones</h2>
           <div className="relative">
-            <div className="absolute left-[18px] top-2 bottom-2 w-px bg-gray-100" />
+            <div className="absolute left-4.5 top-2 bottom-2 w-px bg-gray-100" />
             <div className="space-y-4">
               {milestones.map((m, idx) => (
                 <div key={idx} className="flex items-start gap-4 relative">
@@ -145,8 +145,8 @@ export default function PatronImpactPage() {
                     {m.year.slice(2)}
                   </div>
                   <div className="pt-1.5">
-                    <p className="text-[12px] text-gray-400 font-medium">{m.year}</p>
-                    <p className="text-[13px] text-gray-800 font-medium mt-0.5">{m.event}</p>
+                    <p className="text-[10px] sm:text-[11px] text-gray-400 font-medium">{m.year}</p>
+                    <p className="text-xs text-gray-800 font-medium mt-0.5">{m.event}</p>
                   </div>
                 </div>
               ))}
@@ -156,7 +156,7 @@ export default function PatronImpactPage() {
 
         {/* CTA */}
         <div className="impact-section text-center py-4">
-          <p className="text-gray-400 text-[12px] mb-3">Continue making an impact with NAAKIMS</p>
+          <p className="text-gray-400 text-[10px] sm:text-[11px] mb-3">Continue making an impact with NAAKIMS</p>
           <a
             href="/portal/patron/contribute"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#008751] text-white rounded-lg text-[12px] font-semibold hover:bg-[#006d42] transition-all duration-200"

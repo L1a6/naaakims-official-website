@@ -55,8 +55,8 @@ export default function AlumniCardPage() {
         {/* Virtual Card - Alumni gradient (teal to emerald) */}
         <div className="id-card relative overflow-hidden rounded-2xl bg-linear-to-br from-[#004d3a] via-[#006d42] to-[#008751]">
           <div className="aspect-[1.7/1] relative p-5 sm:p-7 flex flex-col justify-between">
-            <div className="absolute top-0 right-0 w-56 h-56 bg-white/[0.04] rounded-full -translate-y-20 translate-x-20" />
-            <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/[0.03] rounded-full translate-y-16 -translate-x-16" />
+            <div className="absolute top-0 right-0 w-56 h-56 bg-white/4 rounded-full -translate-y-20 translate-x-20" />
+            <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/3 rounded-full translate-y-16 -translate-x-16" />
             <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #fff 0.5px, transparent 0.5px)', backgroundSize: '18px 18px' }} />
 
             {/* Top Row */}
@@ -112,7 +112,7 @@ export default function AlumniCardPage() {
 
         {/* Card Details */}
         <div className="card-section grid sm:grid-cols-2 gap-3">
-          <div className="bg-[#008751]/[0.03] rounded-xl px-4 py-4 sm:px-5 sm:py-5">
+          <div className="bg-[#008751]/3 rounded-xl px-4 py-4 sm:px-5 sm:py-5">
             <h3 className="text-[11px] sm:text-[12px] font-semibold text-gray-900 mb-3">Card Information</h3>
             <div className="space-y-2.5">
               {[

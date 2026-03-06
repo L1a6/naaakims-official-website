@@ -146,12 +146,12 @@ export default function DashboardLayout({ children, memberType, userName, userRe
   return (
     <div className="min-h-screen bg-[#FAFBFC]">
       {/* Desktop Sidebar - offset below site header */}
-      <aside ref={sidebarRef} className="hidden lg:flex flex-col w-[260px] fixed top-16 bottom-0 left-0 bg-white border-r border-gray-100/80 z-30">
+      <aside ref={sidebarRef} className="hidden lg:flex flex-col w-65 fixed top-16 bottom-0 left-0 bg-white border-r border-gray-100/80 z-30">
         {/* Logo */}
         <div className="px-6 py-5 border-b border-gray-100/60">
           <Link href="/" className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#008751] flex items-center justify-center overflow-hidden">
-              <Image src="/logo.png" alt="NAAKIMS" width={36} height={36} className="w-[22px] h-[22px]" />
+              <Image src="/logo.png" alt="NAAKIMS" width={36} height={36} className="w-5.5 h-5.5" />
             </div>
             <div>
               <span className="text-gray-900 font-bold text-[13px] tracking-[-0.01em] block leading-tight">NAAKIMS</span>
@@ -178,7 +178,7 @@ export default function DashboardLayout({ children, memberType, userName, userRe
                   `}
                 >
                   {isActive && (
-                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-[#008751] rounded-r-full" />
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.75 h-5 bg-[#008751] rounded-r-full" />
                   )}
                   <span className={isActive ? 'text-[#008751]' : 'text-gray-400'}>{item.icon}</span>
                   {item.label}
@@ -225,14 +225,14 @@ export default function DashboardLayout({ children, memberType, userName, userRe
                 key={item.href}
                 href={item.href}
                 className={`
-                  flex flex-col items-center gap-0.5 px-3 py-2 min-w-[60px] transition-all duration-300 relative
+                  flex flex-col items-center gap-0.5 px-3 py-2 min-w-15 transition-all duration-300 relative
                   ${isActive 
                     ? 'text-[#008751]' 
                     : 'text-gray-400'}
                 `}
               >
                 {isActive && (
-                  <span className="absolute top-0 left-1/2 -translate-x-1/2 w-5 h-[2px] bg-[#008751] rounded-full" />
+                  <span className="absolute top-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-[#008751] rounded-full" />
                 )}
                 {item.icon}
                 <span className="text-[10px] font-medium">{item.label}</span>
@@ -243,7 +243,7 @@ export default function DashboardLayout({ children, memberType, userName, userRe
       </nav>
 
       {/* Main Content */}
-      <main className="lg:ml-[260px] min-h-screen pb-24 lg:pb-8 pt-16">
+      <main className="lg:ml-65 min-h-screen pb-24 lg:pb-8 pt-16">
         <div ref={mainRef} className="p-4 lg:p-8">
           {children}
         </div>
