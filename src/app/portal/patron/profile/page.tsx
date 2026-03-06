@@ -90,10 +90,10 @@ export default function PatronProfilePage() {
     >
       <div ref={containerRef} className="max-w-3xl mx-auto">
         {/* Header */}
-        <div className="mb-6">
+        <div className="mb-4">
           <Link 
             href="/portal/patron" 
-            className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm mb-4"
+            className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-xs mb-3"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -104,13 +104,13 @@ export default function PatronProfilePage() {
           <p className="text-gray-500 text-xs sm:text-sm mt-1">Update your patron information and preferences</p>
         </div>
 
-        <form onSubmit={handleSave} className="space-y-6">
+        <form onSubmit={handleSave} className="space-y-4">
           {/* Profile Photo Section */}
-          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Profile Photo</h2>
             <div className="flex items-center gap-4 sm:gap-6">
               <div className="relative">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#008751]/5 flex items-center justify-center overflow-hidden border-2 border-[#008751]/10">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#008751]/5 flex items-center justify-center overflow-hidden border-2 border-[#008751]/10">
                   {photoPreview || formData.photoUrl ? (
                     <Image 
                       src={photoPreview || formData.photoUrl} 
@@ -119,7 +119,7 @@ export default function PatronProfilePage() {
                       className="object-cover" 
                     />
                   ) : (
-                    <span className="text-2xl sm:text-4xl font-bold text-[#008751]">
+                    <span className="text-xl sm:text-2xl font-bold text-[#008751]">
                       {formData.firstName.charAt(0)}
                     </span>
                   )}
@@ -136,7 +136,7 @@ export default function PatronProfilePage() {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-4 py-2 bg-[#008751] text-white text-sm font-medium rounded-lg hover:bg-[#006B41] transition-colors"
+                  className="px-3 py-1.5 text-xs bg-[#008751] text-white font-medium rounded-lg hover:bg-[#006B41] transition-colors"
                 >
                   Upload Photo
                 </button>
@@ -146,77 +146,77 @@ export default function PatronProfilePage() {
           </div>
 
           {/* Personal Information */}
-          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Personal Information</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-3">
               <div className="sm:col-span-2 sm:w-1/3">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Title</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => handleChange('title', e.target.value)}
                   placeholder="e.g., Alhaji, Chief, Dr., Prof."
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">First Name</label>
                 <input
                   type="text"
                   value={formData.firstName}
                   onChange={(e) => handleChange('firstName', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Last Name</label>
                 <input
                   type="text"
                   value={formData.lastName}
                   onChange={(e) => handleChange('lastName', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Email Address</label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleChange('email', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Phone Number</label>
                 <input
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => handleChange('phone', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
                 />
               </div>
             </div>
           </div>
 
           {/* Patron/Organization Information */}
-          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Organization Information</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Patron ID</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Patron ID</label>
                 <input
                   type="text"
                   value={formData.regNo}
                   disabled
-                  className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Organization Type</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Organization Type</label>
                 <select
                   value={formData.organizationType}
                   onChange={(e) => handleChange('organizationType', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
                 >
                   {organizationTypes.map(type => (
                     <option key={type} value={type}>{type}</option>
@@ -224,44 +224,44 @@ export default function PatronProfilePage() {
                 </select>
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Organization Name</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Organization Name</label>
                 <input
                   type="text"
                   value={formData.organization}
                   onChange={(e) => handleChange('organization', e.target.value)}
                   placeholder="e.g., Bello Healthcare Foundation"
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Your Position</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Your Position</label>
                 <input
                   type="text"
                   value={formData.position}
                   onChange={(e) => handleChange('position', e.target.value)}
                   placeholder="e.g., Chairman, CEO"
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">City</label>
                 <input
                   type="text"
                   value={formData.city}
                   onChange={(e) => handleChange('city', e.target.value)}
                   placeholder="e.g., Abuja"
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/50/20 focus:border-[#008751]/50 transition-all"
                 />
               </div>
             </div>
           </div>
 
           {/* Preferences */}
-          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Preferences</h2>
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Contact Method</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Preferred Contact Method</label>
                 <div className="flex gap-4">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -272,7 +272,7 @@ export default function PatronProfilePage() {
                       onChange={(e) => handleChange('preferredContact', e.target.value)}
                       className="w-4 h-4 text-[#008751] focus:ring-[#008751]/50"
                     />
-                    <span className="text-gray-700">Email</span>
+                    <span className="text-sm text-gray-700">Email</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -283,7 +283,7 @@ export default function PatronProfilePage() {
                       onChange={(e) => handleChange('preferredContact', e.target.value)}
                       className="w-4 h-4 text-[#008751] focus:ring-[#008751]/50"
                     />
-                    <span className="text-gray-700">Phone</span>
+                    <span className="text-sm text-gray-700">Phone</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -294,15 +294,15 @@ export default function PatronProfilePage() {
                       onChange={(e) => handleChange('preferredContact', e.target.value)}
                       className="w-4 h-4 text-[#008751] focus:ring-[#008751]/50"
                     />
-                    <span className="text-gray-700">Both</span>
+                    <span className="text-sm text-gray-700">Both</span>
                   </label>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-[#008751]/5 rounded-xl">
+              <div className="flex items-center justify-between p-3 bg-[#008751]/5 rounded-xl">
                 <div>
-                  <h3 className="font-medium text-gray-900">Event Notifications</h3>
-                  <p className="text-sm text-gray-500">Receive updates about VIP events</p>
+                  <h3 className="text-sm font-medium text-gray-900">Event Notifications</h3>
+                  <p className="text-xs text-gray-500">Receive updates about VIP events</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -315,10 +315,10 @@ export default function PatronProfilePage() {
                 </label>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-[#008751]/5 rounded-xl">
+              <div className="flex items-center justify-between p-3 bg-[#008751]/5 rounded-xl">
                 <div>
-                  <h3 className="font-medium text-gray-900">Impact Reports</h3>
-                  <p className="text-sm text-gray-500">Receive quarterly impact reports</p>
+                  <h3 className="text-sm font-medium text-gray-900">Impact Reports</h3>
+                  <p className="text-xs text-gray-500">Receive quarterly impact reports</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -331,10 +331,10 @@ export default function PatronProfilePage() {
                 </label>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-[#008751]/5 rounded-xl">
+              <div className="flex items-center justify-between p-3 bg-[#008751]/5 rounded-xl">
                 <div>
-                  <h3 className="font-medium text-gray-900">Public Recognition</h3>
-                  <p className="text-sm text-gray-500">Show my name on the public patrons list</p>
+                  <h3 className="text-sm font-medium text-gray-900">Public Recognition</h3>
+                  <p className="text-xs text-gray-500">Show my name on the public patrons list</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input

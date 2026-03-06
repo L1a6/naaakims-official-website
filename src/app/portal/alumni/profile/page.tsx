@@ -111,10 +111,10 @@ export default function AlumniProfilePage() {
     >
       <div ref={containerRef} className="max-w-3xl mx-auto">
         {/* Header */}
-        <div className="mb-6">
+        <div className="mb-4">
           <Link 
             href="/portal/alumni" 
-            className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm mb-4"
+            className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-xs mb-3"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -125,13 +125,13 @@ export default function AlumniProfilePage() {
           <p className="text-gray-500 text-xs sm:text-sm mt-1">Update your professional information and preferences</p>
         </div>
 
-        <form onSubmit={handleSave} className="space-y-6">
+        <form onSubmit={handleSave} className="space-y-4">
           {/* Profile Photo Section */}
-          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Profile Photo</h2>
             <div className="flex items-center gap-4 sm:gap-6">
               <div className="relative">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#008751]/5 flex items-center justify-center overflow-hidden border-2 border-[#008751]/10">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#008751]/5 flex items-center justify-center overflow-hidden border-2 border-[#008751]/10">
                   {photoPreview || formData.photoUrl ? (
                     <Image 
                       src={photoPreview || formData.photoUrl} 
@@ -140,7 +140,7 @@ export default function AlumniProfilePage() {
                       className="object-cover" 
                     />
                   ) : (
-                    <span className="text-2xl sm:text-4xl font-bold text-[#008751]">
+                    <span className="text-xl sm:text-2xl font-bold text-[#008751]">
                       {formData.firstName.charAt(0)}
                     </span>
                   )}
@@ -157,7 +157,7 @@ export default function AlumniProfilePage() {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-4 py-2 bg-[#008751]/50 text-white text-sm font-medium rounded-lg hover:bg-[#006B41] transition-colors"
+                  className="px-3 py-1.5 text-xs bg-[#008751]/50 text-white font-medium rounded-lg hover:bg-[#006B41] transition-colors"
                 >
                   Upload Photo
                 </button>
@@ -167,78 +167,78 @@ export default function AlumniProfilePage() {
           </div>
 
           {/* Personal Information */}
-          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Personal Information</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-3">
               <div className="sm:col-span-2 sm:w-1/4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Title</label>
                 <select
                   value={formData.title}
                   onChange={(e) => handleChange('title', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 >
                   <option value="Dr.">Dr.</option>
                   <option value="Prof.">Prof.</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">First Name</label>
                 <input
                   type="text"
                   value={formData.firstName}
                   onChange={(e) => handleChange('firstName', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Last Name</label>
                 <input
                   type="text"
                   value={formData.lastName}
                   onChange={(e) => handleChange('lastName', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Email Address</label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleChange('email', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Phone Number</label>
                 <input
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => handleChange('phone', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 />
               </div>
             </div>
           </div>
 
           {/* Alumni/Professional Information */}
-          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Professional Information</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">NAAKIMS Alumni ID</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">NAAKIMS Alumni ID</label>
                 <input
                   type="text"
                   value={formData.regNo}
                   disabled
-                  className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Former Chapter</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Former Chapter</label>
                 <select
                   value={formData.chapter}
                   onChange={(e) => handleChange('chapter', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 >
                   {chapters.map(chapter => (
                     <option key={chapter} value={chapter}>{chapter}</option>
@@ -246,20 +246,20 @@ export default function AlumniProfilePage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Graduation Year</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Graduation Year</label>
                 <input
                   type="text"
                   value={formData.graduationYear}
                   onChange={(e) => handleChange('graduationYear', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Specialization</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Specialization</label>
                 <select
                   value={formData.specialization}
                   onChange={(e) => handleChange('specialization', e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 >
                   {specializations.map(spec => (
                     <option key={spec} value={spec}>{spec}</option>
@@ -270,50 +270,50 @@ export default function AlumniProfilePage() {
           </div>
 
           {/* Workplace Information */}
-          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Workplace Information</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-3">
               <div className="sm:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Hospital / Institution</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Hospital / Institution</label>
                 <input
                   type="text"
                   value={formData.workplace}
                   onChange={(e) => handleChange('workplace', e.target.value)}
                   placeholder="e.g., Lagos University Teaching Hospital"
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">City</label>
                 <input
                   type="text"
                   value={formData.workplaceCity}
                   onChange={(e) => handleChange('workplaceCity', e.target.value)}
                   placeholder="e.g., Lagos"
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Position</label>
+                <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Position</label>
                 <input
                   type="text"
                   value={formData.position}
                   onChange={(e) => handleChange('position', e.target.value)}
                   placeholder="e.g., Senior Registrar"
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                 />
               </div>
             </div>
           </div>
 
           {/* Mentorship & Social */}
-          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+          <div className="profile-section bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Mentorship & Connections</h2>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-[#008751]/5 rounded-xl">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between p-3 bg-[#008751]/5 rounded-xl">
                 <div>
-                  <h3 className="font-medium text-gray-900">Available for Mentorship</h3>
-                  <p className="text-sm text-gray-500">Students can request you as their mentor</p>
+                  <h3 className="text-sm font-medium text-gray-900">Available for Mentorship</h3>
+                  <p className="text-xs text-gray-500">Students can request you as their mentor</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -325,25 +325,25 @@ export default function AlumniProfilePage() {
                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#008751]/15 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#008751]/50"></div>
                 </label>
               </div>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">LinkedIn (optional)</label>
+                  <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">LinkedIn (optional)</label>
                   <input
                     type="url"
                     value={formData.linkedin}
                     onChange={(e) => handleChange('linkedin', e.target.value)}
                     placeholder="https://linkedin.com/in/username"
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Twitter/X (optional)</label>
+                  <label className="block text-[10px] sm:text-[11px] font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Twitter/X (optional)</label>
                   <input
                     type="text"
                     value={formData.twitter}
                     onChange={(e) => handleChange('twitter', e.target.value)}
                     placeholder="@username"
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#008751]/15 focus:border-[#008751]/40 transition-all"
                   />
                 </div>
               </div>
