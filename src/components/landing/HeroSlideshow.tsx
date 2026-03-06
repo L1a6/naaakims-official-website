@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { cn } from '@/lib/utils';
 
@@ -244,18 +245,19 @@ export default function HeroSlideshow() {
               ready ? 'opacity-100 translate-y-0 delay-300' : 'opacity-0 translate-y-4',
             )}
           >
-            <span
+            <Link
+              href="/portal/login"
               className={cn(
                 'group inline-flex items-center justify-center gap-3',
                 'min-w-55 sm:min-w-50 px-10 py-3.75 rounded-lg',
-                'bg-[#008751] text-white text-[13px] sm:text-sm font-bold tracking-wide',
+                'bg-[#008751] hover:bg-[#00A863] text-white text-[13px] sm:text-sm font-bold tracking-wide',
                 'shadow-lg shadow-[#008751]/25',
                 'transition-all duration-300',
               )}
             >
               Get Started
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </span>
+            </Link>
 
             <span
               className={cn(

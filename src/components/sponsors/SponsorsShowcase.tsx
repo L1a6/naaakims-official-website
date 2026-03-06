@@ -43,7 +43,7 @@ const COMMISSIONERS: Person[] = [
     credentials: '',
     role: 'Commissioner for Health',
     bio: "Dr. Ekem John brings a distinguished medical background to his role overseeing one of Akwa Ibom's most critical government portfolios. His alignment with NAAKIMS reflects a shared vision of building skilled medical professionals.",
-    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/ekemjohn.jpeg',
   },
   {
     id: 'mrs-idongesit-etiebet',
@@ -61,7 +61,7 @@ const COMMISSIONERS: Person[] = [
     credentials: '',
     role: 'Commissioner for Youth',
     bio: "Dr. Ekerete Ekanem champions youth empowerment from the highest levels of government. His partnership with NAAKIMS is built on the belief that investing in young people is investing in Nigeria's future.",
-    image: '/images/ekereetteekanem.jpeg',
+    image: '/images/ekereteekanem.jpeg',
   },
 ];
 

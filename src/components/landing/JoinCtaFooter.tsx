@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { NAV_LINKS, SOCIAL_MEDIA, CONTACT_INFO, BRAND } from '@/lib/constants';
@@ -194,14 +195,15 @@ export default function JoinCtaFooter() {
 
               {/* CTA buttons */}
               <div className="cta-el flex flex-col sm:flex-row items-center justify-center gap-4">
-                <span
-                  className="group relative inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-[#008751] text-white text-sm font-bold tracking-wide transition-all duration-300"
+                <Link
+                  href="/portal/login"
+                  className="group relative inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-[#008751] hover:bg-[#00A863] text-white text-sm font-bold tracking-wide transition-all duration-300"
                 >
                   Get Started
                   <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                </span>
+                </Link>
                 <span
                   className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg border border-white/20 text-white text-sm font-medium tracking-wide backdrop-blur-sm transition-all duration-300"
                 >

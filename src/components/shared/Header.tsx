@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { CustomEase } from 'gsap/CustomEase';
 import { NAV_LINKS } from '@/lib/constants';
@@ -23,6 +24,10 @@ export default function Header() {
   const shapesRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  
+  // Always solid header - green navbar on every page
+  const isSolid = true;
   const activeShapeRef = useRef<number>(0);
   const isHoveringRef = useRef<boolean>(false);
   const idleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -203,15 +208,15 @@ export default function Header() {
         <header 
           className="header"
           style={{
-            background: scrolled
+            background: isSolid
               ? 'rgba(0, 50, 30, 0.92)'
               : 'rgba(255,255,255,0.15)',
             backdropFilter: 'blur(25px)',
-            borderBottom: scrolled
+            borderBottom: isSolid
               ? '1px solid rgba(0,208,132,0.15)'
               : '1px solid rgba(255,255,255,0.2)',
             transition: 'all 0.5s cubic-bezier(0.65, 0.01, 0.05, 0.99)',
-            boxShadow: scrolled ? '0 4px 30px rgba(0,50,30,0.12)' : 'none',
+            boxShadow: isSolid ? '0 4px 30px rgba(0,50,30,0.12)' : 'none',
           }}
         >
           <div className="container is--full">
@@ -229,26 +234,60 @@ export default function Header() {
 
               {/* Desktop Nav Links - Hidden on mobile, visible on lg and up */}
               <div className="hidden lg:flex items-center gap-5 xl:gap-6 flex-1 justify-center">
-                {NAV_LINKS.map((link) => (
-                  <span
-                    key={link.href}
-                    className="text-white/90 text-[12px] xl:text-[13px] font-medium transition-all duration-300 relative group whitespace-nowrap cursor-default"
-                  >
-                    {link.label}
-                  </span>
-                ))}
+                {NAV_LINKS.map((link) => {
+                  const isActive = link.href === '/' || link.href === '/sponsors';
+                  return isActive ? (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-white/90 text-[12px] xl:text-[13px] font-medium transition-all duration-300 relative group whitespace-nowrap hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <span
+                      key={link.href}
+                      className="text-white/90 text-[12px] xl:text-[13px] font-medium transition-all duration-300 relative group whitespace-nowrap cursor-default"
+                    >
+                      {link.label}
+                    </span>
+                  );
+                })}
               </div>
 
               <div className="nav-row__right">
-                {/* Join Now CTA - Desktop only */}
-                <span
-                  className="hidden lg:flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-white text-[11px] xl:text-[12px] font-bold bg-[#008751] transition-all duration-300 whitespace-nowrap shadow-sm shadow-[#008751]/20"
-                >
-                  Log In to Portal
-                  <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                  </svg>
-                </span>
+                {/* CTA - Desktop only: context-aware */}
+                {pathname?.startsWith('/portal/login') || pathname?.startsWith('/portal/register') ? (
+                  <Link
+                    href="/"
+                    className="hidden lg:flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-white text-[11px] xl:text-[12px] font-bold bg-white/15 hover:bg-white/25 transition-all duration-300 whitespace-nowrap border border-white/20"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Back to Website
+                  </Link>
+                ) : pathname?.startsWith('/portal') ? (
+                  <Link
+                    href="/portal/login"
+                    className="hidden lg:flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-white text-[11px] xl:text-[12px] font-bold bg-white/15 hover:bg-white/25 transition-all duration-300 whitespace-nowrap border border-white/20"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                    </svg>
+                    Log Out
+                  </Link>
+                ) : (
+                  <Link
+                    href="/portal/login"
+                    className="hidden lg:flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-white text-[11px] xl:text-[12px] font-bold bg-[#008751] hover:bg-[#00A863] transition-all duration-300 whitespace-nowrap shadow-sm shadow-[#008751]/20"
+                  >
+                    Log In to Portal
+                    <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                )}
 
                 {/* Mobile Menu Button - Only visible on mobile (lg:hidden) */}
                 <button
@@ -368,32 +407,71 @@ export default function Header() {
               <ul className="menu-list">
                 {NAV_LINKS.map((link, idx) => {
                   const shapeIdx = (idx % 5);
+                  const isLive = link.href === '/' || link.href === '/sponsors';
                   return (
                     <li key={link.href} className="menu-list-item" data-shape={(shapeIdx + 1).toString()}>
-                      <button
-                        type="button"
-                        className="nav-link w-full text-left"
-                        style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent', userSelect: 'none' }}
-                        onMouseEnter={() => handleNavHover(shapeIdx)}
-                        onMouseLeave={handleNavLeave}
-                        onClick={() => handleNavClick(shapeIdx)}
-                      >
-                        <p className="nav-link-text">{link.label}</p>
-                        <div className="nav-link-hover-bg"></div>
-                      </button>
+                      {isLive ? (
+                        <Link
+                          href={link.href}
+                          className="nav-link w-full text-left block"
+                          style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent', userSelect: 'none' }}
+                          onMouseEnter={() => handleNavHover(shapeIdx)}
+                          onMouseLeave={handleNavLeave}
+                          onClick={closeMenu}
+                        >
+                          <p className="nav-link-text">{link.label}</p>
+                          <div className="nav-link-hover-bg"></div>
+                        </Link>
+                      ) : (
+                        <button
+                          type="button"
+                          className="nav-link w-full text-left"
+                          style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent', userSelect: 'none' }}
+                          onMouseEnter={() => handleNavHover(shapeIdx)}
+                          onMouseLeave={handleNavLeave}
+                          onClick={() => handleNavClick(shapeIdx)}
+                        >
+                          <p className="nav-link-text">{link.label}</p>
+                          <div className="nav-link-hover-bg"></div>
+                        </button>
+                      )}
                     </li>
                   );
                 })}
               </ul>
-              {/* Mobile Get Started CTA — below nav links */}
+              {/* Mobile CTA — below nav links */}
               <div className="px-6 pt-6 pb-4 lg:hidden" data-menu-fade>
-                <span
-                  className="flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-lg bg-[#008751] text-white text-[13px] font-bold tracking-wide transition-all duration-300"
-                  style={{ fontFamily: 'var(--font-inter)' }}
-                >
-                  Log In to Portal
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </span>
+                {pathname?.startsWith('/portal/login') || pathname?.startsWith('/portal/register') ? (
+                  <Link
+                    href="/"
+                    className="flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-[13px] font-bold tracking-wide transition-all duration-300 border border-white/20"
+                    style={{ fontFamily: 'var(--font-inter)' }}
+                    onClick={closeMenu}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M13 8H3m0 0l4-4M3 8l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    Back to Website
+                  </Link>
+                ) : pathname?.startsWith('/portal') ? (
+                  <Link
+                    href="/portal/login"
+                    className="flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-[13px] font-bold tracking-wide transition-all duration-300 border border-white/20"
+                    style={{ fontFamily: 'var(--font-inter)' }}
+                    onClick={closeMenu}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    Log Out
+                  </Link>
+                ) : (
+                  <Link
+                    href="/portal/login"
+                    className="flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-lg bg-[#008751] hover:bg-[#00A863] text-white text-[13px] font-bold tracking-wide transition-all duration-300"
+                    style={{ fontFamily: 'var(--font-inter)' }}
+                    onClick={closeMenu}
+                  >
+                    Log In to Portal
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  </Link>
+                )}
               </div>
             </div>
           </nav>

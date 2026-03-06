@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* Use webpack for dev to avoid Turbopack panics */
   devIndicators: false,
   images: {
+    qualities: [100, 75],
     remotePatterns: [
       {
         protocol: 'https',

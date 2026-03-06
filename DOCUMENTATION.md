@@ -1,14 +1,14 @@
 # NAAKIMS Worldwide — Official Website
 
-## Project Documentation
+## Landing Page Documentation
 
 ---
 
 ### Overview
 
-The **NAAKIMS Worldwide Official Website** is a premium, modern landing page built for the **National Association of Akwa Ibom State Medical and Dental Surgery Students Worldwide**. The site serves as the digital face of the organization — showcasing its mission, leadership, programs, events, testimonials, and community.
+The **NAAKIMS Worldwide Official Website** landing page is complete and live at **naakims.com**. Built as a premium, modern digital presence for the **National Association of Akwa Ibom State Medical and Dental Surgery Students Worldwide**, it showcases the organization's mission, leadership, programs, events, testimonials, and community.
 
-> **Current Status:** The landing page is fully implemented and live. All other sections (About, Chapters, Events, Blog, Gallery, etc.) are in development and have not yet been rolled out or deployed.
+> **Status:** The landing page is fully implemented, deployed, and live. All other pages (About, Chapters, Events, Blog, Gallery, etc.) are planned for future rollout.
 
 ---
 
@@ -16,33 +16,27 @@ The **NAAKIMS Worldwide Official Website** is a premium, modern landing page bui
 
 | Layer | Technology |
 |---|---|
-| **Framework** | Next.js 16 (App Router) |
-| **Language** | TypeScript |
-| **UI Library** | React 19 |
+| **Framework** | Next.js 16 |
 | **Styling** | Tailwind CSS v4 |
-| **Animations** | GSAP 3.14 + ScrollTrigger + CustomEase |
+| **Animations** | GSAP 3.14 |
 | **Fonts** | Poppins (headings), Inter (body) |
-| **Image Optimization** | Next.js `<Image>` with `quality={100}` |
-| **Utilities** | clsx, tailwind-merge, lucide-react |
-| **Deployment** | GitHub → Vercel |
+| **Deployment** | GitHub → Vercel (auto-deploy) |
 
 ---
 
-### Brand Identity
+### Brand Colors
 
 | Element | Value |
 |---|---|
 | **Primary Green** | `#00D084` |
 | **Dark Green** | `#008751` |
 | **Accent Green** | `#00B872` |
-| **Email** | info@naakims.com |
-| **Website** | naakims.com |
 
 ---
 
-### Landing Page Architecture
+## Landing Page Sections
 
-The landing page is composed of **9 sections**, rendered in order from `src/app/page.tsx`:
+The page flows through **9 sections** in this order:
 
 ```
 Preloader → Header → Hero → About → Programs → Leadership → Blog → Testimonials → CTA + Footer
@@ -50,60 +44,48 @@ Preloader → Header → Hero → About → Programs → Leadership → Blog →
 
 ---
 
-## Section Breakdown
+### 0. Preloader
 
----
-
-### 1. Preloader
-
-**File:** `src/components/shared/Preloader.tsx`
-
-A premium split-curtain loading screen displayed on initial page load. The letters **N-A-A-K-I-M-S** animate in with a spring-physics stagger effect. A progress bar fills as status text cycles through: *Initializing → Loading resources → Preparing experience → Welcome*. The exit animation splits the screen — top curtain slides up, bottom curtain slides down — to reveal the page content underneath.
+The first thing every visitor sees. A full-screen loading screen with the **NAAKIMS** letters animating in one by one with a spring-bounce effect, a progress bar, and cycling status text (*Initializing → Loading resources → Preparing experience → Welcome*). Once complete, the screen splits open like a curtain to reveal the site.
 
 > 📸 *[Insert screenshot of Preloader here]*
 
 ---
 
-### 2. Header / Navigation
+### 1. Header / Navigation
 
-**File:** `src/components/shared/Header.tsx`
+A navigation bar with the NAAKIMS logo and 10 links: Home, About, Chapters, Executives, Events, Blog, Gallery, Achievements, Sponsors, and Contact. Starts transparent over the hero and becomes solid on scroll. Includes a mobile hamburger menu.
 
-A scroll-aware navigation bar with the NAAKIMS logo and 10 navigation links: Home, About, Chapters, Executives, Events, Blog, Gallery, Achievements, Sponsors, and Contact. The header starts transparent over the hero and gains a solid background after scrolling past 85% of the viewport height. Features animated decorative shapes on hover and a fully functional mobile hamburger menu.
+> **Note:** All navigation links point to their routes, but only the landing page is live. Other pages will go live as they are built.
 
-> **Note:** All navigation links currently point to their respective routes but those pages are not yet deployed; only the landing page `/` is live.
+> 📸 *[Insert screenshot of Header — desktop view here]*
 
-> 📸 *[Insert screenshot of Header here]*
+> 📸 *[Insert screenshot of Header — mobile menu open here]*
 
 ---
 
-### 3. Hero Slideshow
+### 2. Hero Slideshow
 
-**File:** `src/components/landing/HeroSlideshow.tsx`
+A full-screen cinematic carousel with 4 slides, auto-advancing every 6 seconds. Each slide has a high-resolution background image with animated headlines.
 
-A full-screen cinematic hero carousel with 4 slides, auto-advancing every 6 seconds. Each slide features a local high-resolution image with overlay gradients and word-by-word headline animation (3D rotateX + blur stagger via GSAP).
-
-| Slide | Heading | Image |
-|---|---|---|
-| 1 | Uniting Akwa Ibom / Students Across Continents | `hero1.jpg` |
-| 2 | Advancing Medical / Excellence Together | `hero2.jpg` |
-| 3 | Tomorrow's Healthcare Leaders / Start Right Here | `hero3.jpg` |
-| 4 | United by Origin, / Driven by Excellence | `hero4.jpg` |
-
-The slide transition uses a multi-phase system: `visible → exiting → hidden → entering`.
+| Slide | Heading |
+|---|---|
+| 1 | Uniting Akwa Ibom Students Across Continents |
+| 2 | Advancing Medical Excellence Together |
+| 3 | Tomorrow's Healthcare Leaders Start Right Here |
+| 4 | United by Origin, Driven by Excellence |
 
 > 📸 *[Insert screenshot of Hero Slideshow here]*
 
 ---
 
-### 4. About Preview + Core Values
-
-**File:** `src/components/landing/AboutPreview.tsx`
+### 3. About Preview + Core Values
 
 This section contains three parts:
 
 #### a) Stats Strip
 
-Animated number counters triggered on scroll, powered by GSAP + IntersectionObserver:
+Animated counters that count up on scroll:
 
 | Stat | Label |
 |---|---|
@@ -114,48 +96,68 @@ Animated number counters triggered on scroll, powered by GSAP + IntersectionObse
 
 #### b) About Text
 
-A scroll-zoom editorial image (`aboutus.jpg`) paired with descriptive text about NAAKIMS's mission, vision, and purpose.
+An editorial image paired with descriptive text about NAAKIMS's mission, vision, and purpose.
 
 #### c) Core Values Pillars
 
-Three interactive pillar cards (desktop: expandable on hover, mobile: accordion tap):
+Three interactive pillar cards that expand on hover (desktop) or tap (mobile):
 
-| # | Title | Image | Description |
-|---|---|---|---|
-| 01 | Academic Excellence | `academicexcellence.jpg` | Mentorship programs, symposiums, cross-chapter knowledge exchange |
-| 02 | Global Unity | `globalunity.jpg` | Connecting Akwa Ibom medical students across Nigeria and beyond |
-| 03 | Community Impact | `communityimpact.jpg` | Healthcare outreach, community service, public health advocacy |
-
-On desktop, hovering a pillar card expands it with a subtle green (`#008751`) tint overlay. On mobile, tapping a card expands it vertically.
+| # | Title | Description |
+|---|---|---|
+| 01 | Academic Excellence | Mentorship programs, symposiums, cross-chapter knowledge exchange |
+| 02 | Global Unity | Connecting Akwa Ibom medical students across Nigeria and beyond |
+| 03 | Community Impact | Healthcare outreach, community service, public health advocacy |
 
 > 📸 *[Insert screenshot of About / Stats section here]*
 
-> 📸 *[Insert screenshot of Core Values Pillars here]*
+> 📸 *[Insert screenshot of Core Values — default state (no hover) here]*
+
+> 📸 *[Insert screenshot of Core Values — Academic Excellence hovered/expanded here]*
+
+> 📸 *[Insert screenshot of Core Values — another pillar hovered/expanded here]*
 
 ---
 
-### 5. The NAAKIMS Experience (Programs & Initiatives)
+### 4. The NAAKIMS Experience (Programs & Initiatives)
 
-**File:** `src/components/landing/ProgramsInitiatives.tsx`
-
-An interactive split-screen showcase of NAAKIMS's three flagship programs. Users click tabs to switch between programs with smooth GSAP crossfade transitions.
-
-| # | Tag | Title | Stat | Image |
-|---|---|---|---|---|
-| 01 | Social | Dinner & Awards Night | 500+ Annual Guests | `dinnernight.jpg` |
-| 02 | Outreach | Community Health Missions | 50+ Health Campaigns | `healthmissions.jpg` |
-| 03 | Welfare | Student Bursary Programme | Coming Soon | `bursary.jpg` |
-
-**Desktop:** Split layout — image panel (left) + content/tabs (right).
-**Mobile:** Stacked expandable accordion cards with navigation dots.
-
-> 📸 *[Insert screenshot of NAAKIMS Experience section here]*
+An interactive showcase of NAAKIMS's three flagship programs. Users click tabs to switch between programs with smooth crossfade transitions on the image panel.
 
 ---
 
-### 6. Leadership Showcase
+#### Program 01 — Dinner & Awards Night
 
-**File:** `src/components/landing/LeadershipShowcase.tsx`
+Our flagship social event. An elegant evening of celebration, networking, and recognition, bringing together members, alumni, and distinguished guests for a night of fine dining, awards, and cultural showcases.
+
+- **Tag:** Social
+- **Stat:** 500+ Annual Guests
+
+> 📸 *[Insert screenshot — Dinner & Awards Night active here]*
+
+---
+
+#### Program 02 — Community Health Missions
+
+Health education campaigns, awareness programs, and community engagement initiatives reaching thousands of communities across Akwa Ibom and beyond.
+
+- **Tag:** Outreach
+- **Stat:** 50+ Health Campaigns
+
+> 📸 *[Insert screenshot — Community Health Missions active here]*
+
+---
+
+#### Program 03 — Student Bursary Programme
+
+Supporting deserving medical and dental surgery students with financial aid to ease the burden of tuition and academic expenses.
+
+- **Tag:** Welfare
+- **Stat:** Coming Soon
+
+> 📸 *[Insert screenshot — Student Bursary Programme active here]*
+
+---
+
+### 5. Leadership Showcase
 
 Showcases the NAAKIMS Worldwide executive team with a cinematic president hero card and an executive grid.
 
@@ -163,7 +165,7 @@ Showcases the NAAKIMS Worldwide executive team with a cinematic president hero c
 - **Name:** Ndifreke Okpongete
 - **Role:** Worldwide President
 - **Chapter:** University of Uyo
-- **Quote:** *"Our mission is simple — to build a world-class network of medical and dental surgery professionals rooted in excellence, service, and the shared identity of Akwa Ibom."*
+- **Quote:** *"Our mission is simple, to build a world-class network of medical and dental surgery professionals rooted in excellence, service, and the shared identity of Akwa Ibom."*
 
 **Executives:**
 
@@ -174,36 +176,28 @@ Showcases the NAAKIMS Worldwide executive team with a cinematic president hero c
 | Assam, Kingsley | Financial Secretary | University of Uyo |
 | Emediong Asuquo | Treasurer | University of Uyo |
 
-Executive cards feature GSAP hover animations: image zoom (1.07×), scaleY wipe reveal, shimmer overlay, and tag fade-in.
-
 > 📸 *[Insert screenshot of Leadership section here]*
 
 ---
 
-### 7. Latest News / Blog
+### 6. Latest News / Blog
 
-**File:** `src/components/landing/LatestNews.tsx`
+A magazine-style blog section with a cinematic featured article and a 3-column card grid.
 
-A dark editorial magazine-style blog section with a cinematic featured hero article and a 3-column card grid.
-
-| # | Title | Category | Date | Image |
-|---|---|---|---|---|
-| ⭐ | NAAKIMS Worldwide Dinner Night: An Unforgettable Evening Awaits | Upcoming Event | Coming Soon | `blog.jpg` |
-| 1 | NAAKIMS UniUyo Chapter Welcomes New Administration | Chapter Updates | Feb 16, 2026 | `newadministration.jpg` |
-| 2 | NAAKIMS Presents Voluntary Blood Donation at St. Luke's Hospital, Anua | Health Advocacy | Feb 19, 2026 | `bloodonation.jpg` |
-| 3 | NAAKIMS UCC Chapter Swearing-In Ceremony Marks New Beginning | Chapter Updates | Feb 12, 2026 | `swearingin.jpg` |
-
-Features a clip-path wipe entrance animation via GSAP ScrollTrigger.
+| # | Title | Category | Date |
+|---|---|---|---|
+| Featured | NAAKIMS Worldwide Dinner Night: An Unforgettable Evening Awaits | Upcoming Event | Coming Soon |
+| 1 | NAAKIMS UniUyo Chapter Welcomes New Administration | Chapter Updates | Feb 16, 2026 |
+| 2 | NAAKIMS Presents Voluntary Blood Donation at St. Luke's Hospital, Anua | Health Advocacy | Feb 19, 2026 |
+| 3 | NAAKIMS UCC Chapter Swearing-In Ceremony Marks New Beginning | Chapter Updates | Feb 12, 2026 |
 
 > 📸 *[Insert screenshot of Blog section here]*
 
 ---
 
-### 8. Testimonials Showcase
+### 7. Testimonials Showcase
 
-**File:** `src/components/landing/TestimonialsShowcase.tsx`
-
-A premium testimonial carousel with touch/swipe support and a scrolling chapter-name marquee across the bottom.
+A testimonial carousel with touch/swipe support and a scrolling chapter-name marquee across the bottom.
 
 | Name | Role | Chapter |
 |---|---|---|
@@ -218,13 +212,11 @@ A premium testimonial carousel with touch/swipe support and a scrolling chapter-
 
 ---
 
-### 9. CTA + Footer
+### 8. CTA + Footer
 
-**File:** `src/components/landing/JoinCtaFooter.tsx`
+#### a) Call-to-Action
 
-#### a) Cinematic CTA
-
-A full-bleed call-to-action section with parallax background, clip-path reveal animation, and staggered content entrance. Stat badges animate in with elastic spring physics.
+A full-bleed section with parallax background and animated stat badges:
 
 | Stat | Label |
 |---|---|
@@ -232,17 +224,11 @@ A full-bleed call-to-action section with parallax background, clip-path reveal a
 | 20+ | Chapters |
 | 15+ | Years |
 
-#### b) Premium Footer
+#### b) Footer
 
-Dark gradient footer with:
-- NAAKIMS brand logo and description
-- Contact info (email, address)
-- Three link columns: About, Explore, Resources
-- Social media icons: Facebook, Twitter/X, Instagram, LinkedIn, WhatsApp, YouTube
-- Copyright notice
-- Developer credit
+Dark gradient footer with the NAAKIMS logo, contact info, navigation link columns, social media icons, and copyright notice.
 
-> **Note:** All footer links and social media icons are non-functional placeholders. They will be connected once individual pages and official social accounts are finalized.
+> **Note:** All footer links and social media icons are placeholders. They will be connected once individual pages and official social accounts are finalized.
 
 > 📸 *[Insert screenshot of CTA section here]*
 
@@ -250,125 +236,42 @@ Dark gradient footer with:
 
 ---
 
-## Project Structure
-
-```
-naakims-official-website/
-├── public/
-│   ├── images/                    # All local images
-│   │   ├── hero1-4.jpg           # Hero slideshow backgrounds
-│   │   ├── aboutus.jpg           # About section image
-│   │   ├── academicexcellence.jpg # Core Values pillar images
-│   │   ├── globalunity.jpg
-│   │   ├── communityimpact.jpg
-│   │   ├── dinnernight.jpg       # Programs section
-│   │   ├── healthmissions.jpg
-│   │   ├── bursary.jpg
-│   │   ├── naakimswwpresident.jpg # Leadership
-│   │   ├── vicepresidentexternal.jpg
-│   │   ├── generalsecretary.jpg
-│   │   ├── financialsecretary.jpg
-│   │   ├── treasurer.jpg
-│   │   ├── testimonials1.jpg     # Testimonials
-│   │   ├── testimonial2.jpg
-│   │   ├── testimonials3.jpg
-│   │   ├── blog.jpg              # Blog featured image
-│   │   ├── newadministration.jpg
-│   │   ├── bloodonation.jpg
-│   │   └── swearingin.jpg
-│   └── logo.png                   # NAAKIMS logo
-├── src/
-│   ├── app/
-│   │   ├── layout.tsx             # Root layout (fonts, metadata, preloader)
-│   │   ├── page.tsx               # Landing page (assembles all sections)
-│   │   └── globals.css            # Global styles
-│   ├── components/
-│   │   ├── shared/
-│   │   │   ├── Header.tsx         # Navigation header
-│   │   │   └── Preloader.tsx      # Loading screen
-│   │   └── landing/
-│   │       ├── HeroSlideshow.tsx
-│   │       ├── AboutPreview.tsx
-│   │       ├── ProgramsInitiatives.tsx
-│   │       ├── LeadershipShowcase.tsx
-│   │       ├── LatestNews.tsx
-│   │       ├── TestimonialsShowcase.tsx
-│   │       └── JoinCtaFooter.tsx
-│   └── lib/
-│       ├── constants.ts           # Brand, links, social, contacts
-│       └── utils.ts               # cn() utility (clsx + tailwind-merge)
-├── package.json
-├── next.config.ts
-├── tsconfig.json
-├── tailwind.config.ts
-└── postcss.config.mjs
-```
-
----
-
-## Animation System
-
-All animations are powered by **GSAP 3.14** with the **ScrollTrigger** plugin. Key animation patterns used throughout:
-
-| Pattern | Used In | Description |
-|---|---|---|
-| **Word stagger** | Hero | Each word animates in with rotateX, blur, and opacity |
-| **Clip-path reveal** | Blog, CTA | `inset()` wipe from center to full |
-| **CountUp** | About stats | Numbers count up from 0 on scroll |
-| **Crossfade** | Hero, Programs | Opacity transitions between content |
-| **Parallax** | CTA | Background image moves at half-speed on scroll |
-| **Spring entrance** | Preloader, Stats | Elements pop in with elastic easing |
-| **Stagger grid** | Leadership, Footer | Cards/columns reveal in sequence |
-| **Split curtain** | Preloader | Screen splits vertically to reveal content |
-
----
-
 ## Responsive Design
 
-The site is fully responsive with three primary breakpoints:
-
-| Breakpoint | Width | Layout |
-|---|---|---|
-| **Mobile** | < 640px | Single column, accordion menus, stacked cards |
-| **Tablet** | 640px – 1024px | 2-column grids, hybrid layouts |
-| **Desktop** | > 1024px | Full multi-column layouts, hover interactions |
-
-Core Values pillars use **tap/accordion** on mobile and **hover-expand** on desktop. The Programs section switches between **stacked accordion** (mobile) and **split-screen** (desktop).
-
-The site renders correctly in Chrome's **"Request Desktop Site"** mode on mobile, showing the full desktop layout including hover-enabled Core Values interactions.
-
----
-
-## Image Optimization
-
-All images use Next.js `<Image>` component with `quality={100}` to ensure maximum sharpness. Images are served locally from `/public/images/` — no external CDN dependencies.
+The site is fully responsive across mobile, tablet, and desktop. It also renders correctly in Chrome's "Request Desktop Site" mode on mobile, showing the full desktop layout with hover interactions.
 
 ---
 
 ## Deployment
 
-- **Repository:** [github.com/L1a6/naaakims-official-website](https://github.com/L1a6/naaakims-official-website)
-- **Branch:** `main`
-- **Platform:** Vercel (auto-deploy on push)
-- **Domain:** naakims.com
+- **Live at:** naakims.com
+- **Platform:** Vercel (auto-deploys when code is pushed)
+- **Repository:** github.com/L1a6/naaakims-official-website
 
 ---
 
 ## What's Next (Roadmap)
 
-The following pages/sections are planned but **not yet implemented or deployed**:
+The following pages are planned for future development:
 
 - [ ] About page
-- [ ] Chapters directory + individual chapter pages
-- [ ] Executives page (full leadership roster)
-- [ ] Events listing + individual event pages
-- [ ] Blog listing + individual post pages
+- [ ] Chapters directory
+- [ ] Executives page
+- [ ] Events listing
+- [ ] Blog listing
 - [ ] Gallery / Media page
 - [ ] Achievements page
 - [ ] Sponsors & Patrons page
-- [ ] Contact page with form
+- [ ] Contact page
 - [ ] Student portal / membership system
 
 ---
 
-*Last updated: February 2026*
+## Developer
+
+**Larry David** — *I build, you grow, we win.*
+[www.larrydavid.dev](https://www.larrydavid.dev)
+
+---
+
+*Last updated: 19th February, 2026*
