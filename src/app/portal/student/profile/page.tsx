@@ -100,17 +100,17 @@ export default function StudentProfilePage() {
             </svg>
             Back to Dashboard
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">Edit Profile</h1>
-          <p className="text-gray-500 text-sm mt-1">Update your personal information and profile photo</p>
+          <h1 className="text-lg sm:text-xl font-semibold text-gray-900 tracking-[-0.025em]">Edit Profile</h1>
+          <p className="text-gray-500 text-xs sm:text-sm mt-1">Update your personal information and profile photo</p>
         </div>
 
         <form onSubmit={handleSave} className="space-y-6">
           {/* Profile Photo Section */}
-          <div className="profile-section bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Profile Photo</h2>
-            <div className="flex items-center gap-6">
+          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+            <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Profile Photo</h2>
+            <div className="flex items-center gap-4 sm:gap-6">
               <div className="relative">
-                <div className="w-24 h-24 rounded-2xl bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-gray-200">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-gray-200">
                   {photoPreview || formData.photoUrl ? (
                     <Image 
                       src={photoPreview || formData.photoUrl} 
@@ -119,7 +119,7 @@ export default function StudentProfilePage() {
                       className="object-cover" 
                     />
                   ) : (
-                    <span className="text-4xl font-bold text-gray-400">
+                    <span className="text-2xl sm:text-4xl font-bold text-gray-400">
                       {formData.firstName.charAt(0)}
                     </span>
                   )}
@@ -146,8 +146,8 @@ export default function StudentProfilePage() {
           </div>
 
           {/* Personal Information */}
-          <div className="profile-section bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h2>
+          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+            <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Personal Information</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
@@ -189,8 +189,8 @@ export default function StudentProfilePage() {
           </div>
 
           {/* Academic Information */}
-          <div className="profile-section bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Academic Information</h2>
+          <div className="profile-section bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+            <h2 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">Academic Information</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">NAAKIMS ID</label>
@@ -259,17 +259,17 @@ export default function StudentProfilePage() {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-4">
+          <div className="flex items-center justify-end gap-3 sm:gap-4">
             <Link
               href="/portal/student"
-              className="px-6 py-3 text-gray-600 font-medium rounded-xl hover:bg-gray-100 transition-colors"
+              className="px-4 sm:px-6 py-2.5 sm:py-3 text-gray-600 text-sm font-medium rounded-xl hover:bg-gray-100 transition-colors"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={isSaving}
-              className="px-6 py-3 bg-[#008751] text-white font-medium rounded-xl hover:bg-[#007545] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-[#008751] text-white text-sm font-medium rounded-xl hover:bg-[#007545] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
             >
               {isSaving ? (
                 <>

@@ -83,6 +83,15 @@ export default function AlumniDashboard() {
           </Link>
         </div>
 
+        {/* Mobile Edit Profile Link */}
+        <Link
+          href="/portal/alumni/profile"
+          className="dash-section sm:hidden flex items-center justify-between px-3 py-2.5 rounded-xl bg-gray-50 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors duration-200"
+        >
+          <span>Edit Profile</span>
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" /></svg>
+        </Link>
+
         {/* Stats */}
         <div className="dash-section grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
           <div className="stat-item rounded-xl bg-indigo-50/50 px-3 py-3 sm:px-4 sm:py-4">
@@ -108,13 +117,13 @@ export default function AlumniDashboard() {
         </div>
 
         {/* Main Grid */}
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Left Column */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Quick Actions */}
             <div className="dash-section">
               <h2 className="text-sm font-semibold text-gray-900 mb-3">Quick Actions</h2>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 sm:gap-3">
                 {[
                   { label: 'View ID Card', desc: 'Digital alumni card', href: '/portal/alumni/card', gradient: 'from-slate-700 to-slate-800', iconBg: 'bg-white/[0.12]', icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" /></svg> },
                   { label: 'Directory', desc: 'Find alumni members', href: '/portal/alumni/directory', gradient: 'from-[#008751] to-[#006d42]', iconBg: 'bg-white/[0.12]', icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg> },
@@ -202,7 +211,7 @@ export default function AlumniDashboard() {
           </div>
 
           {/* Right Column */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Membership Card */}
             <div className="dash-section relative overflow-hidden rounded-xl p-5 bg-[#008751] text-white">
               <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '24px 24px' }} />

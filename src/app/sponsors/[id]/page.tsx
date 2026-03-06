@@ -27,7 +27,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: 'Ph.D',
     role: 'Executive Governor, Akwa Ibom State',
     bio: "His Excellency Pastor Umo Bassey Eno, Ph.D stands among the most transformative leaders in Akwa Ibom State's modern history. His administration's commitment to healthcare, education, and youth empowerment has reshaped the landscape of opportunity for young professionals across the state. As Distinguished Patron of NAAKIMS Worldwide, his belief in the next generation represents a personal investment in the future of medical excellence.",
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=900&h=1200&fit=crop&crop=face&auto=format&q=90',
+    image: '/images/umoeno.webp',
     category: 'governor',
   },
   {
@@ -37,7 +37,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: '',
     role: 'Commissioner for Health',
     bio: "Dr. Ekem John brings a distinguished medical background to his role overseeing one of Akwa Ibom's most critical government portfolios. His alignment with NAAKIMS reflects a shared vision of building skilled medical professionals.",
-    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/ekemjohn.jpeg',
     category: 'commissioner',
   },
   {
@@ -47,7 +47,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: '',
     role: 'Commissioner for Education',
     bio: "Mrs. Idongesit Etiebet has been a driving force in reshaping Akwa Ibom's educational sector. Her support underscores the vital connection between academic foundations and world-class medical professionals.",
-    image: 'https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/idongesitetiebet.jpeg',
     category: 'commissioner',
   },
   {
@@ -57,7 +57,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: '',
     role: 'Commissioner for Youth',
     bio: "Dr. Ekerete Ekanem champions youth empowerment from the highest levels of government. His partnership with NAAKIMS is built on the belief that investing in young people is investing in Nigeria's future.",
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/ekereteekanem.jpeg',
     category: 'commissioner',
   },
   {
@@ -67,7 +67,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: '',
     role: 'Chairman, NMA Akwa Ibom',
     bio: "Dr. Aniekan Peter's leadership of the Nigerian Medical Association positions him at the forefront of medical advocacy in the state.",
-    image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/aniekanpeter.jpeg',
     category: 'medical',
   },
   {
@@ -77,7 +77,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: '',
     role: 'Chairman, NMA Akwa Ibom',
     bio: "Dr. Uduak Usanga's tenure has been defined by an unrelenting commitment to raising standards across the medical profession.",
-    image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/uduakusanga.jpg',
     category: 'medical',
   },
   {
@@ -87,7 +87,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: '',
     role: 'CMD, UUTH',
     bio: "Prof. Ememabasi Bassey leads one of Nigeria's premier teaching hospitals. Her endorsement carries the weight of institutional authority.",
-    image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/ememabasibassey.jpeg',
     category: 'medical',
   },
   {
@@ -97,7 +97,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: '',
     role: 'President, ARD UUTH',
     bio: "Dr. Promise Jacob represents the bridge between studenthood and professional practice as President of Resident Doctors at UUTH.",
-    image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/promisejacob.jpg',
     category: 'medical',
   },
   {
@@ -107,7 +107,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: '',
     role: 'Pioneer President',
     bio: "Dr. Israel Ben is the architect of NAAKIMS. As Pioneer President, he built the association from the ground up — turning a vision into a global organisation.",
-    image: 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/israelben.jpg',
     category: 'patron',
   },
   {
@@ -117,7 +117,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: '',
     role: 'First Female Patron',
     bio: "Dr. Glory Edet entered NAAKIMS history as the first woman to be honoured as a patron — a milestone reflecting the progressive values of the association.",
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/gloryedet.jpeg',
     category: 'patron',
   },
   {
@@ -127,7 +127,7 @@ const ALL_SPONSORS: Person[] = [
     credentials: '',
     role: 'Patron',
     bio: "Dr. Ekaette Mbatt's commitment to student welfare has made her one of NAAKIMS' most steadfast champions across Nigeria and the diaspora.",
-    image: 'https://images.unsplash.com/photo-1567532900872-f4e906cbf06a?w=600&h=800&fit=crop&crop=face&auto=format&q=85',
+    image: '/images/ekaetembatt.jpg',
     category: 'patron',
   },
 ];
